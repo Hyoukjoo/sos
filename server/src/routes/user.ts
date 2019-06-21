@@ -3,7 +3,7 @@ import { MysqlError, PoolConnection } from 'mysql';
 import passport from 'passport';
 import { hash } from 'bcrypt';
 
-import { pool } from '../app';
+import pool from '../databaseConfig';
 import { checkPoolConnection } from '../utils/checkPoolConnection';
 import { promiseSelectOne } from '../utils/promiseQuery';
 
@@ -47,13 +47,19 @@ router.post(
 );
 
 router.get('/info', (req: Request, res: Response, next: NextFunction) => {
-  let userid = 'test';
-  console.log(req.session);
+  let userid = null;
+
   if (req.user) {
     userid = req.user;
   }
 
   res.json({ userid });
+});
+
+router.get('/logout', (req: Request, res: Response, next: NextFunction) => {
+  (req.session as any).destroy();
+  req.logout();
+  res.send('logout success');
 });
 
 export default router;

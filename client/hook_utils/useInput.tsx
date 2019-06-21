@@ -1,20 +1,18 @@
 import { useState, useCallback } from 'react';
 
-interface IuseInput {
-    value: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
+export const useInput = (initailValue: string = ''): any => {
+  const [value, setValue] = useState(initailValue);
 
-export const useInput = (initailValue: string): IuseInput => {
-    const [value, setValue] = useState(initailValue);
+  const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
+    const {
+      currentTarget: { value }
+    } = e;
 
-    const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
-        const {
-            currentTarget: { value }
-        } = e;
+    setValue(value);
+  }, []);
 
-        setValue(value);
-    }, []);
-
-    return { value, onChange };
+  const onReset = () => {
+    setValue(initailValue);
+  };
+  return [value, onReset, onChange];
 };

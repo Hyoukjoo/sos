@@ -9,7 +9,10 @@ export enum E_userAction {
   USER_LOGIN_FAILURE = 'USER_LOGIN_FAILURE',
   LOAD_USER_INFO_REQUEST = 'LOAD_USER_INFO_REQUEST',
   LOAD_USER_INFO_SUCCESS = 'LOAD_USER_INFO_SUCCESS',
-  LOAD_USER_INFO_FAILURE = 'LOAD_USER_INFO_FAILURE'
+  LOAD_USER_INFO_FAILURE = 'LOAD_USER_INFO_FAILURE',
+  USER_LOGOUT_REQUEST = 'USER_LOGOUT_REQUEST',
+  USER_LOGOUT_SUCCESS = 'USER_LOGOUT_SUCCESS',
+  USER_LOGOUT_FAILURE = 'USER_LOGOUT_FAILURE'
 }
 
 // Signup type definition
@@ -17,6 +20,7 @@ export enum E_userAction {
 export interface I_userSingupInfo {
   userid: string;
   password: string;
+  email?: string;
 }
 
 interface I_userSignupRequest {
@@ -51,26 +55,42 @@ interface I_userLoginSuccess {
 
 interface I_userLoginFailure {
   type: typeof E_userAction.USER_LOGIN_FAILURE;
-  data?: null;
   message: string;
 }
 
-interface I_userInfo {
+// load user info type definition
+
+interface I_loadUserInfo {
   userid: string;
 }
 
-interface I_loadUserRequest {
+interface I_loadUserInfoRequest {
   type: typeof E_userAction.LOAD_USER_INFO_REQUEST;
 }
 
-interface I_loadUserSuccess {
+interface I_loadUserInfoSuccess {
   type: typeof E_userAction.LOAD_USER_INFO_SUCCESS;
-  data: I_userInfo;
+  data: I_loadUserInfo;
 }
 
-interface I_loadUserFailure {
+interface I_loadUserInfoFailure {
   type: typeof E_userAction.LOAD_USER_INFO_FAILURE;
-  messaga: string;
+  message: string;
+}
+
+//logout type definition
+
+interface I_userLogoutRequest {
+  type: typeof E_userAction.USER_LOGOUT_REQUEST;
+}
+
+interface I_userLogoutSuccess {
+  type: typeof E_userAction.USER_LOGOUT_SUCCESS;
+}
+
+interface I_userLogoutFailure {
+  type: typeof E_userAction.USER_LOGOUT_FAILURE;
+  message: string;
 }
 
 export type I_userActionType =
@@ -80,6 +100,9 @@ export type I_userActionType =
   | I_userLoginRequest
   | I_userLoginSuccess
   | I_userLoginFailure
-  | I_loadUserRequest
-  | I_loadUserSuccess
-  | I_loadUserFailure;
+  | I_loadUserInfoRequest
+  | I_loadUserInfoSuccess
+  | I_loadUserInfoFailure
+  | I_userLogoutRequest
+  | I_userLogoutSuccess
+  | I_userLogoutFailure;

@@ -3,6 +3,7 @@ import express, { Response, Request } from 'express';
 import cookieParser from 'cookie-parser';
 import expressSession from 'express-session';
 import { config } from 'dotenv';
+import morgan from 'morgan';
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
@@ -14,7 +15,7 @@ app
   .prepare()
   .then(() => {
     const server = express();
-
+    // server.use(morgan('dev'));
     server.use(express.json());
     server.use(express.urlencoded({ extended: true }));
     server.use(cookieParser(process.env.COOKIE_SECRET));
@@ -31,8 +32,6 @@ app
     );
 
     server.get('/user/:id', (req, res) => {
-      console.log('새로고침');
-      console.log(req.params.id);
       return app.render(req, res, '/user', { id: req.params.id });
     });
 

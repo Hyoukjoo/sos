@@ -1,7 +1,7 @@
-import { all, fork, call, put, take, takeLatest, takeEvery, cancelled } from 'redux-saga/effects';
+import { all, fork, call, put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
-import { E_userAction, I_userSingupInfo } from '../actionTypes/userType';
+import { E_userAction, I_userSingupInfo, I_userLoginInfoType } from '../actionTypes/userType';
 
 const signupAPI = async (data: I_userSingupInfo) => {
   return await axios.post('/user/signup', data, {
@@ -28,7 +28,7 @@ function* watchSginup() {
   yield takeLatest(E_userAction.USER_SIGNUP_REQUEST, signupRequest);
 }
 
-const loginAPI = async (data: I_userSingupInfo) => {
+const loginAPI = async (data: I_userLoginInfoType) => {
   return await axios.post('/user/login', data, {
     withCredentials: true
   });
@@ -55,14 +55,12 @@ function* watchLogin() {
 }
 
 const loadUserAPI = async () => {
-  console.log('watch load user api');
   return await axios.get('/user/info', {
     withCredentials: true
   });
 };
 
 function* loadUserRequest() {
-  console.log('watch load use request');
   try {
     const result = yield call(loadUserAPI);
     yield put({
@@ -78,12 +76,34 @@ function* loadUserRequest() {
 }
 
 function* watchLaodUser() {
-  console.log('watch load user');
   yield takeLatest(E_userAction.LOAD_USER_INFO_REQUEST, loadUserRequest);
 }
 
-export default function* userSaga() {
-  console.log('watch user saga');
+const logoutAPI = () => {
+  return axios.get('/user/logout', {
+    withCredentials: true
+  });
+};
 
-  yield all([fork(watchSginup), fork(watchLogin), fork(watchLaodUser)]);
+function* logoutRequest() {
+  try {
+    yield call(logoutAPI);
+    yield put({
+      type: E_userAction.USER_LOGOUT_SUCCESS
+    });
+  } catch (e) {
+    console.log(e);
+    yield put({
+      type: E_userAction.USER_LOGOUT_FAILURE,
+      message: e
+    });
+  }
+}
+
+function* watchLogout() {
+  yield takeLatest(E_userAction.USER_LOGOUT_REQUEST, logoutRequest);
+}
+
+export default function* userSaga() {
+  yield all([fork(watchSginup), fork(watchLogin), fork(watchLaodUser), fork(watchLogout)]);
 }

@@ -10,6 +10,9 @@ const initialState = {
 const userReducer = (state = initialState, action: I_userActionType) => {
   switch (action.type) {
     case E_userAction.USER_SIGNUP_REQUEST:
+    case E_userAction.USER_LOGIN_REQUEST:
+    case E_userAction.USER_LOGOUT_REQUEST:
+    case E_userAction.LOAD_USER_INFO_REQUEST:
       return {
         ...state
       };
@@ -21,45 +24,31 @@ const userReducer = (state = initialState, action: I_userActionType) => {
         isSingup: true
       };
 
-    case E_userAction.USER_SIGNUP_FAILURE:
-      return {
-        ...state,
-        message: action.message
-      };
-
-    case E_userAction.USER_LOGIN_REQUEST:
-      return {
-        ...state
-      };
-
     case E_userAction.USER_LOGIN_SUCCESS:
       return {
         ...state,
-        isLogin: true,
         myInfo: action.myInfo
       };
 
-    case E_userAction.USER_LOGIN_FAILURE:
-      return action.message;
-
-    case E_userAction.LOAD_USER_INFO_REQUEST:
-      console.log('reducer load user info request');
+    case E_userAction.USER_LOGOUT_SUCCESS:
       return {
-        ...state
+        ...state,
+        myInfo: null
       };
 
     case E_userAction.LOAD_USER_INFO_SUCCESS:
-      console.log('reducer load user info success');
       return {
         ...state,
-        myInfo: action.data,
-        isLogin: true
+        myInfo: action.data
       };
 
+    case E_userAction.USER_SIGNUP_FAILURE:
+    case E_userAction.USER_LOGIN_FAILURE:
+    case E_userAction.USER_LOGOUT_FAILURE:
     case E_userAction.LOAD_USER_INFO_FAILURE:
       return {
         ...state,
-        message: action.messaga
+        messaga: action.message
       };
 
     default:
