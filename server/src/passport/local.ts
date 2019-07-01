@@ -2,37 +2,33 @@ import passport from 'passport';
 import { Strategy as localStrategy } from 'passport-local';
 import { compare } from 'bcrypt';
 
-import pool from '../databaseConfig';
-import { promiseSelectOne } from '../utils/promiseQuery';
+import { User } from '../models';
 
 const local = () => {
   passport.use(
     new localStrategy(
       {
-        usernameField: 'userid',
+        usernameField: 'userId',
         passwordField: 'password'
       },
-      async (userid, password, done) => {
+      async (userId, password, done) => {
         try {
-          const sql = 'select * from users where ?';
+          const userData: any = await User.findOne({
+            where: { userId }
+          });
 
-          const user_id = { userid };
+          if (!userData) return done(null, false, { message: 'Unknown User' });
 
-          const user: any = await promiseSelectOne(pool, sql, user_id);
+          const user = userData.toJSON();
 
-          if (!user) {
-            return done(null, false, { message: 'Unknown User' });
-          }
+          const result = await compare(password, user.password);
 
-          const result = await compare(password, user[0].password);
-
-          if (result) {
-            return done(null, user[0]);
-          }
+          if (result) return done(null, user);
 
           return done(null, false, { message: 'Incorreced Password' });
         } catch (e) {
           console.log(e);
+
           return done(e);
         }
       }

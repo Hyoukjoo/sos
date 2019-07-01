@@ -3,11 +3,12 @@ import App, { Container, NextAppContext } from 'next/app';
 import { Provider } from 'react-redux';
 import withRedux, { AppProps } from 'next-redux-wrapper';
 import withReduxSaga from 'next-redux-saga';
+import Helmet from 'react-helmet';
 import axios from 'axios';
 
 import { makeStore } from '../store';
 import Layout from '../components/Layout';
-import { E_userAction } from '../actionTypes/userType';
+import { E_userActionType } from '../actionTypes/userType';
 
 class MyApp extends App<AppProps> {
   static getInitialProps = async ({ Component, ctx }: NextAppContext) => {
@@ -25,7 +26,7 @@ class MyApp extends App<AppProps> {
 
     if (!myInfo) {
       store.dispatch({
-        type: E_userAction.LOAD_USER_INFO_REQUEST
+        type: E_userActionType.LOAD_USER_INFO_REQUEST
       });
     }
 

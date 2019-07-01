@@ -5,11 +5,11 @@ import { I_userInfo } from '../interface/user_interface';
 
 const passportConfig = () => {
   passport.serializeUser((user: I_userInfo, done) => {
-    done(null, user.userid);
+    done(null, user.userId);
   });
 
-  passport.deserializeUser((userid, done) => {
-    done(null, userid);
+  passport.deserializeUser((userId, done) => {
+    done(null, userId);
   });
 
   local();

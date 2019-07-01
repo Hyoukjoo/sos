@@ -1,4 +1,4 @@
 export interface I_userInfo {
-  userid: string;
+  userId: string;
   password?: string;
 }

@@ -1,39 +1,31 @@
-import { Request, Response, NextFunction, Router } from 'express';
-import { MysqlError, PoolConnection } from 'mysql';
+import { Router } from 'express';
 import passport from 'passport';
 import { hash } from 'bcrypt';
 
-import pool from '../databaseConfig';
-import { checkPoolConnection } from '../utils/checkPoolConnection';
-import { promiseSelectOne } from '../utils/promiseQuery';
+import { User } from '../models';
 
 const router = Router();
 
-router.post('/signup', async (req: Request, res: Response, next: NextFunction) => {
+router.post('/signup', async (req, res, next) => {
   try {
-    const sql = 'select * from users where ?';
-    const userid = { userid: req.body.userid };
-
-    const exUser = await promiseSelectOne(pool, sql, userid);
-
-    if (exUser.length > 0) {
-      console.log('current userid');
-      return res.status(401).send('It is current user');
-    }
-
-    const password_hash = await hash(req.body.password, 11);
-
-    const signupInfo = [req.body.userid, password_hash];
-
-    pool.getConnection((err: MysqlError, conn: PoolConnection) => {
-      checkPoolConnection(err, conn);
-      conn.query('insert into users (userid, password) values (?, ?)', signupInfo, () => conn.release());
+    const exUser = await User.findOne({
+      where: {
+        userId: req.body.userId
+      }
     });
 
-    res.end();
-  } catch (e) {
-    console.log(e);
+    if (exUser) return res.status(403).json({ message: 'Existed user' });
 
+    const passwordToHash = await hash(req.body.password, 11);
+
+    const newUser = await User.create({
+      userId: req.body.userId,
+      password: passwordToHash,
+      email: req.body.email
+    });
+
+    res.json(newUser);
+  } catch (e) {
     return next(e);
   }
 });
@@ -42,21 +34,21 @@ router.post('/signup', async (req: Request, res: Response, next: NextFunction) =
 router.post(
   '/login',
   passport.authenticate('local', {
-    successRedirect: '/user/info'
+    successRedirect: '/user/info',
+    successMessage: true,
+    failureMessage: true
   })
 );
 
-router.get('/info', (req: Request, res: Response, next: NextFunction) => {
-  let userid = null;
+router.get('/info', (req, res, next) => {
+  let userId = null;
 
-  if (req.user) {
-    userid = req.user;
-  }
+  if (req.user) userId = req.user;
 
-  res.json({ userid });
+  res.json({ userId });
 });
 
-router.get('/logout', (req: Request, res: Response, next: NextFunction) => {
+router.get('/logout', (req, res, next) => {
   (req.session as any).destroy();
   req.logout();
   res.send('logout success');

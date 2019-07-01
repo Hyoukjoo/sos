@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import Link from 'next/link';
-import '../scss/styles.scss';
+// import '../scss/styles.scss';
 
 const HeadLine: React.FC = memo(() => {
   return (

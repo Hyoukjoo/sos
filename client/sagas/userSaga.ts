@@ -1,7 +1,7 @@
 import { all, fork, call, put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
-import { E_userAction, I_userSingupInfo, I_userLoginInfoType } from '../actionTypes/userType';
+import { E_userActionType, I_userSingupInfo, I_userLoginInfoType } from '../actionTypes/userType';
 
 const signupAPI = async (data: I_userSingupInfo) => {
   return await axios.post('/user/signup', data, {
@@ -9,23 +9,23 @@ const signupAPI = async (data: I_userSingupInfo) => {
   });
 };
 
-function* signupRequest({ data }: any) {
+function* signupRequest(action) {
   try {
-    yield call(signupAPI, data);
+    yield call(signupAPI, action.data);
     yield put({
-      type: E_userAction.USER_SIGNUP_SUCCESS
+      type: E_userActionType.USER_SIGNUP_SUCCESS
     });
   } catch (e) {
     console.error(e);
     yield put({
-      type: E_userAction.USER_SIGNUP_FAILURE,
-      message: e
+      type: E_userActionType.USER_SIGNUP_FAILURE,
+      message: e.message
     });
   }
 }
 
 function* watchSginup() {
-  yield takeLatest(E_userAction.USER_SIGNUP_REQUEST, signupRequest);
+  yield takeLatest(E_userActionType.USER_SIGNUP_REQUEST, signupRequest);
 }
 
 const loginAPI = async (data: I_userLoginInfoType) => {
@@ -34,24 +34,24 @@ const loginAPI = async (data: I_userLoginInfoType) => {
   });
 };
 
-function* loginRequest({ data }: any) {
+function* loginRequest(action) {
   try {
-    const result = yield call(loginAPI, data);
+    const result = yield call(loginAPI, action.data);
     yield put({
-      type: E_userAction.USER_LOGIN_SUCCESS,
-      myInfo: result.data.userid
+      type: E_userActionType.USER_LOGIN_SUCCESS,
+      myInfo: result.data
     });
   } catch (e) {
     console.error(e);
     yield put({
-      type: E_userAction.USER_LOGIN_FAILURE,
+      type: E_userActionType.USER_LOGIN_FAILURE,
       message: e
     });
   }
 }
 
 function* watchLogin() {
-  yield takeLatest(E_userAction.USER_LOGIN_REQUEST, loginRequest);
+  yield takeLatest(E_userActionType.USER_LOGIN_REQUEST, loginRequest);
 }
 
 const loadUserAPI = async () => {
@@ -64,19 +64,19 @@ function* loadUserRequest() {
   try {
     const result = yield call(loadUserAPI);
     yield put({
-      type: E_userAction.LOAD_USER_INFO_SUCCESS,
-      data: result.data.userid
+      type: E_userActionType.LOAD_USER_INFO_SUCCESS,
+      data: result.data.user_id
     });
   } catch (e) {
     yield put({
-      type: E_userAction.LOAD_USER_INFO_FAILURE,
-      message: e
+      type: E_userActionType.LOAD_USER_INFO_FAILURE,
+      message: e.message
     });
   }
 }
 
 function* watchLaodUser() {
-  yield takeLatest(E_userAction.LOAD_USER_INFO_REQUEST, loadUserRequest);
+  yield takeLatest(E_userActionType.LOAD_USER_INFO_REQUEST, loadUserRequest);
 }
 
 const logoutAPI = () => {
@@ -89,19 +89,19 @@ function* logoutRequest() {
   try {
     yield call(logoutAPI);
     yield put({
-      type: E_userAction.USER_LOGOUT_SUCCESS
+      type: E_userActionType.USER_LOGOUT_SUCCESS
     });
   } catch (e) {
-    console.log(e);
+    console.log(e.message);
     yield put({
-      type: E_userAction.USER_LOGOUT_FAILURE,
-      message: e
+      type: E_userActionType.USER_LOGOUT_FAILURE,
+      message: e.message
     });
   }
 }
 
 function* watchLogout() {
-  yield takeLatest(E_userAction.USER_LOGOUT_REQUEST, logoutRequest);
+  yield takeLatest(E_userActionType.USER_LOGOUT_REQUEST, logoutRequest);
 }
 
 export default function* userSaga() {

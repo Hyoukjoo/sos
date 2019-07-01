@@ -10,7 +10,9 @@ export default class MyDocument extends Document {
   render() {
     return (
       <html>
-        <Head />
+        <Head>
+          <script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBSM_qaz6K_DqkoooxdtFie8pgUF9p9FK8&libraries=places' />
+        </Head>
         <body>
           <Main />
           <NextScript />

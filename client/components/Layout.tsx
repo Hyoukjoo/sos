@@ -1,7 +1,7 @@
 import React from 'react';
 import { NextFunctionComponent } from 'next';
 import HeadLine from './HeadLine';
-// import '../css/styles.scss';
+import '../scss/styles.scss';
 
 const Layout: NextFunctionComponent = ({ children }) => {
   return (

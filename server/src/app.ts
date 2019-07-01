@@ -4,16 +4,20 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import expressSession from 'express-session';
 import passport from 'passport';
+import morgan = require('morgan');
 
 import userRouter from './routes/user';
+import postRouter from './routes/post';
 import passportConfig from './passport';
-import morgan = require('morgan');
+import { sequelize } from './models';
 
 dotenv.config();
 
 const prod = process.env.NODE_ENV === 'production';
 
 const app = express();
+
+sequelize.sync();
 
 app.use(
   cors({
@@ -37,11 +41,14 @@ app.use(
     }
   })
 );
+app.use(express.static(__dirname + '/uploads'));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
 passportConfig();
 
 app.use('/user', userRouter);
+app.use('/post', postRouter);
 
 export default app;
