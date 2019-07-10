@@ -4,11 +4,11 @@ import axios from 'axios';
 import { E_postActionType } from '../actionTypes/postType';
 
 const addPostAPI = async data => {
-  console.log(data);
   return await axios.post('/post', data, {
     headers: {
       'Content-Type': 'multipart/form-data'
-    }
+    },
+    withCredentials: true
   });
 };
 
@@ -17,8 +17,7 @@ function* addPostRequest(action) {
     const result = yield call(addPostAPI, action.data);
     console.log(result);
     yield put({
-      type: E_postActionType.ADD_POST_SUCCESS,
-      images: result.data.images
+      type: E_postActionType.ADD_POST_SUCCESS
     });
   } catch (e) {
     yield put({

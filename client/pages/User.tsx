@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { E_userActionType } from '../actionTypes/userType';
 import LoginForm from '../containers/LoginForm';
+import GroupForm from '../containers/GroupForm';
 
 interface Props {
   id: string;
@@ -27,6 +28,7 @@ const User: NextFunctionComponent<Props> = props => {
           <label>
             <button onClick={onLogout}>logout</button>
           </label>
+          <GroupForm />
         </>
       ) : (
         <LoginForm />

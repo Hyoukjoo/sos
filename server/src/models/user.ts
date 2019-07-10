@@ -1,12 +1,10 @@
-import { Model, DataTypes, ModelCtor } from 'sequelize';
-import { HasManyAddAssociationMixin, Association } from 'sequelize/types';
+import Sequelize, { Model, DataTypes } from 'sequelize';
 
 import { sequelize } from '.';
 import { Post } from './post';
 import { Profile } from './profile';
-import { HasOneSetAssociationMixin } from 'sequelize';
 
-export class User extends Model {
+export class User extends Model<User> {
   public userId!: string;
   public password!: string;
   public email!: string;
@@ -14,15 +12,16 @@ export class User extends Model {
   public readonly createAt!: Date;
   public readonly updateAt!: Date;
 
-  public addPost!: HasManyAddAssociationMixin<Post, string>;
-  public setProfile!: HasOneSetAssociationMixin<Profile, string>;
+  public addPost!: Sequelize.HasManyAddAssociationMixin<Post, number>;
+
+  public setProfile!: Sequelize.HasOneSetAssociationMixin<Profile, number>;
 
   public readonly posts?: Post[];
   public readonly profile?: Profile;
 
   public static associations: {
-    posts: Association<User, Post>;
-    profile: Association<User, Profile>;
+    posts: Sequelize.Association<User, Post>;
+    profile: Sequelize.Association<User, Profile>;
   };
 }
 
@@ -44,13 +43,15 @@ export const initUserModel = () => {
     },
     {
       sequelize,
-      tableName: 'users'
+      tableName: 'users',
+      charset: 'utf8mb4',
+      collate: 'utf8mb4_unicode_ci'
     }
   );
 };
 
 export const associateUser = () => {
-  User.hasMany(Post, { foreignKey: 'author', sourceKey: 'userId', as: 'posts' });
+  User.hasMany(Post, { foreignKey: 'authorId', sourceKey: 'userId', as: 'posts' });
   // User.hasOne(Profile, { foreignKey: 'userId', sourceKey: 'userId' });
 
   return User;

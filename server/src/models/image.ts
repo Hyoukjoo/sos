@@ -1,11 +1,18 @@
-import { DataTypes, Model, ModelCtor } from 'sequelize';
+import Sequelize, { DataTypes, Model } from 'sequelize';
 
 import { sequelize } from '.';
 import { Post } from './post';
 
-export class Image extends Model {
+export class Image extends Model<Image> {
   public postId!: number;
   public src!: string;
+
+  public readonly createAt!: Date;
+  public readonly updateAt!: Date;
+
+  public static associations: {
+    postImages: Sequelize.Association<Image, Post>;
+  };
 }
 
 export const initImageModel = () => {
@@ -15,7 +22,7 @@ export const initImageModel = () => {
         type: DataTypes.INTEGER.UNSIGNED
       },
       src: {
-        type: DataTypes.STRING(64),
+        type: DataTypes.STRING,
         allowNull: false
       }
     },
@@ -29,7 +36,7 @@ export const initImageModel = () => {
 };
 
 export const associateImage = () => {
-  Image.belongsTo(Post, { targetKey: 'postId', foreignKey: 'postId', as: 'PostImage' });
+  Image.belongsTo(Post, { targetKey: 'postId', foreignKey: 'postId', as: 'postImages' });
 
   return Image;
 };

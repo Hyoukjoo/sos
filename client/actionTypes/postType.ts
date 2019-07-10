@@ -22,7 +22,6 @@ interface I_addPostRequest {
 
 interface I_addPostSuccess {
   type: E_postActionType.ADD_POST_SUCCESS;
-  data: { images: any[] };
 }
 
 interface I_addPostFailure {

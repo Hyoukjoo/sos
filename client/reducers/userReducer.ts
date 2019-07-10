@@ -3,7 +3,8 @@ import { I_userAction, E_userActionType } from '../actionTypes/userType';
 const initialState = {
   myInfo: null,
   message: '',
-  isSignup: null
+  isSingup: false,
+  isLogin: false
 };
 
 const userReducer = (state = initialState, action: I_userAction) => {
@@ -13,21 +14,19 @@ const userReducer = (state = initialState, action: I_userAction) => {
     case E_userActionType.USER_LOGOUT_REQUEST:
     case E_userActionType.LOAD_USER_INFO_REQUEST:
       return {
-        ...state,
-        isSignup: null
+        ...state
       };
 
     case E_userActionType.USER_SIGNUP_SUCCESS:
       return {
         ...state,
-        password: '',
         isSignup: 'success'
       };
 
     case E_userActionType.USER_LOGIN_SUCCESS:
       return {
         ...state,
-        myInfo: action.myInfo
+        myInfo: action.data
       };
 
     case E_userActionType.USER_LOGOUT_SUCCESS:
@@ -54,7 +53,6 @@ const userReducer = (state = initialState, action: I_userAction) => {
     case E_userActionType.LOAD_USER_INFO_FAILURE:
       return {
         ...state,
-        password: '',
         messaga: action.message
       };
 

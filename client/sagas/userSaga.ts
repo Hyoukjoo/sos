@@ -39,7 +39,7 @@ function* loginRequest(action) {
     const result = yield call(loginAPI, action.data);
     yield put({
       type: E_userActionType.USER_LOGIN_SUCCESS,
-      myInfo: result.data
+      data: result.data
     });
   } catch (e) {
     console.error(e);
@@ -65,7 +65,7 @@ function* loadUserRequest() {
     const result = yield call(loadUserAPI);
     yield put({
       type: E_userActionType.LOAD_USER_INFO_SUCCESS,
-      data: result.data.user_id
+      data: result.data.userId === null ? null : result.data
     });
   } catch (e) {
     yield put({

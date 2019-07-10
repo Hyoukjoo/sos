@@ -8,6 +8,7 @@ import morgan = require('morgan');
 
 import userRouter from './routes/user';
 import postRouter from './routes/post';
+import groupRouter from './routes/group';
 import passportConfig from './passport';
 import { sequelize } from './models';
 
@@ -19,6 +20,7 @@ const app = express();
 
 sequelize.sync();
 
+app.use(express.static(__dirname + '/uploads'));
 app.use(
   cors({
     origin: true,
@@ -41,7 +43,6 @@ app.use(
     }
   })
 );
-app.use(express.static(__dirname + '/uploads'));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -50,5 +51,6 @@ passportConfig();
 
 app.use('/user', userRouter);
 app.use('/post', postRouter);
+app.use('/group', groupRouter);
 
 export default app;

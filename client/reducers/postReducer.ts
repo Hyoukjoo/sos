@@ -1,8 +1,7 @@
 import { I_postAction, E_postActionType } from '../actionTypes/postType';
-import { string } from 'prop-types';
 
 const InitialState = {
-  loadPlaceData: '',
+  loadPlaceData: undefined,
   images: ''
 };
 
@@ -11,7 +10,7 @@ const postReducer = (state = InitialState, action: I_postAction) => {
     case E_postActionType.ADD_POST_REQUEST:
       return { ...state };
     case E_postActionType.ADD_POST_SUCCESS:
-      return { ...state, images: action.data.images };
+      return { ...state };
     case E_postActionType.ADD_POST_FAILURE:
       return { ...state };
     case E_postActionType.LOAD_PLACE_DATA:

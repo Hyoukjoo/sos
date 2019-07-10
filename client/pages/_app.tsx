@@ -9,6 +9,7 @@ import axios from 'axios';
 import { makeStore } from '../store';
 import Layout from '../components/Layout';
 import { E_userActionType } from '../actionTypes/userType';
+import { isBoolean } from 'util';
 
 class MyApp extends App<AppProps> {
   static getInitialProps = async ({ Component, ctx }: NextAppContext) => {

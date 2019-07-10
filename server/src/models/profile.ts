@@ -28,7 +28,9 @@ export const initProfileModel = () => {
     },
     {
       sequelize,
-      tableName: 'profiles'
+      tableName: 'profiles',
+      charset: 'utf8mb4',
+      collate: 'utf8mb4_unicode_ci'
     }
   );
 

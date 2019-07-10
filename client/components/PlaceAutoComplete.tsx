@@ -9,25 +9,22 @@ const PlaceAutocomplete = () => {
   const [address, setAddress] = useState('');
   const [resultAddress, setResultAddress] = useState('');
 
-  const handle = (e: KeyboardEvent) => {
+  const stopKeydownEventHandler = (e: KeyboardEvent) => {
     if (e.keyCode === 13 || (e.keyCode >= 37 && e.keyCode <= 40)) {
       e.stopImmediatePropagation();
     }
   };
 
   useEffect(() => {
-    document.addEventListener('keydown', handle, true);
-    return () => document.removeEventListener('keydown', handle);
+    document.addEventListener('keydown', stopKeydownEventHandler, true);
+    return () => document.removeEventListener('keydown', stopKeydownEventHandler);
   }, []);
 
   //TODO: 키보드로 이동해서 값 입력했을 때 input tag에 보여지는 값과 저장되는 값을 마우스 클릭했을 때와 일치시키기
-  const onChangePlace = useCallback(
-    (inputAddress: string) => {
-      setAddress(inputAddress);
-      setResultAddress(inputAddress);
-    },
-    [address, resultAddress]
-  );
+  const onChangePlace = useCallback((inputAddress: string) => {
+    setAddress(inputAddress);
+    // setResultAddress(inputAddress);
+  }, []);
 
   const onSelectPlace = useCallback(
     (address: string) => {
@@ -40,14 +37,14 @@ const PlaceAutocomplete = () => {
     [resultAddress]
   );
 
-  const onMouseOverResult = useCallback((e: React.MouseEvent<HTMLDivElement>, suggenstion) => {
+  const onMouseOverPlaceResult = useCallback((e: React.MouseEvent<HTMLDivElement>, suggenstion) => {
     const { innerText } = e.currentTarget;
     setResultAddress(innerText);
   }, []);
 
   const replaceDotToSpace = useCallback((text: string): string => {
-    let isIncludeDot = text.includes('.');
     let result = text;
+    let isIncludeDot = text.includes('.');
     while (isIncludeDot) {
       result = result.replace('.', ' ');
       isIncludeDot = result.includes('.');
@@ -80,7 +77,7 @@ const PlaceAutocomplete = () => {
                     className,
                     style
                   })}
-                  onMouseOver={e => onMouseOverResult(e, suggestion)}
+                  onMouseOver={e => onMouseOverPlaceResult(e, suggestion)}
                 >
                   <span>{result}</span>
                 </div>

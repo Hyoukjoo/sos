@@ -50,7 +50,7 @@ interface I_userLoginRequest {
 
 interface I_userLoginSuccess {
   type: typeof E_userActionType.USER_LOGIN_SUCCESS;
-  myInfo: I_userLoginInfoType;
+  data: I_userLoginInfoType;
 }
 
 interface I_userLoginFailure {

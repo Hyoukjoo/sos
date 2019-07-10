@@ -38,7 +38,9 @@ export const initRelationModel = (sequelize: Sequelize) => {
     },
     {
       sequelize,
-      tableName: 'relations'
+      tableName: 'relations',
+      charset: 'utf8',
+      collate: 'utf8_general_ci'
     }
   );
 

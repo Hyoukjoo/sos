@@ -1,6 +1,7 @@
 import React, { useCallback, useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DatePicker from 'react-datepicker';
+import axios from 'axios';
 
 import PreviewImages from '../components/PreviewImages';
 import useInput from '../hook_utils/useInput';
@@ -12,7 +13,8 @@ import PlaceAutocomplete from '../components/PlaceAutoComplete';
 const PostForm = () => {
   const dispatch = useDispatch();
 
-  const [title, resetTitle, onChangeTitle] = useInput('');
+  const [content, resetContent, onChangeContent] = useInput('');
+  const [privacyBound, resetPrivacyBound, onChangePrivacyBound] = useInput(undefined);
 
   const [imageURLs, setImageURLs] = useState(null);
   const [formImages, setFormImages] = useState(null);
@@ -48,16 +50,22 @@ const PostForm = () => {
       });
     }
 
-    formData.append('title', title);
+    formData.append('content', content);
     formData.append('startTime', startTime);
     formData.append('endTime', endTime);
     formData.append('place', place);
+    formData.append('privacyBound', privacyBound);
 
     dispatch({
       type: E_postActionType.ADD_POST_REQUEST,
       data: formData
     });
-  }, [title, formImages, startTime, endTime, place]);
+  }, [content, formImages, startTime, endTime, place, privacyBound]);
+
+  const onTest = useCallback(async () => {
+    const result = await axios.get('http://localhost:4000/post/', { withCredentials: true });
+    console.log(result);
+  }, []);
 
   return (
     <div className='addContainer'>
@@ -69,9 +77,9 @@ const PostForm = () => {
       </div>
       <div className='add_title'>
         <label>
-          title:{' '}
+          content:{' '}
           <div className='wrapper'>
-            <input type='text' onChange={onChangeTitle} value={title} />
+            <input type='text' onChange={onChangeContent} value={content} />
           </div>
         </label>
       </div>
@@ -111,13 +119,13 @@ const PostForm = () => {
       </div>
       <div className='add_privacy_bounds'>
         <label>
-          privacy_bounds: <input type='text' />
+          privacy_bound: <input type='text' value={privacyBound} onChange={onChangePrivacyBound} />
         </label>
       </div>
       <div className='add_submit'>
         <button onClick={onPost}>ADD</button>
+        <button onClick={onTest}>TEST</button>
       </div>
-      {images && images.map(image => <img src={image} style={{ width: '100px', height: '100px' }} />)}
     </div>
   );
 };

@@ -1,8 +1,9 @@
 import { Router } from 'express';
 import multer from 'multer';
+import { Op } from 'sequelize';
 
-import { Image } from '../models';
-import { Post } from '../models';
+import { Image, Group, Post, Tag } from '../models';
+import isLogin from '../utils/checkLogin';
 
 const router = Router();
 
@@ -16,7 +17,6 @@ const storage = multer.diskStorage({
     array[1] = '.' + array[1];
     array.splice(1, 0, Date.now().toString());
     const result = array.join('');
-    console.log(result);
     cb(null, result);
   }
 });
@@ -29,41 +29,97 @@ const upload = multer({
   }
 });
 
-router.post('/', upload.array('images'), async (req, res, next) => {
-  console.dir(req.body);
+router.post('/', isLogin, upload.array('images'), async (req, res, next) => {
   try {
+    const privacyBoundGroup: string[] =
+      req.body.privacyBound.match(/\$[\wㄱ-ㅎㅏ-ㅣ가-힣]+/g) === null
+        ? []
+        : req.body.privacyBound.match(/\$[\wㄱ-ㅎㅏ-ㅣ가-힣]+/g);
+    const privacyBoundFollower: string[] =
+      req.body.privacyBound.match(/@[\wㄱ-ㅎㅏ-ㅣ가-힣]+/g) === null
+        ? []
+        : req.body.privacyBound.match(/@[\wㄱ-ㅎㅏ-ㅣ가-힣]+/g);
+    console.log(privacyBoundGroup);
+    console.log(privacyBoundFollower);
+
+    const privacyBound = privacyBoundGroup.concat(privacyBoundFollower).join(' ');
+
     const newPost = await Post.create({
-      author: 't1',
-      title: req.body.title,
-      startTime: req.body.startTime,
-      endTime: req.body.endTime,
-      place: req.body.place
+      authorId: req.user,
+      content: req.body.content,
+      startTime: req.body.startTime === 'undefined' ? null : req.body.startTime,
+      endTime: req.body.endTime === 'undefined' ? null : req.body.endTime,
+      place: req.body.place === 'undefined' ? null : req.body.place,
+      privacyBound: privacyBound.length === 0 ? null : privacyBound
     });
 
-    if (req.files.length > 0) {
-      if (req.files.length === 1) {
-        const image = await Image.create({ src: (req.files as any[])[0].filename });
-        await newPost.addPostImage(image);
-      } else {
-        //TODO: addPostImages -> error 해결하기, 아마도 association이 제대로 안되서 문제가 발생하는거 같은 느낌같은 느낌
-        await Promise.all(
-          (req.files as any[]).map(async file => {
-            const image = await Image.create({ src: file.filename });
-            await newPost.addPostImage(image);
-          })
-        );
-      }
+    const tags = req.body.content.match(/#[\wㄱ-ㅎㅏ-ㅣ가-힣]+/g);
+    console.log(tags);
+
+    if (tags) {
+      await Promise.all(
+        tags.map(async (tag: string) => {
+          const result = await Tag.findOrCreate({ where: { tag } });
+          await newPost.addPostTag(result[0]);
+        })
+      );
     }
+
+    if (req.files.length > 0) {
+      //TODO: addPostImages -> error 해결하기, 아마도 association이 제대로 안되서 문제가 발생하는거 같은 느낌같은 느낌
+      await Promise.all(
+        (req.files as any[]).map(async file => {
+          const result = await Image.create({ src: file.filename });
+          await newPost.addPostImage(result);
+        })
+      );
+    }
+
+    res.send('nice!');
   } catch (e) {
+    console.log(e);
     res.send(e);
   }
-
-  res.send('nice!');
 });
 
-router.post('/images', upload.array('images'), (req, res, next) => {
-  console.log(req.files);
-  res.send('success');
+router.get('/', isLogin, async (req, res, next) => {
+  const results = await Group.findAll({
+    where: {
+      userId: req.user
+    },
+    attributes: ['groupName']
+  });
+
+  const groups = results.map(result => {
+    return (result.get() as any).groupName;
+  });
+
+  let reg = '';
+
+  for (let i = 0; i < groups.length; i++) {
+    reg += groups[i].replace(/\$/, '\\$\\b') + '\\b';
+    if (i !== groups.length - 1) reg += '|';
+  }
+
+  const posts = await Post.findAll({
+    where: {
+      [Op.and]: [
+        { authorId: req.user },
+        {
+          privacyBound: {
+            [Op.or]: [
+              null,
+              {
+                [Op.regexp]: reg
+              },
+              { [Op.like]: '%@' + req.user + '%' }
+            ]
+          }
+        }
+      ]
+    }
+  });
+  res.json(posts);
 });
 
 export default router;
