@@ -16,7 +16,7 @@ function* addGroupRequest(action) {
     });
   } catch (e) {
     yield put({
-      type: E_groupActionType.ADD_GROUP_FAILURE,
+      type: E_groupActionType.ADD_GROUP_FAILURE_ERROR,
       message: e
     });
   }
@@ -40,7 +40,7 @@ function* inviteGroupRequest(action) {
     });
   } catch (e) {
     yield put({
-      type: E_groupActionType.INVITE_GROUP_FAILURE,
+      type: E_groupActionType.INVITE_GROUP_FAILURE_ERROR,
       message: e
     });
   }
@@ -50,6 +50,29 @@ function* watchInviteGroup() {
   yield takeEvery(E_groupActionType.INVITE_GROUP_REQUEST, inviteGroupRequest);
 }
 
+const loadGroupInfoAPI = async () => {
+  return await axios.get('/group', { withCredentials: true });
+};
+
+function* loadGroupInfoRequest() {
+  try {
+    const result = yield call(loadGroupInfoAPI);
+    console.log(result);
+    yield put({
+      type: E_groupActionType.LOAD_GROUP_INFO_SUCCESS,
+      data: result.data
+    });
+  } catch (e) {
+    yield put({
+      type: E_groupActionType.LOAD_GROUP_INFO_FAILURE_ERROR,
+      message: e
+    });
+  }
+}
+
+function* watchLoadGroupInfo() {
+  yield takeLatest(E_groupActionType.LOAD_GROUP_INFO_REQUEST, loadGroupInfoRequest);
+}
 export default function* groupSaga() {
-  yield all([fork(watchAddGroup), fork(watchInviteGroup)]);
+  yield all([fork(watchAddGroup), fork(watchInviteGroup), fork(watchLoadGroupInfo)]);
 }

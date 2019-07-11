@@ -72,3 +72,7 @@
 ## 2019.07.10 WED
 
 1. TODO: GROUP MODEL에서 CLASS PROPERTY 중 userid를 userId로 바꾸기
+
+## 2019.07.11 THU
+
+1. ACHIEVE: GROUP 정보 가져오기

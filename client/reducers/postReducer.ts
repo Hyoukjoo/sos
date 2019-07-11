@@ -11,7 +11,7 @@ const postReducer = (state = InitialState, action: I_postAction) => {
       return { ...state };
     case E_postActionType.ADD_POST_SUCCESS:
       return { ...state };
-    case E_postActionType.ADD_POST_FAILURE:
+    case E_postActionType.ADD_POST_FAILURE_ERROR:
       return { ...state };
     case E_postActionType.LOAD_PLACE_DATA:
       return { ...state, loadPlaceData: action.data };

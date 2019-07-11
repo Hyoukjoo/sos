@@ -21,7 +21,7 @@ function* addPostRequest(action) {
     });
   } catch (e) {
     yield put({
-      type: E_postActionType.ADD_POST_FAILURE,
+      type: E_postActionType.ADD_POST_FAILURE_ERROR,
       message: e
     });
   }

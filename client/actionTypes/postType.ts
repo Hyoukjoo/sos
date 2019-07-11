@@ -1,7 +1,7 @@
 export enum E_postActionType {
   ADD_POST_REQUEST = 'ADD_POST_REQUEST',
   ADD_POST_SUCCESS = 'ADD_POST_SUCCESS',
-  ADD_POST_FAILURE = 'ADD_POST_FAILURE',
+  ADD_POST_FAILURE_ERROR = 'ADD_POST_FAILURE_ERROR',
   LOAD_PLACE_DATA = 'LOAD_PLACE_DATA'
 }
 
@@ -25,7 +25,7 @@ interface I_addPostSuccess {
 }
 
 interface I_addPostFailure {
-  type: E_postActionType.ADD_POST_FAILURE;
+  type: E_postActionType.ADD_POST_FAILURE_ERROR;
   message: string;
 }
 

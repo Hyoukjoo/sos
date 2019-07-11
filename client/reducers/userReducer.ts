@@ -41,16 +41,16 @@ const userReducer = (state = initialState, action: I_userAction) => {
         myInfo: action.data
       };
 
-    case E_userActionType.USER_SIGNUP_FAILURE:
+    case E_userActionType.USER_SIGNUP_FAILURE_ERROR:
       return {
         ...state,
         isSignup: 'failure',
         message: action.message
       };
 
-    case E_userActionType.USER_LOGIN_FAILURE:
-    case E_userActionType.USER_LOGOUT_FAILURE:
-    case E_userActionType.LOAD_USER_INFO_FAILURE:
+    case E_userActionType.USER_LOGIN_FAILURE_ERROR:
+    case E_userActionType.USER_LOGOUT_FAILURE_ERROR:
+    case E_userActionType.LOAD_USER_INFO_FAILURE_ERROR:
       return {
         ...state,
         messaga: action.message

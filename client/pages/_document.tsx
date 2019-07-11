@@ -1,5 +1,8 @@
 import React from 'react';
 import Document, { Head, Main, NextScript } from 'next/document';
+import { config } from 'dotenv';
+
+config();
 
 export default class MyDocument extends Document {
   // static async getInitialProps(ctx: any) {
@@ -11,7 +14,7 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>
-          <script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBSM_qaz6K_DqkoooxdtFie8pgUF9p9FK8&libraries=places' />
+          <script src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_API_KEY}&libraries=places`} />
         </Head>
         <body>
           <Main />

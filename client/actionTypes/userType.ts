@@ -3,16 +3,16 @@
 export enum E_userActionType {
   USER_SIGNUP_REQUEST = 'USER_SIGNUP_REQUEST',
   USER_SIGNUP_SUCCESS = 'USER_SIGNUP_SUCCESS',
-  USER_SIGNUP_FAILURE = 'USER_SIGNUP_FAILURE',
+  USER_SIGNUP_FAILURE_ERROR = 'USER_SIGNUP_FAILURE_ERROR',
   USER_LOGIN_REQUEST = 'USER_LOGIN_REQUEST',
   USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS',
-  USER_LOGIN_FAILURE = 'USER_LOGIN_FAILURE',
+  USER_LOGIN_FAILURE_ERROR = 'USER_LOGIN_FAILURE_ERROR',
   LOAD_USER_INFO_REQUEST = 'LOAD_USER_INFO_REQUEST',
   LOAD_USER_INFO_SUCCESS = 'LOAD_USER_INFO_SUCCESS',
-  LOAD_USER_INFO_FAILURE = 'LOAD_USER_INFO_FAILURE',
+  LOAD_USER_INFO_FAILURE_ERROR = 'LOAD_USER_INFO_FAILURE_ERROR',
   USER_LOGOUT_REQUEST = 'USER_LOGOUT_REQUEST',
   USER_LOGOUT_SUCCESS = 'USER_LOGOUT_SUCCESS',
-  USER_LOGOUT_FAILURE = 'USER_LOGOUT_FAILURE'
+  USER_LOGOUT_FAILURE_ERROR = 'USER_LOGOUT_FAILURE_ERROR'
 }
 
 // Signup type definition
@@ -33,7 +33,7 @@ interface I_userSignupSuccess {
 }
 
 interface I_userSignupFailure {
-  type: typeof E_userActionType.USER_SIGNUP_FAILURE;
+  type: typeof E_userActionType.USER_SIGNUP_FAILURE_ERROR;
   message: string;
 }
 
@@ -54,7 +54,7 @@ interface I_userLoginSuccess {
 }
 
 interface I_userLoginFailure {
-  type: typeof E_userActionType.USER_LOGIN_FAILURE;
+  type: typeof E_userActionType.USER_LOGIN_FAILURE_ERROR;
   message: string;
 }
 
@@ -74,7 +74,7 @@ interface I_loadUserInfoSuccess {
 }
 
 interface I_loadUserInfoFailure {
-  type: typeof E_userActionType.LOAD_USER_INFO_FAILURE;
+  type: typeof E_userActionType.LOAD_USER_INFO_FAILURE_ERROR;
   message: string;
 }
 
@@ -89,7 +89,7 @@ interface I_userLogoutSuccess {
 }
 
 interface I_userLogoutFailure {
-  type: typeof E_userActionType.USER_LOGOUT_FAILURE;
+  type: typeof E_userActionType.USER_LOGOUT_FAILURE_ERROR;
   message: string;
 }
 

@@ -3,7 +3,6 @@ import { Op } from 'sequelize';
 
 import isLogin from '../utils/checkLogin';
 import { Group } from '../models';
-import { map } from 'bluebird';
 
 const router = Router();
 
@@ -87,7 +86,7 @@ router.get('/', isLogin, async (req, res, next) => {
     })
   );
 
-  console.log(dataObject['$sejong']);
+  res.json(dataObject);
 });
 
 export default router;
