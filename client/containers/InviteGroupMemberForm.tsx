@@ -26,14 +26,10 @@ const InviteGroupMemberForm: React.FC = () => {
     <div>
       <h2>Invite Group Member</h2>
       <div>
-        <label htmlFor=''>
-          GroupName: <input type='text' onChange={onChangeInviteGroupName} />
-        </label>
+        GroupName: <input type='text' onChange={onChangeInviteGroupName} />
       </div>
       <div>
-        <label htmlFor=''>
-          InviteMember: <input type='text' onChange={onChangeInviteGroupMember} />
-        </label>
+        InviteMember: <input type='text' onChange={onChangeInviteGroupMember} />
       </div>
       <button onClick={onInvite}>INVITE</button>
     </div>

@@ -13,9 +13,7 @@ router.post('/', isLogin, (req, res, next) => {
     status: 0
   });
 
-  const groupMember = req.body.groupMember.map(member => member.replace(/@/, ''));
-
-  groupMember.map(member => {
+  req.body.groupMember.map(member => {
     Group.create({
       userId: member,
       groupName: req.body.groupName,
@@ -61,7 +59,8 @@ router.post('/invite', isLogin, async (req, res, next) => {
 router.get('/', isLogin, async (req, res, next) => {
   const myGroups = await Group.findAll({
     where: {
-      userId: req.user
+      userId: req.user,
+      status: { [Op.or]: [0, 1] }
     },
     attributes: ['groupName']
   });
@@ -76,7 +75,7 @@ router.get('/', isLogin, async (req, res, next) => {
     myGroupNames.map(async groupName => {
       let data: any[] = [];
       await Group.findAll({
-        where: { groupName }
+        where: { groupName, status: { [Op.or]: [0, 1] } }
       }).then(values => {
         values.map(value => {
           data = [...data, value.get()];

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { E_postActionType } from '../actionTypes/postType';
 
-const addPostAPI = async data => {
+const newPostAPI = async data => {
   return await axios.post('/post', data, {
     headers: {
       'Content-Type': 'multipart/form-data'
@@ -12,23 +12,22 @@ const addPostAPI = async data => {
   });
 };
 
-function* addPostRequest(action) {
+function* newPostRequest(action) {
   try {
-    const result = yield call(addPostAPI, action.data);
-    console.log(result);
+    const result = yield call(newPostAPI, action.data);
     yield put({
-      type: E_postActionType.ADD_POST_SUCCESS
+      type: E_postActionType.NEW_POST_SUCCESS
     });
   } catch (e) {
     yield put({
-      type: E_postActionType.ADD_POST_FAILURE_ERROR,
+      type: E_postActionType.NEW_POST_ERROR,
       message: e
     });
   }
 }
 
 function* watchAddPost() {
-  yield takeLatest(E_postActionType.ADD_POST_REQUEST, addPostRequest);
+  yield takeLatest(E_postActionType.NEW_POST_REQUEST, newPostRequest);
 }
 
 export default function* postSaga() {

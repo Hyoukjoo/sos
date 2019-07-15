@@ -1,7 +1,8 @@
 export enum E_postActionType {
-  ADD_POST_REQUEST = 'ADD_POST_REQUEST',
-  ADD_POST_SUCCESS = 'ADD_POST_SUCCESS',
-  ADD_POST_FAILURE_ERROR = 'ADD_POST_FAILURE_ERROR',
+  NEW_POST_REQUEST = 'NEW_POST_REQUEST',
+  NEW_POST_SUCCESS = 'NEW_POST_SUCCESS',
+  NEW_POST_FAILURE = 'NEW_POST_FAILURE',
+  NEW_POST_ERROR = 'NEW_POST_ERROR',
   LOAD_PLACE_DATA = 'LOAD_PLACE_DATA'
 }
 
@@ -15,18 +16,23 @@ export interface I_postInfo {
   tags?: string;
 }
 
-interface I_addPostRequest {
-  type: E_postActionType.ADD_POST_REQUEST;
+interface I_newPostRequest {
+  type: E_postActionType.NEW_POST_REQUEST;
   data: I_postInfo;
 }
 
-interface I_addPostSuccess {
-  type: E_postActionType.ADD_POST_SUCCESS;
+interface I_newPostSuccess {
+  type: E_postActionType.NEW_POST_SUCCESS;
 }
 
-interface I_addPostFailure {
-  type: E_postActionType.ADD_POST_FAILURE_ERROR;
+interface I_newPostFailure {
+  type: E_postActionType.NEW_POST_FAILURE;
   message: string;
+}
+
+interface I_newPostError {
+  type: E_postActionType.NEW_POST_ERROR;
+  error: Error;
 }
 
 interface I_loadPlaceData {
@@ -34,4 +40,4 @@ interface I_loadPlaceData {
   data: string;
 }
 
-export type I_postAction = I_addPostRequest | I_addPostSuccess | I_addPostFailure | I_loadPlaceData;
+export type I_postAction = I_newPostRequest | I_newPostSuccess | I_newPostFailure | I_newPostError | I_loadPlaceData;

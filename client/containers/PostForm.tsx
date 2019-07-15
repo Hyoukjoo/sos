@@ -57,7 +57,7 @@ const PostForm = () => {
     formData.append('privacyBound', privacyBound);
 
     dispatch({
-      type: E_postActionType.ADD_POST_REQUEST,
+      type: E_postActionType.NEW_POST_REQUEST,
       data: formData
     });
   }, [content, formImages, startTime, endTime, place, privacyBound]);

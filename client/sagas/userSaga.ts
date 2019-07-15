@@ -16,10 +16,9 @@ function* signupRequest(action) {
       type: E_userActionType.USER_SIGNUP_SUCCESS
     });
   } catch (e) {
-    console.error(e);
     yield put({
-      type: E_userActionType.USER_SIGNUP_FAILURE_ERROR,
-      message: e.message
+      type: E_userActionType.USER_SIGNUP_ERROR,
+      error: e
     });
   }
 }
@@ -44,8 +43,8 @@ function* loginRequest(action) {
   } catch (e) {
     console.error(e);
     yield put({
-      type: E_userActionType.USER_LOGIN_FAILURE_ERROR,
-      message: e
+      type: E_userActionType.USER_LOGIN_ERROR,
+      error: e
     });
   }
 }
@@ -69,8 +68,8 @@ function* loadUserRequest() {
     });
   } catch (e) {
     yield put({
-      type: E_userActionType.LOAD_USER_INFO_FAILURE_ERROR,
-      message: e.message
+      type: E_userActionType.LOAD_USER_INFO_ERROR,
+      error: e
     });
   }
 }
@@ -92,10 +91,9 @@ function* logoutRequest() {
       type: E_userActionType.USER_LOGOUT_SUCCESS
     });
   } catch (e) {
-    console.log(e.message);
     yield put({
-      type: E_userActionType.USER_LOGOUT_FAILURE_ERROR,
-      message: e.message
+      type: E_userActionType.USER_LOGOUT_ERROR,
+      error: e
     });
   }
 }

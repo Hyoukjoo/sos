@@ -7,11 +7,11 @@ const InitialState = {
 
 const postReducer = (state = InitialState, action: I_postAction) => {
   switch (action.type) {
-    case E_postActionType.ADD_POST_REQUEST:
+    case E_postActionType.NEW_POST_REQUEST:
       return { ...state };
-    case E_postActionType.ADD_POST_SUCCESS:
+    case E_postActionType.NEW_POST_SUCCESS:
       return { ...state };
-    case E_postActionType.ADD_POST_FAILURE_ERROR:
+    case E_postActionType.NEW_POST_ERROR:
       return { ...state };
     case E_postActionType.LOAD_PLACE_DATA:
       return { ...state, loadPlaceData: action.data };

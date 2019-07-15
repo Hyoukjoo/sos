@@ -1,16 +1,19 @@
 export enum E_groupActionType {
-  ADD_GROUP_REQUEST = 'ADD_GROUP_REQUEST',
-  ADD_GROUP_SUCCESS = 'ADD_GROUP_SUCCESS',
-  ADD_GROUP_FAILURE_ERROR = 'ADD_GROUP_FAILURE_ERROR',
+  NEW_GROUP_REQUEST = 'NEW_GROUP_REQUEST',
+  NEW_GROUP_SUCCESS = 'NEW_GROUP_SUCCESS',
+  NEW_GROUP_FAILURE = 'NEW_GROUP_FAILURE',
+  NEW_GROUP_ERROR = 'NEW_GROUP_ERROR',
   INVITE_GROUP_REQUEST = 'INVITE_GROUP_REQUEST',
   INVITE_GROUP_SUCCESS = 'INVITE_GROUP_SUCCESS',
-  INVITE_GROUP_FAILURE_ERROR = 'INVITE_GROUP_FAILURE_ERROR',
+  INVITE_GROUP_FAILURE = 'INVITE_GROUP_FAILURE',
+  INVITE_GROUP_ERROR = 'INVITE_GROUP_ERROR',
   LOAD_GROUP_INFO_REQUEST = 'LOAD_GROUP_INFO_REQUEST',
   LOAD_GROUP_INFO_SUCCESS = 'LOAD_GROUP_INFO_SUCCESS',
-  LOAD_GROUP_INFO_FAILURE_ERROR = 'LOAD_GROUP_INFO_FAILURE_ERROR'
+  LOAD_GROUP_INFO_FAILURE = 'LOAD_GROUP_INFO_FAILURE',
+  LOAD_GROUP_INFO_ERROR = 'LOAD_GROUP_INFO_ERROR'
 }
 
-export interface I_addGroupInfo {
+export interface I_newGroupInfo {
   groupId: string;
   groupName: string;
   groupMember: string;
@@ -31,18 +34,23 @@ interface I_loadGroupInfo {
   }[];
 }
 
-interface I_addGroupRequest {
-  type: typeof E_groupActionType.ADD_GROUP_REQUEST;
-  data: I_addGroupInfo;
+interface I_newGroupRequest {
+  type: typeof E_groupActionType.NEW_GROUP_REQUEST;
+  data: I_newGroupInfo;
 }
 
-interface I_addGroupSuccess {
-  type: typeof E_groupActionType.ADD_GROUP_SUCCESS;
+interface I_newGroupSuccess {
+  type: typeof E_groupActionType.NEW_GROUP_SUCCESS;
 }
 
-interface I_addGroupFailure {
-  type: typeof E_groupActionType.ADD_GROUP_FAILURE_ERROR;
+interface I_newGroupFailure {
+  type: typeof E_groupActionType.NEW_GROUP_FAILURE;
   message: string;
+}
+
+interface I_newGroupError {
+  type: typeof E_groupActionType.NEW_GROUP_ERROR;
+  error: Error;
 }
 
 interface I_inviteGroupRequest {
@@ -55,8 +63,13 @@ interface I_inviteGroupSuccess {
 }
 
 interface I_inviteGroupFailure {
-  type: typeof E_groupActionType.INVITE_GROUP_FAILURE_ERROR;
+  type: typeof E_groupActionType.INVITE_GROUP_FAILURE;
   message: string;
+}
+
+interface I_inviteGroupError {
+  type: typeof E_groupActionType.INVITE_GROUP_ERROR;
+  error: Error;
 }
 
 interface I_loadGroupInfoRequest {
@@ -69,17 +82,25 @@ interface I_loadGroupInfoSuccess {
 }
 
 interface I_loadGroupInfoFailure {
-  type: typeof E_groupActionType.LOAD_GROUP_INFO_FAILURE_ERROR;
+  type: typeof E_groupActionType.LOAD_GROUP_INFO_FAILURE;
   message: string;
 }
 
+interface I_loadGroupInfoError {
+  type: typeof E_groupActionType.LOAD_GROUP_INFO_ERROR;
+  error: Error;
+}
+
 export type I_groupAction =
-  | I_addGroupRequest
-  | I_addGroupSuccess
-  | I_addGroupFailure
+  | I_newGroupRequest
+  | I_newGroupSuccess
+  | I_newGroupFailure
+  | I_newGroupError
   | I_inviteGroupRequest
   | I_inviteGroupSuccess
   | I_inviteGroupFailure
+  | I_inviteGroupError
   | I_loadGroupInfoRequest
   | I_loadGroupInfoSuccess
-  | I_loadGroupInfoFailure;
+  | I_loadGroupInfoFailure
+  | I_loadGroupInfoError;

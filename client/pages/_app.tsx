@@ -21,11 +21,9 @@ class MyApp extends App<AppProps> {
       axios.defaults.headers.Cookie = cookie;
     }
 
-    const {
-      user: { myInfo }
-    } = store.getState();
+    const state = store.getState();
 
-    if (!myInfo) {
+    if (!state.user.myInfo) {
       store.dispatch({
         type: E_userActionType.LOAD_USER_INFO_REQUEST
       });

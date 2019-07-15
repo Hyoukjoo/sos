@@ -4,7 +4,8 @@ const initialState = {
   myInfo: null,
   message: '',
   isSingup: false,
-  isLogin: false
+  isLogin: false,
+  error: null
 };
 
 const userReducer = (state = initialState, action: I_userAction) => {
@@ -24,6 +25,7 @@ const userReducer = (state = initialState, action: I_userAction) => {
       };
 
     case E_userActionType.USER_LOGIN_SUCCESS:
+    case E_userActionType.LOAD_USER_INFO_SUCCESS:
       return {
         ...state,
         myInfo: action.data
@@ -35,25 +37,13 @@ const userReducer = (state = initialState, action: I_userAction) => {
         myInfo: null
       };
 
-    case E_userActionType.LOAD_USER_INFO_SUCCESS:
+    case E_userActionType.USER_SIGNUP_ERROR:
+    case E_userActionType.USER_LOGIN_ERROR:
+    case E_userActionType.USER_LOGOUT_ERROR:
+    case E_userActionType.LOAD_USER_INFO_ERROR:
       return {
         ...state,
-        myInfo: action.data
-      };
-
-    case E_userActionType.USER_SIGNUP_FAILURE_ERROR:
-      return {
-        ...state,
-        isSignup: 'failure',
-        message: action.message
-      };
-
-    case E_userActionType.USER_LOGIN_FAILURE_ERROR:
-    case E_userActionType.USER_LOGOUT_FAILURE_ERROR:
-    case E_userActionType.LOAD_USER_INFO_FAILURE_ERROR:
-      return {
-        ...state,
-        messaga: action.message
+        error: action.error
       };
 
     default:
