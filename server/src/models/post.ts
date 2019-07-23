@@ -7,6 +7,7 @@ import { Tag } from './tag';
 
 export class Post extends Model<Post> {
   public postId!: number;
+  public title!: string;
   public content!: string;
   public startTime!: Date;
   public endTime!: Date;
@@ -54,6 +55,9 @@ export const initPostModel = () => {
       authorId: {
         type: DataTypes.STRING,
         allowNull: false
+      },
+      title: {
+        type: DataTypes.STRING,
       },
       content: {
         type: DataTypes.TEXT

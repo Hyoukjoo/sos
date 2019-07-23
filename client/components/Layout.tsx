@@ -5,7 +5,7 @@ import '../scss/styles.scss';
 
 const Layout: NextFunctionComponent = ({ children }) => {
   return (
-    <div className='container'>
+    <div className='app'>
       <HeadLine />
       {children}
     </div>

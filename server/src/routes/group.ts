@@ -26,7 +26,6 @@ router.post('/', isLogin, (req, res, next) => {
 
 router.post('/invite', isLogin, async (req, res, next) => {
   try {
-    console.log(req.body);
     const group = await Group.findOne({
       where: {
         [Op.and]: [

@@ -76,3 +76,12 @@
 ## 2019.07.11 THU
 
 1. ACHIEVE: GROUP 정보 가져오기
+
+## 2019.07.15 MON
+
+1. ONGOING: checkbox design
+2. ACHIEVE: checkbox design 
+
+## 2019.07.17 WED
+
+1. ONGOING: FEED PAGE DESIGN 
