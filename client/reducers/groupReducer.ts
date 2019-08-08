@@ -1,7 +1,8 @@
 import { I_groupAction, E_groupActionType } from '../actionTypes/groupType';
 
 const initialState = {
-  myGroupInfo: {}
+  myGroupInfo: {},
+  myGroupNameList: null
 };
 
 const groupReducer = (state = initialState, action: I_groupAction) => {
@@ -16,7 +17,7 @@ const groupReducer = (state = initialState, action: I_groupAction) => {
       return { ...state };
 
     case E_groupActionType.LOAD_GROUP_INFO_SUCCESS:
-      return { ...state, myGroupInfo: action.data, myGroupList: Object.keys(action.data) };
+      return { ...state, myGroupInfo: action.data, myGroupNameList: Object.keys(action.data) };
 
     case E_groupActionType.NEW_GROUP_FAILURE:
     case E_groupActionType.INVITE_GROUP_FAILURE:

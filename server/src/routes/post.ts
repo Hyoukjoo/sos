@@ -2,8 +2,8 @@ import { Router } from 'express';
 import multer from 'multer';
 import { Op } from 'sequelize';
 
-import { Image, Group, Post, Tag } from '../models';
-import isLogin from '../utils/checkLogin';
+import { Image, Group, Post, Tag, Like, Reply, Follow } from '../models';
+import isLogin from '../utils/isLogin';
 
 const router = Router();
 
@@ -83,16 +83,28 @@ router.post('/', isLogin, upload.array('images'), async (req, res, next) => {
 });
 
 router.get('/', isLogin, async (req, res, next) => {
-  const results = await Group.findAll({
+  const groupData = await Group.findAll({
     where: {
       userId: req.user
     },
     attributes: ['groupName']
   });
 
-  const groups = results.map(result => {
-    return (result.get() as any).groupName;
-  });
+  const followeeData = await Follow.findAll({
+    where: {
+      followerId: req.user
+    },
+    attributes: ['followeeId']
+  })
+
+  const groups = groupData.map(result => result.groupName);
+
+  const followees = followeeData.map(result => result.followeeId);
+  const findUserId = [req.user, ...followees];
+
+  console.log(groups);
+  console.log(followees);
+  console.log(findUserId);
 
   let reg = '';
 
@@ -117,8 +129,23 @@ router.get('/', isLogin, async (req, res, next) => {
           }
         }
       ]
-    }
+    },
+    include: [
+      {
+        model: Like,
+        as: 'postLike'
+      },
+      {
+        model: Reply,
+        as: 'postReply'
+      },
+      {
+        model: Image,
+        as: 'postImage'
+      }
+    ]
   });
+
   res.json(posts);
 });
 

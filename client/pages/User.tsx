@@ -1,15 +1,13 @@
-import { NextFunctionComponent, NextContext } from 'next';
+import { NextFunctionComponent, NextContext, NextFC } from 'next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { E_userActionType } from '../actionTypes/userType';
 import LoginForm from '../containers/LoginForm';
 import GroupForm from '../containers/GroupForm';
+import { E_groupActionType } from '../actionTypes/groupType';
+import { E_followActionType } from '../actionTypes/followType';
 
-interface Props {
-  id: string;
-}
-
-const User: NextFunctionComponent<Props> = props => {
+const User: NextFC = () => {
   const myInfo = useSelector((state: any) => state.user.myInfo);
 
   const dispatch = useDispatch();
@@ -21,7 +19,7 @@ const User: NextFunctionComponent<Props> = props => {
   };
 
   return (
-    <div style={{ height: '500px', margin: '2%' }}>
+    <div>
       {myInfo ? (
         <>
           <h1>{myInfo.userId}</h1>
@@ -38,11 +36,17 @@ const User: NextFunctionComponent<Props> = props => {
 };
 
 User.getInitialProps = async (context: NextContext) => {
-  const id = context.query.id as string;
+  const { store } = context as any;
 
-  const test = { id };
+  store.dispatch({
+    type: E_groupActionType.LOAD_GROUP_INFO_REQUEST,
+    data: 't1'
+  });
 
-  return test;
+  store.dispatch({
+    type: E_followActionType.LOAD_FOLLOW_INFO_REQUEST,
+    data: 't1'
+  });
 };
 
 export default User;

@@ -80,8 +80,14 @@
 ## 2019.07.15 MON
 
 1. ONGOING: checkbox design
-2. ACHIEVE: checkbox design 
+2. ACHIEVE: checkbox design
 
 ## 2019.07.17 WED
 
-1. ONGOING: FEED PAGE DESIGN 
+1. ONGOING: FEED PAGE DESIGN
+
+## 2019.08.06 TUE
+
+1. TODO: FEED
+2. TODO: SIGN IN FORM
+3. TODO: SIGN UP FORM

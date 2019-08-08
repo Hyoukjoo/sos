@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { Op } from 'sequelize';
 
-import isLogin from '../utils/checkLogin';
+import isLogin from '../utils/isLogin';
 import { Group } from '../models';
 
 const router = Router();
@@ -55,10 +55,10 @@ router.post('/invite', isLogin, async (req, res, next) => {
   }
 });
 
-router.get('/', isLogin, async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   const myGroups = await Group.findAll({
     where: {
-      userId: req.user,
+      userId: req.params.id,
       status: { [Op.or]: [0, 1] }
     },
     attributes: ['groupName']

@@ -4,6 +4,8 @@ import { sequelize } from '.';
 import { Image } from './image';
 import { User } from './user';
 import { Tag } from './tag';
+import { Like } from './like';
+import { Reply } from './reply';
 
 export class Post extends Model<Post> {
   public postId!: number;
@@ -33,13 +35,17 @@ export class Post extends Model<Post> {
   public hasPostTag!: Sequelize.BelongsToManyHasAssociationMixin<Tag, number>;
   public hasPOstTags!: Sequelize.BelongsToManyHasAssociationsMixin<Tag, number>;
 
-  public readonly postImages?: Image[];
+  public readonly postImage?: Image[];
   public readonly postTag?: Tag[];
+  public readonly postLike?: Like[];
+  public readonly postReply?: Reply[];
 
   public static associations: {
-    postImages: Sequelize.Association<Post, Image>;
+    postImage: Sequelize.Association<Post, Image>;
     postTag: Sequelize.Association<Post, Tag>;
     user: Sequelize.Association<Post, User>;
+    postLike: Sequelize.Association<Post, Like>;
+    postReply: Sequelize.Association<Post, Reply>;
   };
 }
 
@@ -57,7 +63,7 @@ export const initPostModel = () => {
         allowNull: false
       },
       title: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING
       },
       content: {
         type: DataTypes.TEXT
@@ -83,8 +89,10 @@ export const initPostModel = () => {
 
 export const associatePost = () => {
   Post.belongsTo(User, { targetKey: 'userId', foreignKey: 'authorId' });
-  Post.hasMany(Image, { sourceKey: 'postId', foreignKey: 'postId', as: 'postImages' });
   Post.belongsToMany(Tag, { through: 'PostTag', as: 'postTag', foreignKey: 'postId' });
+  Post.hasMany(Like, { sourceKey: 'postId', foreignKey: 'postId', as: 'postLike' });
+  Post.hasMany(Reply, { sourceKey: 'postId', foreignKey: 'postId', as: 'postReply' });
+  Post.hasMany(Image, { sourceKey: 'postId', foreignKey: 'postId', as: 'postImage' });
 
   return Post;
 };

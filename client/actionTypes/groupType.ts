@@ -74,6 +74,7 @@ interface I_inviteGroupError {
 
 interface I_loadGroupInfoRequest {
   type: typeof E_groupActionType.LOAD_GROUP_INFO_REQUEST;
+  data: string;
 }
 
 interface I_loadGroupInfoSuccess {

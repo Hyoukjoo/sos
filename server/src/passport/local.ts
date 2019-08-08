@@ -28,7 +28,6 @@ const local = () => {
           return done(null, false, { message: 'Incorreced Password' });
         } catch (e) {
           console.log(e);
-
           return done(e);
         }
       }

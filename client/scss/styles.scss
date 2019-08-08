@@ -1,10 +1,10 @@
-@import 'headline', 'feed';
+@import 'headline', 'feed', 'loginForm', 'signupForm';
 
 body {
   margin: 0;
   height: 100%;
   box-sizing: border-box;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 18px;
 }
 
@@ -13,15 +13,6 @@ a {
   &:visited {
     color: black;
   }
-}
-
-main {
-  justify-content: center;
-  background-color: #fcfcfc;
-}
-
-article {
-  background-color: #ffffff;
 }
 
 div,

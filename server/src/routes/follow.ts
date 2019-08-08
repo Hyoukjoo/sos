@@ -1,7 +1,6 @@
 import { Router } from 'express';
-import { Op } from 'sequelize';
 
-import isLogin from '../utils/checkLogin';
+import isLogin from '../utils/isLogin';
 import { Follow } from '../models';
 
 const router = Router();

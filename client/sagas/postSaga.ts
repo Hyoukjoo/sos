@@ -30,6 +30,29 @@ function* watchAddPost() {
   yield takeLatest(E_postActionType.NEW_POST_REQUEST, newPostRequest);
 }
 
+const loadPostAPI = async data => {
+  return await axios.get('/post', { withCredentials: true });
+};
+
+function* loadPostRequest(action) {
+  try {
+    const result = yield call(loadPostAPI, action.data);
+    console.dir(result.data[0]);
+    yield put({
+      type: E_postActionType.LOAD_POST_SUCCESS,
+      data: result.data
+    });
+  } catch (e) {
+    yield put({
+      type: E_postActionType.LOAD_POST_ERROR
+    });
+  }
+}
+
+function* watchLoadPost() {
+  yield takeLatest(E_postActionType.LOAD_POST_REQUEST, loadPostRequest);
+}
+
 export default function* postSaga() {
-  yield all([fork(watchAddPost)]);
+  yield all([fork(watchAddPost), fork(watchLoadPost)]);
 }

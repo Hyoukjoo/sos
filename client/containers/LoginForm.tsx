@@ -31,25 +31,46 @@ const LoginForm = () => {
   }, [userId, password]);
 
   return (
-    <div style={{ margin: '2%' }}>
-      <label>
-        userId: <input type='text' onChange={onChangeuserId} value={userId} />
-      </label>
-      <label>
-        password: <input type='password' onChange={onChangePassword} value={password} />
-      </label>
-      <label>
-        <Link href='/signup'>
-          <a>
-            <button>signup</button>
-          </a>
-        </Link>
-      </label>
-      <label>
-        <button onClick={onLogin}>login</button>
-      </label>
-    </div>
+    <section className='Login-form'>
+      <main>
+        <div className='login-container'>
+          <div className='row-gap' />
+          <div>
+            <h1>Sign in</h1>
+          </div>
+          <div className='row-gap' />
+          <div className='input-container'>
+            <label>
+              <input type='text' onChange={onChangeuserId} value={userId} placeholder='ID' />
+            </label>
+            <label>
+              <input type='password' onChange={onChangePassword} value={password} placeholder='Password' />
+            </label>
+          </div>
+          <div className='row-gap' />
+          <div className='button-container'>
+            <button onClick={onLogin}>login</button>
+          </div>
+          <div className='link-container'>
+            <Link href='/signup'>
+              <a>SIGNUP</a>
+            </Link>
+          </div>
+          <div className='row-gap' />
+        </div>
+      </main>
+    </section>
   );
 };
 
 export default LoginForm;
+
+{
+  /* <label>
+  <Link href='/signup'>
+    <a>
+      <button>signup</button>
+    </a>
+  </Link>
+</label>; */
+}

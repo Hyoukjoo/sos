@@ -46,11 +46,11 @@ function* watchInviteGroup() {
   yield takeEvery(E_groupActionType.INVITE_GROUP_REQUEST, inviteGroupRequest);
 }
 
-const loadGroupInfoAPI = async () => await axios.get('/group', { withCredentials: true });
+const loadGroupInfoAPI = async (data) => await axios.get(`/group/${data}`);
 
-function* loadGroupInfoRequest() {
+function* loadGroupInfoRequest(action) {
   try {
-    const result = yield call(loadGroupInfoAPI);
+    const result = yield call(loadGroupInfoAPI, action.data);
     yield put({
       type: E_groupActionType.LOAD_GROUP_INFO_SUCCESS,
       data: result.data

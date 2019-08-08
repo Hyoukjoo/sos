@@ -11,7 +11,7 @@ export class Image extends Model<Image> {
   public readonly updateAt!: Date;
 
   public static associations: {
-    postImages: Sequelize.Association<Image, Post>;
+    postImage: Sequelize.Association<Image, Post>;
   };
 }
 
@@ -29,14 +29,14 @@ export const initImageModel = () => {
     {
       sequelize,
       tableName: 'images',
-      charset: 'utf8',
-      collate: 'utf8_general_ci'
+      charset: 'utf8mb4',
+      collate: 'utf8mb4_unicode_ci'
     }
   );
 };
 
 export const associateImage = () => {
-  Image.belongsTo(Post, { targetKey: 'postId', foreignKey: 'postId', as: 'postImages' });
+  Image.belongsTo(Post, { targetKey: 'postId', foreignKey: 'postId', as: 'postImage' });
 
   return Image;
 };

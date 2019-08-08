@@ -1,4 +1,4 @@
-import { Sequelize, Model, DataTypes, ModelCtor } from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '.';
 
 import { User } from './user';
@@ -7,6 +7,7 @@ export class Profile extends Model {
   public userId!: string;
   public userName!: string;
   public userDescription!: string;
+  public profileImage!: string;
 
   public readonly createAt!: Date;
   public readonly updateAt!: Date;
@@ -24,6 +25,9 @@ export const initProfileModel = () => {
       },
       userDescription: {
         type: DataTypes.STRING
+      },
+      profileImage: {
+        type: DataTypes.STRING
       }
     },
     {
@@ -33,10 +37,10 @@ export const initProfileModel = () => {
       collate: 'utf8mb4_unicode_ci'
     }
   );
-
-  return Profile;
 };
 
-export const associateProfile = (Profile: ModelCtor<Model<any, any>>) => {
+export const associateProfile = () => {
   Profile.belongsTo(User, { foreignKey: 'userId', targetKey: 'userId' });
+
+  return Profile;
 };

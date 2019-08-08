@@ -30,13 +30,10 @@ router.post('/signup', async (req, res, next) => {
   }
 });
 
-//TODO: passport.authenticate -> request.login -> desiralizeUser never called.
 router.post(
   '/login',
   passport.authenticate('local', {
-    successRedirect: '/user/info',
-    successMessage: true,
-    failureMessage: true
+    successRedirect: '/user/info'
   })
 );
 

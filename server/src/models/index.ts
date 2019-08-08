@@ -7,6 +7,9 @@ import { initImageModel, associateImage } from './image';
 import { initTagModel, associateTag } from './tag';
 import { initGroupModel, associateGroup } from './group';
 import { initFollowModel, associateFollow } from './follow';
+import { initLikeModel, associateLike } from './like';
+import { initReplyModel, associateReply } from './reply';
+import { initProfileModel, associateProfile } from './profile';
 
 const env = 'development';
 
@@ -20,6 +23,9 @@ initImageModel();
 initTagModel();
 initGroupModel();
 initFollowModel();
+initLikeModel();
+initReplyModel();
+initProfileModel();
 
 export const User = associateUser();
 export const Post = associatePost();
@@ -27,5 +33,8 @@ export const Image = associateImage();
 export const Tag = associateTag();
 export const Group = associateGroup();
 export const Follow = associateFollow();
+export const Like = associateLike();
+export const Reply = associateReply();
+export const Profile = associateProfile();
 
 export default sequelize;

@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import DatePicker from 'react-datepicker';
 import axios from 'axios';
 
-import PreviewImages from '../components/PreviewImages';
 import useInput from '../hook_utils/useInput';
 import { E_postActionType } from '../actionTypes/postType';
 
-import 'react-datepicker/dist/react-datepicker.css';
+import PreviewImages from '../components/PreviewImages';
 import PlaceAutocomplete from '../components/PlaceAutoComplete';
+
+import 'react-datepicker/dist/react-datepicker.css';
 
 const PostForm = () => {
   const dispatch = useDispatch();

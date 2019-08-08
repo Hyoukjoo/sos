@@ -4,6 +4,7 @@ import Router from 'next/router';
 
 import useInput from '../hook_utils/useInput';
 import { E_userActionType } from '../actionTypes/userType';
+import Link from 'next/link';
 
 const Signup = () => {
   const [userId, onResetUserId, onChangeUserId] = useInput('');
@@ -39,7 +40,7 @@ const Signup = () => {
       return;
     }
 
-    if (!isMatchPassword) {
+    if (!isMatchPassword || checkPassword === '') {
       console.log('Password is not matched');
       return;
     }
@@ -71,32 +72,46 @@ const Signup = () => {
   );
 
   return (
-    <div style={{ height: '500px', margin: '2%' }}>
-      <div>
-        <label>
-          ID: <input type='text' required onChange={onChangeUserId} value={userId} />
-        </label>
-      </div>
-      <div>
-        <label>
-          PASSWORD: <input type='password' required onChange={onChangePassword} value={password} />
-        </label>
-      </div>
-      <div>
-        <label>
-          PASSWORD CHECK: <input type='password' required onChange={onChangeCheckPassword} value={checkPassword} />
-          {isMatchPassword ? null : checkPassword === '' ? null : <span>Password is not matched</span>}
-        </label>
-      </div>
-      <div>
-        <label>
-          EMAIL: <input type='text' required onChange={onChangeEmail} value={email} />
-        </label>
-      </div>
-      <div>
-        <button onClick={onSignup}>SIGNUP</button>
-      </div>
-    </div>
+    <section className='Signup-form'>
+      <main>
+        <div className='signup-container'>
+          <div className='row-gap' />
+          <div>
+            <h1>Sign up</h1>
+          </div>
+          <div className='row-gap' />
+          <div className='input-container'>
+            <label>
+              <input type='text' onChange={onChangeUserId} value={userId} placeholder='ID' />
+            </label>
+            <label>
+              <input type='password' onChange={onChangePassword} value={password} placeholder='Password' />
+            </label>
+            <label>
+              <input
+                type='password'
+                className={isMatchPassword ? null : checkPassword === '' ? null : 'incorrect'}
+                onChange={onChangeCheckPassword}
+                value={checkPassword}
+                placeholder='Password Check'
+              />
+            </label>
+            <label>
+              <input type='text' required onChange={onChangeEmail} value={email} placeholder='Email' />
+            </label>
+          </div>
+          <div className='row-gap' />
+          <div className='button-container'>
+            <button onClick={onSignup}>SIGNUP</button>
+          </div>
+          <div className='link-container'>
+            <Link href='/user'>
+              <a>SINGIN</a>
+            </Link>
+          </div>
+        </div>
+      </main>
+    </section>
   );
 };
 
