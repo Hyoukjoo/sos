@@ -1,4 +1,4 @@
-import { NextFunctionComponent, NextContext, NextFC } from 'next';
+import { NextContext, NextFC } from 'next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { E_userActionType } from '../actionTypes/userType';
@@ -6,6 +6,7 @@ import LoginForm from '../containers/LoginForm';
 import GroupForm from '../containers/GroupForm';
 import { E_groupActionType } from '../actionTypes/groupType';
 import { E_followActionType } from '../actionTypes/followType';
+import Profile from '../containers/Profile';
 
 const User: NextFC = () => {
   const myInfo = useSelector((state: any) => state.user.myInfo);
@@ -22,11 +23,8 @@ const User: NextFC = () => {
     <div>
       {myInfo ? (
         <>
-          <h1>{myInfo.userId}</h1>
-          <label>
-            <button onClick={onLogout}>logout</button>
-          </label>
-          <GroupForm />
+          <Profile />
+          {/* <GroupForm /> */}
         </>
       ) : (
         <LoginForm />

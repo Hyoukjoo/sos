@@ -44,7 +44,8 @@ function* loadPostRequest(action) {
     });
   } catch (e) {
     yield put({
-      type: E_postActionType.LOAD_POST_ERROR
+      type: E_postActionType.LOAD_POST_ERROR,
+      error: e
     });
   }
 }

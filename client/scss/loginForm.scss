@@ -2,15 +2,14 @@ section.Login-form {
   justify-content: center;
   align-items: center;
   background-color: #fffdfa;
-  height: 100vh;
+  height: 92vh;
 
   main {
     width: 350px;
     max-width: 100%;
-    margin-top: -100px;
-    text-align: center;
 
     div.login-container {
+      text-align: center;
       grid-template-rows: 20px 90px 10px 100px 20px 50px 30px 20px;
       overflow: hidden;
       height: 100%;

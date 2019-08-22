@@ -1,0 +1,148 @@
+main.PostForm {
+  width: 100%;
+  height: 100%;
+  justify-items: center;
+  align-items: baseline;
+  // background-color: rgba($color: #000000, $alpha: 0.6);
+
+  .container {
+    margin-top: 50px;
+    width: 500px;
+    grid-template-rows: 35px auto;
+
+    .cancel-button {
+      height: 100%;
+      justify-items: end;
+
+      button {
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+        border: 1px solid #f0f0f0;
+        border-radius: 50%;
+        background-color: #fff;
+        font-size: 1.5rem;
+        font-weight: bolder;
+        cursor: pointer;
+
+        &:focus {
+          outline: 0;
+        }
+
+        &:hover {
+          background-color: #f0f0f0;
+        }
+      }
+    }
+
+    .post-container {
+      height: 100%;
+      grid-template-rows: 60px auto auto;
+      padding: 0px 10px;
+      border: 1px solid #f0f0f0;
+      border-radius: 10px;
+      background-color: #fff;
+
+      header {
+        grid-template-columns: 40px 100px auto;
+        align-items: center;
+        padding: 10px 0px;
+
+        .profile-image {
+          width: 40px;
+          height: 40px;
+          border: 1px solid #f0f0f0;
+          border-radius: 50%;
+        }
+
+        .profile-name {
+          padding-left: 10px;
+          font-size: 1rem;
+          font-weight: bolder;
+        }
+
+        .period {
+          grid-template-columns: repeat(2, 70px);
+          justify-self: end;
+          justify-items: center;
+          padding-right: 10px;
+
+          button {
+            width: 65px;
+            height: 30px;
+            margin-right: 10px;
+            border: 1px solid #f0f0f0;
+            border-radius: 10px;
+            background-color: #fff;
+            font-size: 0.9rem;
+            font-weight: bolder;
+            cursor: pointer;
+
+            &:focus {
+              outline: 0;
+            }
+
+            &:hover {
+              background-color: #f0f0f0;
+            }
+          }
+        }
+      }
+
+      .content {
+        padding: 0px 10px;
+        grid-template-columns: auto auto;
+
+        textarea {
+          padding: 10px;
+          border-radius: 10px;
+          font-size: 1.5rem;
+
+          &:focus {
+            outline: 0;
+          }
+        }
+      }
+
+      footer {
+        padding: 10px 10px;
+        grid-template-columns: 200px auto;
+
+        .sub-menu {
+          grid-template-columns: repeat(4, 50px);
+          justify-items: center;
+          align-items: center;
+
+          span {
+            font-weight: bolder;
+            cursor: pointer;
+          }
+        }
+
+        .submit-button {
+          justify-self: end;
+
+          button {
+            width: 70px;
+            height: 30px;
+            margin-right: 10px;
+            border: 1px solid #f0f0f0;
+            border-radius: 20px;
+            background-color: #fff;
+            font-size: 0.9rem;
+            font-weight: bolder;
+            cursor: pointer;
+
+            &:focus {
+              outline: 0;
+            }
+
+            &:hover {
+              background-color: #f0f0f0;
+            }
+          }
+        }
+      }
+    }
+  }
+}

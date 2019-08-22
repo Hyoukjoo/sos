@@ -7,9 +7,9 @@ section.Signup-form {
   main {
     width: 350px;
     max-width: 100%;
-    text-align: center;
 
     div.signup-container {
+      text-align: center;
       grid-template-rows: 20px 90px 10px 200px 20px 50px 30px 20px;
       overflow: hidden;
       height: 100%;

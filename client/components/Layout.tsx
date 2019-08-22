@@ -5,10 +5,10 @@ import '../scss/styles.scss';
 
 const Layout: NextFunctionComponent = ({ children }) => {
   return (
-    <div className='app'>
+    <section className='app'>
       <HeadLine />
       {children}
-    </div>
+    </section>
   );
 };
 

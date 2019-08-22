@@ -20,7 +20,7 @@ const HeadLine: React.FC = memo(() => {
         <div className='right'>
           <div />
           <div className='plus'>
-            <Link href='/'>
+            <Link href='/add'>
               <a>
                 <FontAwesomeIcon icon={faPlus} size='2x' />
               </a>

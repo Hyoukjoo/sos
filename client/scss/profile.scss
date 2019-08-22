@@ -1,0 +1,45 @@
+main.Profile {
+  width: 600px;
+
+  header {
+    margin-top: 100px;
+    width: 100%;
+    justify-items: center;
+
+    div.profile-image {
+      width: 150px;
+      height: 150px;
+      border: 1px solid rgb(177, 177, 177);
+      border-radius: 50%;
+      background-color: rgb(230, 228, 228);
+    }
+
+    div.profile-description {
+      padding-top: 20px;
+      span {
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+    }
+  }
+
+  div.category {
+    margin-top: 40px;
+    width: 100%;
+    grid-template-columns: 25% 25% 25% 25%;
+
+    div.category-list {
+      justify-items: center;
+      width: 100%;
+      padding-top: 10px;
+      border-top: 1px solid #dddddd;
+      cursor: pointer;
+      &:hover {
+        border-top: 1px solid #000;
+      }
+      span {
+        font-size: 1rem;
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-@import 'headline', 'feed', 'loginForm', 'signupForm';
+@import 'headline', 'feed', 'loginForm', 'signupForm', 'profile', 'layout', 'postform';
 
 body {
   margin: 0;
@@ -6,6 +6,10 @@ body {
   box-sizing: border-box;
   font-size: 12px;
   line-height: 18px;
+}
+
+#__next {
+  height: 100vh;
 }
 
 a {
