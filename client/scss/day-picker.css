@@ -21,6 +21,10 @@
   user-select: none;
 }
 
+.DayPicker-wrapper:focus {
+  outline: 0;
+}
+
 .DayPicker-Months {
   display: flex;
   flex-wrap: wrap;
@@ -137,6 +141,7 @@
 }
 
 .DayPicker-Day:focus {
+  color: #fff;
   background-color: #4a90e2;
   outline: 0;
 }
@@ -174,8 +179,12 @@
 /* Default modifiers */
 
 .DayPicker-Day--today {
-  color: #d0021b;
+  color: #0077ff;
   font-weight: 700;
+}
+
+.DayPicker-Day--today:focus {
+  color: #fff;
 }
 
 .DayPicker-Day--outside {

@@ -16,6 +16,7 @@ export default class MyDocument extends Document {
         <Head>
           <title>sealrock</title>
           <script src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_API_KEY}&libraries=places`} />
+          <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet' />
         </Head>
         <body>
           <Main />

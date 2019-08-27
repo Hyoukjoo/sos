@@ -1,6 +1,5 @@
 import React, { useCallback, useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import DatePicker from 'react-datepicker';
 import axios from 'axios';
 
 import useInput from '../hook_utils/useInput';
@@ -86,32 +85,10 @@ const PostForm = () => {
       </div>
       {/* HINT: CUSTOM INPUT으로 INPUT에다가 표현 가능, customInput - property, 나중에 커스터마이징 하기  */}
       <div className='add_start_Time'>
-        <label>
-          start_time:
-          <DatePicker
-            selected={startTime}
-            onChange={time => setStartTime(time)}
-            showTimeSelect
-            timeFormat='HH:mm'
-            dateFormat='yyyy/M/d h:mm aa'
-            timeCaption='time'
-            placeholderText='start time!'
-          />
-        </label>
+        <label>start_time:</label>
       </div>
       <div className='add_end_Time'>
-        <label>
-          end_time:{' '}
-          <DatePicker
-            selected={endTime}
-            onChange={time => setEndTime(time)}
-            showTimeSelect
-            timeFormat='HH:mm'
-            dateFormat='yyyy/M/d h:mm aa'
-            timeCaption='time'
-            placeholderText='end time!'
-          />
-        </label>
+        <label>end_time: </label>
       </div>
       <div className='add_location'>
         <label>

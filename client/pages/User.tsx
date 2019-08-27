@@ -22,10 +22,7 @@ const User: NextFC = () => {
   return (
     <div>
       {myInfo ? (
-        <>
-          <Profile />
-          {/* <GroupForm /> */}
-        </>
+        <Profile />
       ) : (
         <LoginForm />
       )}

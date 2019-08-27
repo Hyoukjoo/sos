@@ -31,35 +31,33 @@ const LoginForm = () => {
   }, [userId, password]);
 
   return (
-    <section className='Login-form'>
-      <main>
-        <div className='login-container'>
-          <div className='row-gap' />
-          <div>
-            <h1>Sign in</h1>
-          </div>
-          <div className='row-gap' />
-          <div className='input-container'>
-            <label>
-              <input type='text' onChange={onChangeuserId} value={userId} placeholder='ID' />
-            </label>
-            <label>
-              <input type='password' onChange={onChangePassword} value={password} placeholder='Password' />
-            </label>
-          </div>
-          <div className='row-gap' />
-          <div className='button-container'>
-            <button onClick={onLogin}>login</button>
-          </div>
-          <div className='link-container'>
-            <Link href='/signup'>
-              <a>SIGNUP</a>
-            </Link>
-          </div>
-          <div className='row-gap' />
+    <main className='Login-form'>
+      <div className='login-container'>
+        <div className='row-gap' />
+        <div>
+          <h1>Sign in</h1>
         </div>
-      </main>
-    </section>
+        <div className='row-gap' />
+        <div className='input-container'>
+          <label>
+            <input type='text' onChange={onChangeuserId} value={userId} placeholder='ID' />
+          </label>
+          <label>
+            <input type='password' onChange={onChangePassword} value={password} placeholder='Password' />
+          </label>
+        </div>
+        <div className='row-gap' />
+        <div className='button-container'>
+          <button onClick={onLogin}>login</button>
+        </div>
+        <div className='link-container'>
+          <Link href='/signup'>
+            <a>SIGNUP</a>
+          </Link>
+        </div>
+        <div className='row-gap' />
+      </div>
+    </main>
   );
 };
 

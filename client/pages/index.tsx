@@ -2,8 +2,6 @@ import React from 'react';
 import { NextFC } from 'next';
 import axios from 'axios';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStamp, faShare, faCommentAlt, faPenSquare } from '@fortawesome/free-solid-svg-icons';
 import { E_postActionType } from '../actionTypes/postType';
 
 const index: NextFC = () => {

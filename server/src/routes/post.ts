@@ -29,28 +29,30 @@ const upload = multer({
   }
 });
 
-router.post('/', isLogin, upload.array('images'), async (req, res, next) => {
+router.post('/', isLogin, upload.array('image'), async (req, res, next) => {
   try {
-    const privacyBoundGroup: string[] =
-      req.body.privacyBound.match(/\$[\wㄱ-ㅎㅏ-ㅣ가-힣]+/g) === null
-        ? []
-        : req.body.privacyBound.match(/\$[\wㄱ-ㅎㅏ-ㅣ가-힣]+/g);
-    const privacyBoundFollower: string[] =
-      req.body.privacyBound.match(/@[\wㄱ-ㅎㅏ-ㅣ가-힣]+/g) === null
-        ? []
-        : req.body.privacyBound.match(/@[\wㄱ-ㅎㅏ-ㅣ가-힣]+/g);
-    console.log(privacyBoundGroup);
-    console.log(privacyBoundFollower);
+    // const privacyBoundGroup: string[] =
+    //   req.body.privacyBound.match(/\$[\wㄱ-ㅎㅏ-ㅣ가-힣]+/g) === null
+    //     ? []
+    //     : req.body.privacyBound.match(/\$[\wㄱ-ㅎㅏ-ㅣ가-힣]+/g);
+    // const privacyBoundFollower: string[] =
+    //   req.body.privacyBound.match(/@[\wㄱ-ㅎㅏ-ㅣ가-힣]+/g) === null
+    //     ? []
+    //     : req.body.privacyBound.match(/@[\wㄱ-ㅎㅏ-ㅣ가-힣]+/g);
+    // console.log(privacyBoundGroup);
+    // console.log(privacyBoundFollower);
 
-    const privacyBound = privacyBoundGroup.concat(privacyBoundFollower).join(' ');
+    // const privacyBound = privacyBoundGroup.concat(privacyBoundFollower).join(' ');
+
+    console.log(req.body);
 
     const newPost = await Post.create({
       authorId: req.user,
       content: req.body.content,
       startTime: req.body.startTime === 'undefined' ? null : req.body.startTime,
-      endTime: req.body.endTime === 'undefined' ? null : req.body.endTime,
-      place: req.body.place === 'undefined' ? null : req.body.place,
-      privacyBound: privacyBound.length === 0 ? null : privacyBound
+      finishTime: req.body.finishTime === 'undefined' ? null : req.body.finishTime,
+      place: req.body.place === 'undefined' ? null : req.body.place
+      // privacyBound: privacyBound.length === 0 ? null : privacyBound
     });
 
     const tags = req.body.content.match(/#[\wㄱ-ㅎㅏ-ㅣ가-힣]+/g);
@@ -95,7 +97,7 @@ router.get('/', isLogin, async (req, res, next) => {
       followerId: req.user
     },
     attributes: ['followeeId']
-  })
+  });
 
   const groups = groupData.map(result => result.groupName);
 

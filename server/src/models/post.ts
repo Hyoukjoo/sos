@@ -62,16 +62,13 @@ export const initPostModel = () => {
         type: DataTypes.STRING,
         allowNull: false
       },
-      title: {
-        type: DataTypes.STRING
-      },
       content: {
         type: DataTypes.TEXT
       },
       startTime: {
         type: DataTypes.DATE
       },
-      endTime: {
+      finishTime: {
         type: DataTypes.DATE
       },
       privacyBound: {

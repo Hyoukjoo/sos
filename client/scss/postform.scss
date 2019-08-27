@@ -5,37 +5,65 @@ main.PostForm {
   align-items: baseline;
   // background-color: rgba($color: #000000, $alpha: 0.6);
 
-  .container {
-    margin-top: 50px;
+  div.container {
+    margin: 50px 0px;
     width: 500px;
     grid-template-rows: 35px auto;
 
-    .cancel-button {
-      height: 100%;
-      justify-items: end;
+    div.button-container {
+      width: 100%;
+      grid-template-columns: 10% auto 20%;
 
-      button {
-        width: 30px;
-        height: 30px;
-        margin-right: 10px;
-        border: 1px solid #f0f0f0;
-        border-radius: 50%;
-        background-color: #fff;
-        font-size: 1.5rem;
-        font-weight: bolder;
-        cursor: pointer;
+      div.cancel-button {
+        // height: 100%;
+        justify-items: center;
 
-        &:focus {
-          outline: 0;
+        button {
+          justify-items: center;
+          padding: 2px 0px 0px 1px;
+          width: 30px;
+          height: 30px;
+          border: 1px solid #f0f0f0;
+          border-radius: 50%;
+          background-color: #fff;
+          cursor: pointer;
+
+          &:focus {
+            outline: 0;
+          }
+
+          &:hover {
+            background-color: #f0f0f0;
+          }
         }
+      }
 
-        &:hover {
-          background-color: #f0f0f0;
+      div.submit-button {
+        justify-self: end;
+
+        button {
+          width: 70px;
+          height: 30px;
+          margin-right: 10px;
+          border: 1px solid #f0f0f0;
+          border-radius: 20px;
+          background-color: #fff;
+          font-size: 0.9rem;
+          font-weight: bolder;
+          cursor: pointer;
+
+          &:focus {
+            outline: 0;
+          }
+
+          &:hover {
+            background-color: #f0f0f0;
+          }
         }
       }
     }
 
-    .post-container {
+    div.post-container {
       height: 100%;
       grid-template-rows: 60px auto auto;
       padding: 0px 10px;
@@ -48,30 +76,49 @@ main.PostForm {
         align-items: center;
         padding: 10px 0px;
 
-        .profile-image {
+        div.profile-image {
           width: 40px;
           height: 40px;
           border: 1px solid #f0f0f0;
           border-radius: 50%;
         }
 
-        .profile-name {
+        div.profile-name {
           padding-left: 10px;
           font-size: 1rem;
           font-weight: bolder;
         }
 
-        .period {
-          grid-template-columns: repeat(2, 70px);
+        div.period {
+          grid-template-columns: repeat(2, 50px);
           justify-self: end;
           justify-items: center;
-          padding-right: 10px;
+          margin-right: 10px;
+
+          div.start-time {
+            button {
+              color: #6df031;
+              border: 1px solid #6df031;
+              i {
+                font-size: 1.3rem;
+              }
+            }
+          }
+
+          div.finish-time {
+            button {
+              color: #ff5b5b;
+              border: 1px solid #ff5b5b;
+
+              i {
+                font-size: 1.3rem;
+              }
+            }
+          }
 
           button {
-            width: 65px;
+            width: 45px;
             height: 30px;
-            margin-right: 10px;
-            border: 1px solid #f0f0f0;
             border-radius: 10px;
             background-color: #fff;
             font-size: 0.9rem;
@@ -85,18 +132,39 @@ main.PostForm {
             &:hover {
               background-color: #f0f0f0;
             }
+
+            &.selected-start-time {
+              background-color: #6df031;
+              i {
+                color: #fff;
+              }
+            }
+
+            &.selected-finish-time {
+              background-color: #ff5b5b;
+              i {
+                color: #fff;
+              }
+            }
+
+            .opposite {
+              transition: 0ms;
+              transform: rotate(180deg);
+            }
           }
         }
-      }
+      } //header
 
-      .content {
-        padding: 0px 10px;
-        grid-template-columns: auto auto;
+      div.text-content {
+        height: 310px;
+        padding: 0px 20px;
+        justify-items: center;
 
-        textarea {
+        textarea.text-content {
+          width: 100%;
           padding: 10px;
           border-radius: 10px;
-          font-size: 1.5rem;
+          font-size: 1rem;
 
           &:focus {
             outline: 0;
@@ -104,24 +172,74 @@ main.PostForm {
         }
       }
 
+      div.time-content {
+        width: 100%;
+        height: 310px;
+        padding: 0px 20px;
+        grid-template-columns: 130px auto;
+        justify-items: center;
+
+        textarea.time-content {
+          width: 100%;
+          padding: 10px;
+          border-radius: 10px;
+          font-size: 1rem;
+
+          &:focus {
+            outline: 0;
+          }
+        }
+
+        div.time-container {
+          margin-left: 30px;
+          grid-template-rows: auto auto;
+          justify-items: center;
+
+          .time-picker {
+            width: 80%;
+          }
+        }
+      }
+
+      div.image-container {
+        width: 100%;
+        padding: 10px;
+        justify-items: center;
+
+        img {
+          max-width: 450px;
+        }
+      }
+
       footer {
         padding: 10px 10px;
         grid-template-columns: 200px auto;
 
-        .sub-menu {
+        div.sub-menu {
           grid-template-columns: repeat(4, 50px);
-          justify-items: center;
+          justify-items: start;
           align-items: center;
 
           span {
             font-weight: bolder;
             cursor: pointer;
           }
+
+          div.upload-image {
+            label {
+              input[type='file'] {
+                display: none;
+                outline: 0;
+                opacity: 0;
+                pointer-events: none;
+                user-select: none;
+              }
+            }
+          }
         }
 
-        .submit-button {
-          justify-self: end;
-
+        div.delete-button {
+          justify-items: end;
           button {
             width: 70px;
             height: 30px;
@@ -142,7 +260,7 @@ main.PostForm {
             }
           }
         }
-      }
+      } //footer
     }
   }
 }
