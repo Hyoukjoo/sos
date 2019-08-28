@@ -1,0 +1,25 @@
+div#Logout-form {
+  justify-content: center;
+  align-content: center;
+
+  div#logout {
+    justify-content: center;
+    align-content: center;
+    width: 100px;
+    height: 40px;
+    color: #fff;
+    background-color: #ff5959;
+    border-radius: 5px;
+    cursor: pointer;
+
+    span {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    &:active {
+      color: #fff;
+      background-color: #ff9393;
+    }
+  }
+}

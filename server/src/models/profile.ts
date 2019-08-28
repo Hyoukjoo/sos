@@ -6,7 +6,6 @@ import { User } from './user';
 export class Profile extends Model {
   public userId!: string;
   public userName!: string;
-  public userDescription!: string;
   public profileImage!: string;
 
   public readonly createAt!: Date;
@@ -23,10 +22,10 @@ export const initProfileModel = () => {
       userName: {
         type: DataTypes.STRING
       },
-      userDescription: {
+      profileImage: {
         type: DataTypes.STRING
       },
-      profileImage: {
+      email: {
         type: DataTypes.STRING
       }
     },

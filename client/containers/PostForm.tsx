@@ -2,11 +2,11 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import DayPicker from 'react-day-picker';
-import '../scss/day-picker.css';
+import '../css/day-picker.css';
 
 import TimePicker from 'react-times';
-import '../scss/css/classic/default.css';
-import '../scss/css/material/default.css';
+import '../css/classic/default.css';
+import '../css/material/default.css';
 
 import useInput from '../hook_utils/useInput';
 import PreviewImages from '../components/PreviewImages';
@@ -124,11 +124,6 @@ const PostForm: React.FC = () => {
       0o0
     ).toString();
 
-    console.log(content);
-    console.log(startDate);
-    console.log(finishDate);
-    console.log(image);
-
     data.append('content', content);
     data.append('startTime', startDate);
     data.append('finishTime', finishDate);
@@ -143,7 +138,7 @@ const PostForm: React.FC = () => {
   }, [startTime, finishTime, content, image]);
 
   return (
-    <main className='PostForm'>
+    <main className='Post-form'>
       <div className='container'>
         <div className='button-container'>
           <div className='cancel-button'>

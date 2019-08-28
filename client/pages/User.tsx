@@ -6,7 +6,7 @@ import LoginForm from '../containers/LoginForm';
 import GroupForm from '../containers/GroupForm';
 import { E_groupActionType } from '../actionTypes/groupType';
 import { E_followActionType } from '../actionTypes/followType';
-import Profile from '../containers/Profile';
+import Profile from '../components/profile/Profile';
 
 const User: NextFC = () => {
   const myInfo = useSelector((state: any) => state.user.myInfo);
@@ -19,15 +19,7 @@ const User: NextFC = () => {
     });
   };
 
-  return (
-    <div>
-      {myInfo ? (
-        <Profile />
-      ) : (
-        <LoginForm />
-      )}
-    </div>
-  );
+  return <div>{myInfo ? <Profile /> : <LoginForm />}</div>;
 };
 
 User.getInitialProps = async (context: NextContext) => {

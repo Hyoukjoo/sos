@@ -6,7 +6,7 @@ import { E_userActionType } from '../actionTypes/userType';
 import Link from 'next/link';
 
 const LoginForm = () => {
-  const [userId, resetUserId, onChangeuserId] = useInput();
+  const [userId, resetUserId, onChangeUserId] = useInput();
   const [password, resetPassword, onChangePassword] = useInput();
 
   const dispatch = useDispatch();
@@ -40,7 +40,7 @@ const LoginForm = () => {
         <div className='row-gap' />
         <div className='input-container'>
           <label>
-            <input type='text' onChange={onChangeuserId} value={userId} placeholder='ID' />
+            <input type='text' onChange={onChangeUserId} value={userId} placeholder='ID' />
           </label>
           <label>
             <input type='password' onChange={onChangePassword} value={password} placeholder='Password' />

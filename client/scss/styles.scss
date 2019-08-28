@@ -1,4 +1,4 @@
-@import 'headline', 'feed', 'loginForm', 'signupForm', 'profile', 'layout', 'postform';
+@import 'headline', 'feed', 'loginForm', 'signupForm', './profile/profile.scss', 'layout', 'postform';
 
 body {
   margin: 0;

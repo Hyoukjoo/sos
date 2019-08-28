@@ -1,21 +1,28 @@
+@import './settingForm.scss';
+
 main.Profile {
   width: 600px;
 
   header {
-    margin-top: 100px;
+    margin-top: 50px;
     width: 100%;
+    grid-template-columns: 50% 50%;
     justify-items: center;
+    align-items: center;
 
     div.profile-image {
+      justify-self: end;
       width: 150px;
       height: 150px;
+      margin-right: 20px;
       border: 1px solid rgb(177, 177, 177);
       border-radius: 50%;
       background-color: rgb(230, 228, 228);
     }
 
     div.profile-description {
-      padding-top: 20px;
+      justify-self: start;
+      margin-left: 20px;
       span {
         font-size: 1.5rem;
         font-weight: 600;
@@ -26,19 +33,19 @@ main.Profile {
   div.category {
     margin-top: 40px;
     width: 100%;
-    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-columns: repeat(5, 20%);
 
     div.category-list {
       justify-items: center;
       width: 100%;
       padding-top: 10px;
-      border-top: 1px solid #dddddd;
+      border-top: 2px solid #dddddd;
       cursor: pointer;
       &:hover {
-        border-top: 1px solid #000;
+        border-top: 2px solid #000;
       }
       span {
-        font-size: 1rem;
+        font-size: 0.9rem;
       }
     }
   }
