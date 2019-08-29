@@ -34,7 +34,7 @@ div#Profile-form {
   }
 
   div.set-profile-container {
-    grid-template-columns: 172px auto;
+    grid-template-columns: auto 100px;
     align-items: center;
 
     div.set-profile-name-input {
@@ -58,6 +58,7 @@ div#Profile-form {
       justify-items: center;
       align-self: center;
       button {
+        margin-left: -5px;
         width: 70px;
         height: 35px;
         background-color: #3ab0ff;

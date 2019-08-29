@@ -7,6 +7,8 @@ import { E_userActionType } from '../actionTypes/userType';
 import Link from 'next/link';
 
 const Signup = () => {
+  const dispatch = useDispatch();
+
   const [userId, onResetUserId, onChangeUserId] = useInput('');
   const [email, onResetEmail, onChangeEmail] = useInput();
 
@@ -16,8 +18,6 @@ const Signup = () => {
 
   const myInfo = useSelector((state: any) => state.user.myInfo);
   const isSignup = useSelector((state: any) => state.user.isSignup);
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (myInfo) Router.push('/');

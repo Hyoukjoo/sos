@@ -4,12 +4,14 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import expressSession from 'express-session';
 import passport from 'passport';
-import morgan = require('morgan');
+import morgan from 'morgan';
 
 import userRouter from './routes/user';
 import postRouter from './routes/post';
 import groupRouter from './routes/group';
 import followRouter from './routes/follow';
+import profileRouter from './routes/profile';
+
 import passportConfig from './passport';
 import { sequelize } from './models';
 
@@ -54,5 +56,6 @@ app.use('/user', userRouter);
 app.use('/post', postRouter);
 app.use('/group', groupRouter);
 app.use('/follow', followRouter);
+app.use('/profile', profileRouter);
 
 export default app;

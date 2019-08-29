@@ -1,13 +1,31 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { E_profileActionType } from '../../actionTypes/profileType';
 
 const PasswordForm: React.FC = () => {
-  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
   const [isMatchPassword, setIsMatchPassword] = useState(false);
 
-  const onChangePassword = useCallback(
+  const failureMessage = useSelector(state => (state as any).profile.message);
+
+  useEffect(() => {
+    if (failureMessage !== undefined) {
+      alert(failureMessage);
+    }
+  }, [failureMessage]);
+
+  const onChangeOldPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.currentTarget.className = null;
+    setOldPassword(e.currentTarget.value);
+  };
+
+  const onChangeNewPassword = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setPassword(e.currentTarget.value);
+      setNewPassword(e.currentTarget.value);
       setIsMatchPassword(checkPassword === e.currentTarget.value);
     },
     [checkPassword]
@@ -16,10 +34,30 @@ const PasswordForm: React.FC = () => {
   const onChangeCheckPassword = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setCheckPassword(e.currentTarget.value);
-      setIsMatchPassword(password === e.currentTarget.value);
+      setIsMatchPassword(newPassword === e.currentTarget.value);
     },
-    [password]
+    [newPassword]
   );
+
+  const onSubmit = useCallback(() => {
+    if (!isMatchPassword) {
+      alert('new password is not matched');
+      return;
+    } else if (oldPassword.length < 1 || newPassword.length < 1) {
+      alert('input your password');
+      return;
+    }
+
+    const password = {
+      oldPassword,
+      newPassword
+    };
+
+    dispatch({
+      type: E_profileActionType.CHANGE_PASSWORD_REQUEST,
+      data: password
+    });
+  }, [oldPassword, newPassword, checkPassword, failureMessage]);
 
   return (
     <div id='Password-form'>
@@ -37,10 +75,15 @@ const PasswordForm: React.FC = () => {
         </div>
         <div className='password-input'>
           <div className='input-div'>
-            <input type='password' />
+            <input
+              type='password'
+              className={failureMessage === undefined ? null : failureMessage.length > 0 ? 'incorrect' : null}
+              onChange={onChangeOldPassword}
+              value={oldPassword}
+            />
           </div>
           <div className='input-div'>
-            <input type='password' onChange={onChangePassword} value={password} />
+            <input type='password' onChange={onChangeNewPassword} value={newPassword} />
           </div>
           <div className='input-div'>
             <input
@@ -52,7 +95,7 @@ const PasswordForm: React.FC = () => {
           </div>
         </div>
         <div className='submit-div'>
-          <button>submit</button>
+          <button onClick={onSubmit}>submit</button>
         </div>
       </div>
     </div>

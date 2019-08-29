@@ -91,3 +91,7 @@
 1. TODO: FEED
 2. TODO: SIGN IN FORM
 3. TODO: SIGN UP FORM
+
+## 2019.08.28 WED
+
+1. TODO: 아이디 영어 유효성 검사

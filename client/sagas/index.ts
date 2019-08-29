@@ -5,9 +5,10 @@ import userSaga from './userSaga';
 import postSaga from './postSaga';
 import groupSaga from './groupSaga';
 import followSaga from './followSaga';
+import profileSage from './profileSage';
 
 axios.defaults.baseURL = 'http://localhost:4000';
 
 export default function* rootSaga() {
-  yield all([fork(userSaga), fork(postSaga), fork(groupSaga), fork(followSaga)]);
+  yield all([fork(userSaga), fork(postSaga), fork(groupSaga), fork(followSaga), fork(profileSage)]);
 }
