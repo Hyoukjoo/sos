@@ -10,7 +10,7 @@ const Signup = () => {
   const dispatch = useDispatch();
 
   const [userId, onResetUserId, onChangeUserId] = useInput('');
-  const [email, onResetEmail, onChangeEmail] = useInput();
+  const [userName, onResetUserName, onChangeUserName] = useInput();
 
   const [password, setPassword] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
@@ -33,6 +33,22 @@ const Signup = () => {
     }
   }, [isSignup]);
 
+  const onChangePassword = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setPassword(e.currentTarget.value);
+      setIsMatchPassword(checkPassword === e.currentTarget.value);
+    },
+    [checkPassword]
+  );
+
+  const onChangeCheckPassword = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setCheckPassword(e.currentTarget.value);
+      setIsMatchPassword(password === e.currentTarget.value);
+    },
+    [password]
+  );
+
   //TODO: CHECK SIGNUP INFOMATIONS
   const onSignup = useCallback(async () => {
     if (!userId.trim() || !password.trim()) {
@@ -50,68 +66,47 @@ const Signup = () => {
       data: {
         userId,
         password,
-        email
+        userName
       }
     });
-  }, [userId, email, isMatchPassword]);
-
-  const onChangePassword = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setPassword(e.currentTarget.value);
-      setIsMatchPassword(checkPassword === e.currentTarget.value);
-    },
-    [checkPassword]
-  );
-
-  const onChangeCheckPassword = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setCheckPassword(e.currentTarget.value);
-      setIsMatchPassword(password === e.currentTarget.value);
-    },
-    [password]
-  );
+  }, [userId, userName, isMatchPassword]);
 
   return (
-    <section className='Signup-form'>
-      <main>
-        <div className='signup-container'>
-          <div className='row-gap' />
-          <div>
-            <h1>Sign up</h1>
+    <main id='Signup-form'>
+      <div className='signup-container'>
+        <div className='title'>
+          <span>Sign up</span>
+        </div>
+        <div className='input-container'>
+          <div className='input-div'>
+            <input type='text' onChange={onChangeUserId} value={userId} placeholder='ID' />
           </div>
-          <div className='row-gap' />
-          <div className='input-container'>
-            <label>
-              <input type='text' onChange={onChangeUserId} value={userId} placeholder='ID' />
-            </label>
-            <label>
-              <input type='password' onChange={onChangePassword} value={password} placeholder='Password' />
-            </label>
-            <label>
-              <input
-                type='password'
-                className={isMatchPassword ? null : checkPassword === '' ? null : 'incorrect'}
-                onChange={onChangeCheckPassword}
-                value={checkPassword}
-                placeholder='Password Check'
-              />
-            </label>
-            <label>
-              <input type='text' required onChange={onChangeEmail} value={email} placeholder='Email' />
-            </label>
+          <div className='input-div'>
+            <input type='text' required onChange={onChangeUserName} value={userName} placeholder='Username' />
           </div>
-          <div className='row-gap' />
-          <div className='button-container'>
-            <button onClick={onSignup}>SIGNUP</button>
+          <div className='input-div'>
+            <input type='password' onChange={onChangePassword} value={password} placeholder='Password' />
           </div>
-          <div className='link-container'>
-            <Link href='/user'>
-              <a>SINGIN</a>
-            </Link>
+          <div className='input-div'>
+            <input
+              type='password'
+              className={isMatchPassword ? null : checkPassword === '' ? null : 'incorrect'}
+              onChange={onChangeCheckPassword}
+              value={checkPassword}
+              placeholder='Password Check'
+            />
           </div>
         </div>
-      </main>
-    </section>
+        <div className='button-container'>
+          <button onClick={onSignup}>SIGNUP</button>
+        </div>
+        <div className='link-container'>
+          <Link href='/user'>
+            <a>SINGIN</a>
+          </Link>
+        </div>
+      </div>
+    </main>
   );
 };
 

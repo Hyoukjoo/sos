@@ -12,12 +12,19 @@ main.Profile {
 
     div.profile-image {
       justify-self: end;
+      align-items: center;
       width: 150px;
       height: 150px;
       margin-right: 20px;
       border: 1px solid rgb(177, 177, 177);
       border-radius: 50%;
-      background-color: rgb(230, 228, 228);
+      overflow: hidden;
+
+      img {
+        top: 0;
+        left: 0;
+        width: 150px;
+      }
     }
 
     div.profile-description {

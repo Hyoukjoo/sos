@@ -2,7 +2,7 @@ import { Router } from 'express';
 import passport from 'passport';
 import { hash } from 'bcrypt';
 
-import { User } from '../models';
+import { User, Profile } from '../models';
 
 const router = Router();
 
@@ -20,12 +20,21 @@ router.post('/signup', async (req, res, next) => {
 
     const newUser = await User.create({
       userId: req.body.userId,
-      password: passwordToHash,
-      email: req.body.email
+      password: passwordToHash
     });
+
+    const newProfile = await Profile.create({
+      userId: req.body.userId,
+      userName: req.body.userName
+    });
+
+    console.log(newUser);
+    console.log(newProfile);
 
     res.json(newUser);
   } catch (e) {
+    console.log(e);
+    res.send(e);
     return next(e);
   }
 });
@@ -33,7 +42,8 @@ router.post('/signup', async (req, res, next) => {
 router.post(
   '/login',
   passport.authenticate('local', {
-    successRedirect: '/user/info'
+    successRedirect: '/user/info',
+    failureMessage: 'fail'
   })
 );
 

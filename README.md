@@ -95,3 +95,17 @@
 ## 2019.08.28 WED
 
 1. TODO: 아이디 영어 유효성 검사
+
+## 2019.08.29 THU
+
+1. ISSUE: 리덕스가 같은 state에 다른 action을 dispatch할 때 state가 변하지 않는다.
+   그래서 immer를 써서 해결했다. 원인은 도저히 모르겠다.
+2. 프로필 변경할 때 이미지랑 이름이랑 따로 바꿔야 한다. 왜냐하면 이름만 바꿀 때 이미지도 새롭게 저장되면 데이터 낭비가 된다.
+
+## TODO:
+
+1. [ ] 19.06.21 TODO: 회원가입 유효성 검사
+2. [ ] 19.06.26 TODO: user model > user_name을 어떻게 다룰 것인가. unique?, 중복 검색 이후 logic 고민
+3. [ ] 19.06.30 TODO: 장소 입력할 때 키보드로 이동해서 값 입력했을 때 input tag에 보여지는 값과 저장되는 값을 마우스 클릭했을 때와 일치시키기
+4. [V] 19.07.10 TODO: GROUP MODEL에서 CLASS PROPERTY 중 userid를 userId로 바꾸기
+5. [V] 19.08.29 TODO: REDUX REDUCER에 IMMER로 변경하기

@@ -2,13 +2,21 @@ import React, { useState, useCallback } from 'react';
 import ProfileForm from './ProfileForm';
 import LogoutForm from './LogoutForm';
 import PasswordForm from './PasswordForm';
+import { useDispatch } from 'react-redux';
+import { E_profileActionType } from '../../actionTypes/profileType';
 
 const SettingForm: React.FC = () => {
+  const dispatch = useDispatch();
+
   const [list, setList] = useState(null);
 
   const handleList = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const text = e.currentTarget.children[0].innerHTML;
     setList(text);
+
+    // dispatch({
+    //   type: E_profileActionType.INITIALIZE_FAILURE_MESSAGE
+    // });
   };
 
   const renderSwitch = useCallback(

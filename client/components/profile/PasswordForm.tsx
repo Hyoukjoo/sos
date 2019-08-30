@@ -13,8 +13,11 @@ const PasswordForm: React.FC = () => {
   const failureMessage = useSelector(state => (state as any).profile.message);
 
   useEffect(() => {
-    if (failureMessage !== undefined) {
+    if (failureMessage !== null) {
       alert(failureMessage);
+      dispatch({
+        type: E_profileActionType.INITIALIZE_FAILURE_MESSAGE
+      });
     }
   }, [failureMessage]);
 
@@ -57,6 +60,10 @@ const PasswordForm: React.FC = () => {
       type: E_profileActionType.CHANGE_PASSWORD_REQUEST,
       data: password
     });
+
+    setOldPassword('');
+    setNewPassword('');
+    setCheckPassword('');
   }, [oldPassword, newPassword, checkPassword, failureMessage]);
 
   return (
@@ -77,7 +84,7 @@ const PasswordForm: React.FC = () => {
           <div className='input-div'>
             <input
               type='password'
-              className={failureMessage === undefined ? null : failureMessage.length > 0 ? 'incorrect' : null}
+              className={failureMessage === null ? null : failureMessage.length > 0 ? 'incorrect' : null}
               onChange={onChangeOldPassword}
               value={oldPassword}
             />

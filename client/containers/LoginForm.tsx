@@ -33,20 +33,17 @@ const LoginForm = () => {
   return (
     <main className='Login-form'>
       <div className='login-container'>
-        <div className='row-gap' />
-        <div>
-          <h1>Sign in</h1>
+        <div className='title'>
+          <span>Sign in</span>
         </div>
-        <div className='row-gap' />
         <div className='input-container'>
-          <label>
+          <div>
             <input type='text' onChange={onChangeUserId} value={userId} placeholder='ID' />
-          </label>
-          <label>
+          </div>
+          <div>
             <input type='password' onChange={onChangePassword} value={password} placeholder='Password' />
-          </label>
+          </div>
         </div>
-        <div className='row-gap' />
         <div className='button-container'>
           <button onClick={onLogin}>login</button>
         </div>
@@ -55,7 +52,6 @@ const LoginForm = () => {
             <a>SIGNUP</a>
           </Link>
         </div>
-        <div className='row-gap' />
       </div>
     </main>
   );

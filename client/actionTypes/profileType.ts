@@ -7,7 +7,12 @@ export enum E_profileActionType {
   CHANGE_PASSWORD_SUCCESS = 'CHANGE_PASSWORD_SUCCESS',
   CHANGE_PASSWORD_FAILURE = 'CHANGE_PASSWORD_FAILURE',
   CHANGE_PASSWORD_ERROR = 'CHANGE_PASSWORD_ERROR',
-  INITIALIZE_FAILURE_MESSAGE = 'INITIALIZE_FAILURE_MESSAGE'
+  INITIALIZE_FAILURE_MESSAGE = 'INITIALIZE_FAILURE_MESSAGE',
+  INITIALIZE_FAILURE_MESSAGE_REQUEST = 'INITIALIZE_FAILURE_MESSAGE_REQUEST',
+  LOAD_PROFILE_INFO_REQUEST = 'LOAD_PROFILE_INFO_REQUEST',
+  LOAD_PROFILE_INFO_SUCCESS = 'LOAD_PROFILE_INFO_SUCCESS',
+  LOAD_PROFILE_INFO_FAILURE = 'LOAD_PROFILE_INFO_FAILURE',
+  LOAD_PROFILE_INFO_ERROR = 'LOAD_PROFILE_INFO_ERROR'
 }
 
 interface I_changeProfileImageNameInfo {
@@ -15,7 +20,6 @@ interface I_changeProfileImageNameInfo {
   username: string;
 }
 
-//프로필 정보를 어떻게 저장할 것인가?
 interface I_changeProfileImageNameRequest {
   type: typeof E_profileActionType.CHANGE_PROFILE_IMAGE_NAME_REQUEST;
   data: I_changeProfileImageNameInfo;
@@ -42,11 +46,12 @@ interface I_changePasswordInfo {
 
 interface I_changePasswordRequest {
   type: typeof E_profileActionType.CHANGE_PASSWORD_REQUEST;
+  data: I_changePasswordInfo;
 }
 
 interface I_changePasswordSuccess {
   type: typeof E_profileActionType.CHANGE_PASSWORD_SUCCESS;
-  data: I_changePasswordInfo;
+  message: string;
 }
 
 interface I_changePasswordFailure {
@@ -64,6 +69,29 @@ interface I_initializeFailureMessage {
   message: string;
 }
 
+interface I_initializeFailureMessageRequest {
+  type: typeof E_profileActionType.INITIALIZE_FAILURE_MESSAGE_REQUEST;
+}
+
+interface I_loadProfileInfoRequest {
+  type: typeof E_profileActionType.LOAD_PROFILE_INFO_REQUEST;
+}
+
+interface I_loadProfileInfoSuccess {
+  type: typeof E_profileActionType.LOAD_PROFILE_INFO_SUCCESS;
+  data: I_changeProfileImageNameInfo;
+}
+
+interface I_loadProfileInfoFailure {
+  type: typeof E_profileActionType.LOAD_PROFILE_INFO_FAILURE;
+  message: string;
+}
+
+interface I_loadProfileInfoError {
+  type: typeof E_profileActionType.LOAD_PROFILE_INFO_ERROR;
+  error: Error;
+}
+
 export type I_profileAction =
   | I_changeProfileImageNameRequest
   | I_changeProfileImageNameSuccesss
@@ -73,4 +101,9 @@ export type I_profileAction =
   | I_changePasswordSuccess
   | I_changePasswordFailure
   | I_changePasswordError
-  | I_initializeFailureMessage;
+  | I_initializeFailureMessage
+  | I_initializeFailureMessageRequest
+  | I_loadProfileInfoRequest
+  | I_loadProfileInfoSuccess
+  | I_loadProfileInfoFailure
+  | I_loadProfileInfoError;

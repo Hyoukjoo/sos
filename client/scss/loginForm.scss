@@ -1,10 +1,10 @@
 main.Login-form {
-  margin-top: 150px;
+  margin-top: 100px;
   width: 350px;
 
   div.login-container {
     text-align: center;
-    grid-template-rows: 20px 90px 10px 100px 20px 50px 30px 20px;
+    grid-template-rows: 120px auto auto auto;
     overflow: hidden;
     height: 100%;
     padding: 0px 50px;
@@ -13,30 +13,37 @@ main.Login-form {
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
     background-color: #fff;
 
-    h1 {
-      font-size: 2.7rem;
+    div.title {
+      align-items: center;
+      span {
+        font-size: 3rem;
+        font-weight: bold;
+      }
     }
 
     div.input-container {
-      grid-row-gap: auto;
+      margin-top: 10px;
+      grid-template-rows: repeat(2, 1fr);
+      grid-row-gap: 5px;
 
       input {
         box-sizing: border-box;
-        background-color: #eeeeee;
-        border: none;
+        background-color: #eee;
         padding: 12px 15px;
-        width: 100%;
+        border: none;
+        border-radius: 5px;
       }
     }
 
     div.button-container {
+      margin-top: 30px;
       align-items: center;
       justify-items: center;
 
       button {
-        border-radius: 20px;
-        border: 1px solid #fbc531;
-        background-color: #fbc531;
+        border-radius: 10px;
+        border: 1px solid #ff3f34;
+        background-color: #ff3f34;
         color: #ffffff;
         font-size: 12px;
         font-weight: bold;
@@ -44,6 +51,7 @@ main.Login-form {
         letter-spacing: 1px;
         text-transform: uppercase;
         transition: transform 80ms ease-in;
+        cursor: pointer;
 
         &:active {
           transform: scale(0.95);
@@ -57,10 +65,11 @@ main.Login-form {
 
     div.link-container {
       justify-items: center;
+      margin: 10px 0px 20px;
       a {
-        width: 70px;
         font-weight: bold;
         letter-spacing: 0.5px;
+        width: 70px;
       }
     }
   }

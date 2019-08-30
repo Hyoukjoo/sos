@@ -1,8 +1,13 @@
 import React, { useState, useCallback } from 'react';
+import { useSelector } from 'react-redux';
+
 import SettingForm from './SettingForm';
 
 const Profile: React.FC = () => {
   const [category, setCategory] = useState(null);
+
+  const userName = useSelector(state => (state as any).profile.userName);
+  const profileImage = useSelector(state => (state as any).profile.profileImage);
 
   const handleCategory = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const text = e.currentTarget.children[0].innerHTML;
@@ -36,10 +41,12 @@ const Profile: React.FC = () => {
   return (
     <main className='Profile'>
       <header>
-        <div className='profile-image' />
+        <div className='profile-image' title='Change Profile Photo'>
+          <img src={`http://localhost:4000/${profileImage}`} alt='profileImage' />
+        </div>
         <div className='profile-description'>
           <div className='username'>
-            <span>jo920208</span>
+            <span>{userName}</span>
           </div>
         </div>
       </header>

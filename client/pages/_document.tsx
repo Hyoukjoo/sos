@@ -1,14 +1,15 @@
 import React from 'react';
 import Document, { Head, Main, NextScript } from 'next/document';
 import { config } from 'dotenv';
+import Helmet from 'react-helmet';
 
 config();
 
 export default class MyDocument extends Document {
-  // static async getInitialProps(ctx: any) {
-  //   const initialProps = await Document.getInitialProps(ctx);
-  //   return { ...initialProps };
-  // }
+  static async getInitialProps(ctx: any) {
+    const initialProps = await Document.getInitialProps(ctx);
+    return { ...initialProps };
+  }
 
   render() {
     return (

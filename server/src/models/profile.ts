@@ -20,13 +20,17 @@ export const initProfileModel = () => {
         primaryKey: true
       },
       userName: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: false
       },
       profileImage: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        unique: true
       },
       email: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        unique: true
       }
     },
     {
@@ -39,7 +43,7 @@ export const initProfileModel = () => {
 };
 
 export const associateProfile = () => {
-  Profile.belongsTo(User, { foreignKey: 'userId', targetKey: 'userId' });
+  Profile.belongsTo(User, { foreignKey: 'userId', targetKey: 'userId', as: 'userProfile' });
 
   return Profile;
 };

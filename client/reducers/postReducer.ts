@@ -1,36 +1,47 @@
+import produce from 'immer';
+
 import { I_postAction, E_postActionType } from '../actionTypes/postType';
 
 const InitialState = {
-  loadPlaceData: undefined,
-  postsData: undefined,
-  images: ''
+  loadPlaceData: null,
+  postsData: null,
+  images: null,
+  message: null,
+  error: null
 };
 
 const postReducer = (state = InitialState, action: I_postAction) => {
-  switch (action.type) {
-    case E_postActionType.NEW_POST_REQUEST:
-    case E_postActionType.LOAD_POST_REQUEST:
-      return { ...state };
+  return produce(state, draft => {
+    switch (action.type) {
+      case E_postActionType.NEW_POST_REQUEST:
+      case E_postActionType.LOAD_POST_REQUEST:
+        break;
 
-    case E_postActionType.NEW_POST_SUCCESS:
-      return { ...state };
+      case E_postActionType.NEW_POST_SUCCESS:
+        break;
 
-    case E_postActionType.LOAD_POST_SUCCESS:
-      return { ...state, postsData: action.data };
+      case E_postActionType.LOAD_POST_SUCCESS:
+        draft.postsData = action.data;
+        break;
 
-    case E_postActionType.NEW_POST_FAILURE:
-    case E_postActionType.LOAD_POST_FAILURE:
-      return { ...state, message: action.message };
+      case E_postActionType.NEW_POST_FAILURE:
+      case E_postActionType.LOAD_POST_FAILURE:
+        draft.message = action.message;
+        break;
 
-    case E_postActionType.NEW_POST_ERROR:
-    case E_postActionType.LOAD_POST_ERROR:
-      return { ...state, error: action.error };
+      case E_postActionType.NEW_POST_ERROR:
+      case E_postActionType.LOAD_POST_ERROR:
+        draft.error = action.error;
+        break;
 
-    case E_postActionType.LOAD_PLACE_DATA:
-      return { ...state, loadPlaceData: action.data };
-    default:
-      return { ...state };
-  }
+      case E_postActionType.LOAD_PLACE_DATA:
+        draft.loadPlaceData = action.data;
+        break;
+
+      default:
+        break;
+    }
+  });
 };
 
 export default postReducer;

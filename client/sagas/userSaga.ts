@@ -41,7 +41,7 @@ function* loginRequest(action) {
       data: result.data
     });
   } catch (e) {
-    console.error(e);
+    console.log(e);
     yield put({
       type: E_userActionType.USER_LOGIN_ERROR,
       error: e

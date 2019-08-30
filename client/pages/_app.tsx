@@ -3,13 +3,13 @@ import App, { Container, NextAppContext } from 'next/app';
 import { Provider } from 'react-redux';
 import withRedux, { AppProps } from 'next-redux-wrapper';
 import withReduxSaga from 'next-redux-saga';
-import Helmet from 'react-helmet';
 import axios from 'axios';
+import Helmet from 'react-helmet';
+import { config } from 'dotenv';
 
-import { makeStore } from '../store';
 import Layout from '../components/Layout';
+import { makeStore } from '../store';
 import { E_userActionType } from '../actionTypes/userType';
-import { isBoolean } from 'util';
 
 class MyApp extends App<AppProps> {
   static getInitialProps = async ({ Component, ctx }: NextAppContext) => {
