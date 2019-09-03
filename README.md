@@ -109,3 +109,5 @@
 3. [ ] 19.06.30 TODO: 장소 입력할 때 키보드로 이동해서 값 입력했을 때 input tag에 보여지는 값과 저장되는 값을 마우스 클릭했을 때와 일치시키기
 4. [V] 19.07.10 TODO: GROUP MODEL에서 CLASS PROPERTY 중 userid를 userId로 바꾸기
 5. [V] 19.08.29 TODO: REDUX REDUCER에 IMMER로 변경하기
+6. [ ] 19.08.30 TODO: 프로필 이름 바꿀 때 유효성 검사하기
+7. [ ] 19.08.31 TODO: 로그인페이지, 프로필페이지 분리하기

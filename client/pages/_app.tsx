@@ -23,7 +23,7 @@ class MyApp extends App<AppProps> {
 
     const state = store.getState();
 
-    if (!state.user.myInfo) {
+    if (!state.user.myInfo.userId) {
       store.dispatch({
         type: E_userActionType.LOAD_USER_INFO_REQUEST
       });

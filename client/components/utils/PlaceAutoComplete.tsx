@@ -1,7 +1,7 @@
-import React, { useState, useCallback, InputHTMLAttributes, useEffect } from 'react';
-import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import React, { useState, useCallback, useEffect } from 'react';
+import PlacesAutocomplete from 'react-places-autocomplete';
 import { useDispatch } from 'react-redux';
-import { E_postActionType } from '../actionTypes/postType';
+import { E_postActionType } from '../../actionTypes/postType';
 
 const PlaceAutocomplete = () => {
   const dispatch = useDispatch();

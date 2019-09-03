@@ -26,10 +26,10 @@ const Signup = () => {
   useEffect(() => {
     if (isSignup === 'success') {
       alert('signup success');
-      Router.push('/user');
+      Router.push('/');
     } else if (isSignup === 'failure') {
       alert('signup failure');
-      Router.push('/user');
+      Router.push('/');
     }
   }, [isSignup]);
 
@@ -101,7 +101,7 @@ const Signup = () => {
           <button onClick={onSignup}>SIGNUP</button>
         </div>
         <div className='link-container'>
-          <Link href='/user'>
+          <Link href='/'>
             <a>SINGIN</a>
           </Link>
         </div>

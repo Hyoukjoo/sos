@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import useInput from '../hook_utils/useInput';
 import { E_userActionType } from '../actionTypes/userType';
 import Link from 'next/link';
+import Router from 'next/router';
 
 const LoginForm = () => {
   const [userId, resetUserId, onChangeUserId] = useInput();

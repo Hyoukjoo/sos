@@ -1,13 +1,23 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-import SettingForm from './SettingForm';
+import SettingForm from './setting';
+import Router from 'next/router';
 
-const Profile: React.FC = () => {
+const Profile: React.FC<{ userId: string }> = ({ userId }) => {
   const [category, setCategory] = useState(null);
 
-  const userName = useSelector(state => (state as any).profile.userName);
-  const profileImage = useSelector(state => (state as any).profile.profileImage);
+  useEffect(() => {
+    const query = Router.query;
+    console.log('qeury', query);
+    if (query === {}) {
+      console.log('router');
+      Router.push(`/user/${userId}`);
+    }
+  }, []);
+
+  const userName = useSelector((state: any) => state.profile.userName);
+  const profileImage = useSelector((state: any) => state.profile.profileImage);
 
   const handleCategory = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const text = e.currentTarget.children[0].innerHTML;
@@ -18,16 +28,12 @@ const Profile: React.FC = () => {
     category => {
       switch (category) {
         case 'POST':
-          console.log('post');
           return;
         case 'FOLLOW':
-          console.log('FOLLOW');
           return;
         case 'FOLLOWER':
-          console.log('FOLLOWER');
           return;
         case 'GROUP':
-          console.log('GROUP');
           return;
         case 'SETTING':
           return <SettingForm />;
@@ -42,7 +48,9 @@ const Profile: React.FC = () => {
     <main className='Profile'>
       <header>
         <div className='profile-image' title='Change Profile Photo'>
-          <img src={`http://localhost:4000/${profileImage}`} alt='profileImage' />
+          {profileImage !== undefined && profileImage !== null ? (
+            <img src={`http://localhost:4000/${profileImage}`} alt='profileImage' />
+          ) : null}
         </div>
         <div className='profile-description'>
           <div className='username'>

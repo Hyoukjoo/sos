@@ -1,7 +1,12 @@
 import React, { memo } from 'react';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
 
 const HeadLine: React.FC = memo(() => {
+  const { userId } = useSelector((state: any) => state.user.myInfo);
+
+  console.log(userId);
+
   return (
     <nav className='HeadLine'>
       <div className='container'>
@@ -17,7 +22,7 @@ const HeadLine: React.FC = memo(() => {
         <div className='right'>
           <div />
           <div className='plus'>
-            <Link href='/add'>
+            <Link href={{ pathname: '/newpost' }}>
               <a>
                 <i className='material-icons md-36' style={{ fontSize: '2.2rem' }}>
                   add
@@ -35,7 +40,8 @@ const HeadLine: React.FC = memo(() => {
             </Link>
           </div>
           <div className='user'>
-            <Link href='/user'>
+            {/* <Link href={{ pathname: '/user' }}> */}
+            <Link href={{ pathname: '/user', query: userId }} as={`/user/${userId}`}>
               <a>
                 <i className='material-icons md-36' style={{ fontSize: '1.7rem' }}>
                   sentiment_satisfied_alt

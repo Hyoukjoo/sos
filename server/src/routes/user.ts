@@ -42,8 +42,7 @@ router.post('/signup', async (req, res, next) => {
 router.post(
   '/login',
   passport.authenticate('local', {
-    successRedirect: '/user/info',
-    failureMessage: 'fail'
+    successRedirect: '/user/info'
   })
 );
 

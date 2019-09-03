@@ -1,60 +1,45 @@
 import { NextContext, NextFC } from 'next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import LoginForm from '../containers/LoginForm';
+import Profile from '../components/profile/';
 import { E_groupActionType } from '../actionTypes/groupType';
 import { E_followActionType } from '../actionTypes/followType';
-import Profile from '../components/profile/Profile';
 import { E_profileActionType } from '../actionTypes/profileType';
 import { useEffect } from 'react';
+import Router from 'next/router';
 
 const User: NextFC = () => {
-  const myInfo = useSelector((state: any) => state.user.myInfo);
+  const { userId } = useSelector((state: any) => state.user.myInfo);
 
   useEffect(() => {
-    if (myInfo !== null) {
-      dispatch({
-        type: E_profileActionType.LOAD_PROFILE_INFO_REQUEST
-      });
-
-      dispatch({
-        type: E_groupActionType.LOAD_GROUP_INFO_REQUEST,
-        data: myInfo.userId
-      });
-
-      dispatch({
-        type: E_followActionType.LOAD_FOLLOW_INFO_REQUEST,
-        data: myInfo.userId
-      });
+    if (!userId) {
+      alert('Please Login');
+      Router.push('/');
     }
-  }, [myInfo]);
+  }, [userId]);
 
-  const dispatch = useDispatch();
-
-  return <div>{myInfo ? <Profile /> : <LoginForm />}</div>;
+  return <>{userId ? <Profile userId={userId} /> : <LoginForm />}</>;
 };
 
 User.getInitialProps = async (context: NextContext) => {
   const { store } = context as any;
 
-  const state = store.getState();
+  console.log('user get', context.query.id);
 
-  if (state.user.myInfo !== null) {
-    console.log('getInit');
-    store.dispatch({
-      type: E_profileActionType.LOAD_PROFILE_INFO_REQUEST
-    });
+  store.dispatch({
+    type: E_profileActionType.LOAD_PROFILE_INFO_REQUEST
+  });
 
-    store.dispatch({
-      type: E_groupActionType.LOAD_GROUP_INFO_REQUEST,
-      data: 't1'
-    });
+  store.dispatch({
+    type: E_groupActionType.LOAD_GROUP_INFO_REQUEST,
+    data: context.query.id
+  });
 
-    store.dispatch({
-      type: E_followActionType.LOAD_FOLLOW_INFO_REQUEST,
-      data: 't1'
-    });
-  }
+  store.dispatch({
+    type: E_followActionType.LOAD_FOLLOW_INFO_REQUEST,
+    data: context.query.id
+  });
 };
 
 export default User;

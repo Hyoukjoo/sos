@@ -24,6 +24,60 @@ router.get('/loadprofileinfo', async (req, res, next) => {
   }
 });
 
+router.post('/changeprofileimage', upload.array('image'), async (req, res, next) => {
+  try {
+    const updateProfile = await Profile.update(
+      {
+        profileImage: req.files[0].filename
+      },
+      { where: { userId: req.user } }
+    );
+
+    if (updateProfile[0] > 0) {
+      const newProfile: any = await Profile.findOne({ where: { userId: req.user }, attributes: ['profileImage'] });
+
+      const profile = { profileImage: newProfile.dataValues.profileImage };
+
+      console.log(profile);
+
+      res.json({ successMessage: 'Success Change Profile Image', profile });
+    } else {
+      res.json({ failMessage: 'Fail Change Profile Image' });
+    }
+  } catch (e) {
+    console.log(e);
+    res.send(e);
+  }
+});
+
+router.post('/changeusername', async (req, res, next) => {
+  try {
+    const updateProfile = await Profile.update(
+      {
+        userName: req.body.userName
+      },
+      {
+        where: { userId: req.user }
+      }
+    );
+
+    if (updateProfile[0] > 0) {
+      const newProfile: any = await Profile.findOne({ where: { userId: req.user }, attributes: ['userName'] });
+
+      const profile = { userName: newProfile.dataValues.userName };
+
+      console.log(profile);
+
+      res.json({ successMessage: 'Success Change User Name', profile });
+    } else {
+      res.json({ failMessage: 'Fail Change User Name' });
+    }
+  } catch (e) {
+    console.log(e);
+    res.send(e);
+  }
+});
+
 router.post('/changeprofileimagename', upload.array('image'), async (req, res, next) => {
   try {
     const updateProfile = await Profile.update(
@@ -69,9 +123,9 @@ router.post('/changepassword', async (req, res, next) => {
 
       await User.update({ password: hashNewPassword }, { where: { userId: req.user } });
 
-      res.end();
+      res.json({ successMessage: 'Success Change Password' });
     } else {
-      res.send({ message: 'Password is not matched' });
+      res.json({ failMessage: 'Password is not matched' });
     }
   } catch (e) {
     res.send(e);

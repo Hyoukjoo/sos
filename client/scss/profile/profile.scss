@@ -16,7 +16,7 @@ main.Profile {
       width: 150px;
       height: 150px;
       margin-right: 20px;
-      border: 1px solid rgb(177, 177, 177);
+      border: 1px solid #b1b1b1;
       border-radius: 50%;
       overflow: hidden;
 
@@ -48,9 +48,12 @@ main.Profile {
       padding-top: 10px;
       border-top: 2px solid #dddddd;
       cursor: pointer;
+
       &:hover {
         border-top: 2px solid #000;
+        font-weight: bold;
       }
+
       span {
         font-size: 0.9rem;
       }

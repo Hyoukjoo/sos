@@ -75,7 +75,7 @@ interface I_userLoginError {
 // load user info type definition
 
 interface I_loadUserInfo {
-  userid: string;
+  userId: string;
 }
 
 interface I_loadUserInfoRequest {
