@@ -1,6 +1,7 @@
 import produce from 'immer';
 
 import { E_profileActionType, I_profileAction } from '../actionTypes/profileType';
+import { E_userActionType } from '../actionTypes/userType';
 
 const initialState = {
   userName: null,
@@ -60,6 +61,13 @@ const profileReducer = (state = initialState, action: I_profileAction) => {
 
       case E_profileActionType.INITIALIZE_FAILURE_MESSAGE:
         draft.message = null;
+        break;
+
+      case E_userActionType.USER_LOGOUT_SUCCESS:
+        draft.userName = null;
+        draft.profileImage = null;
+        draft.message = null;
+        draft.error = null;
         break;
 
       default:

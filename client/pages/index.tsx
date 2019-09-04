@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NextFC } from 'next';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
@@ -6,11 +6,18 @@ import { useSelector } from 'react-redux';
 import { E_postActionType } from '../actionTypes/postType';
 import Feed from '../components/feed';
 import LoginForm from '../containers/LoginForm';
+import Router from 'next/router';
 
 const index: NextFC = () => {
   const { userId } = useSelector((state: any) => state.user.myInfo);
+  const { postData } = useSelector((state: any) => state.post);
 
-  return <>{userId ? <Feed /> : <LoginForm />}</>;
+  useEffect(() => {
+    console.log(E_postActionType.LOAD_POST_SUCCESS);
+    if (userId === null) Router.push('/login');
+  }, []);
+
+  return <>{userId ? <Feed postData={postData} /> : <LoginForm />}</>;
 };
 
 index.getInitialProps = async context => {

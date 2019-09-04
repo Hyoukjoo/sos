@@ -20,7 +20,7 @@ const Signup = () => {
   const isSignup = useSelector((state: any) => state.user.isSignup);
 
   useEffect(() => {
-    if (myInfo) Router.push('/');
+    if (myInfo.userId) Router.push('/');
   }, []);
 
   useEffect(() => {

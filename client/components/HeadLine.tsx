@@ -5,8 +5,6 @@ import { useSelector } from 'react-redux';
 const HeadLine: React.FC = memo(() => {
   const { userId } = useSelector((state: any) => state.user.myInfo);
 
-  console.log(userId);
-
   return (
     <nav className='HeadLine'>
       <div className='container'>

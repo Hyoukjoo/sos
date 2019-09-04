@@ -1,3 +1,5 @@
+import { E_userActionType } from './userType';
+
 export enum E_profileActionType {
   CHANGE_PROFILE_IMAGE_NAME_REQUEST = 'CHANGE_PROFILE_IMAGE_NAME_REQUEST',
   CHANGE_PROFILE_IMAGE_NAME_SUCCESS = 'CHANGE_PROFILE_IMAGE_NAME_SUCCESS',
@@ -29,63 +31,63 @@ interface I_changeProfileImageNameInfo {
 }
 
 interface I_changeProfileImageNameRequest {
-  type: typeof E_profileActionType.CHANGE_PROFILE_IMAGE_NAME_REQUEST;
+  type: E_profileActionType.CHANGE_PROFILE_IMAGE_NAME_REQUEST;
   data: I_changeProfileImageNameInfo;
 }
 
 interface I_changeProfileImageNameSuccesss {
-  type: typeof E_profileActionType.CHANGE_PROFILE_IMAGE_NAME_SUCCESS;
+  type: E_profileActionType.CHANGE_PROFILE_IMAGE_NAME_SUCCESS;
 }
 
 interface I_changeProfileImageNameFailure {
-  type: typeof E_profileActionType.CHANGE_PROFILE_IMAGE_NAME_FAILURE;
+  type: E_profileActionType.CHANGE_PROFILE_IMAGE_NAME_FAILURE;
   message: string;
 }
 
 interface I_changeProfileImageNameError {
-  type: typeof E_profileActionType.CHANGE_PROFILE_IMAGE_NAME_ERROR;
+  type: E_profileActionType.CHANGE_PROFILE_IMAGE_NAME_ERROR;
   error: Error;
 }
 
 interface I_changeProfileImageRequest {
-  type: typeof E_profileActionType.CHANGE_PROFILE_IMAGE_REQUEST;
+  type: E_profileActionType.CHANGE_PROFILE_IMAGE_REQUEST;
   data: Error;
 }
 
 interface I_changeProfileImageSuccess {
-  type: typeof E_profileActionType.CHANGE_PROFILE_IMAGE_SUCCESS;
+  type: E_profileActionType.CHANGE_PROFILE_IMAGE_SUCCESS;
   message: string;
   data: { profileImage: string };
 }
 
 interface I_changeProfileImageFailure {
-  type: typeof E_profileActionType.CHANGE_PROFILE_IMAGE_FAILURE;
+  type: E_profileActionType.CHANGE_PROFILE_IMAGE_FAILURE;
   message: string;
 }
 
 interface I_changeProfileImageError {
-  type: typeof E_profileActionType.CHANGE_PROFILE_IMAGE_ERROR;
+  type: E_profileActionType.CHANGE_PROFILE_IMAGE_ERROR;
   error: Error;
 }
 
 interface I_changeUserNameRequest {
-  type: typeof E_profileActionType.CHANGE_USER_NAME_REQUEST;
+  type: E_profileActionType.CHANGE_USER_NAME_REQUEST;
   data: string;
 }
 
 interface I_changeUserNameSuccess {
-  type: typeof E_profileActionType.CHANGE_USER_NAME_SUCCESS;
+  type: E_profileActionType.CHANGE_USER_NAME_SUCCESS;
   message: string;
   data: { userName: string };
 }
 
 interface I_changeUserNameFailure {
-  type: typeof E_profileActionType.CHANGE_USER_NAME_FAILURE;
+  type: E_profileActionType.CHANGE_USER_NAME_FAILURE;
   message: string;
 }
 
 interface I_changeUserNameError {
-  type: typeof E_profileActionType.CHANGE_USER_NAME_ERROR;
+  type: E_profileActionType.CHANGE_USER_NAME_ERROR;
   error: Error;
 }
 
@@ -95,51 +97,55 @@ interface I_changePasswordInfo {
 }
 
 interface I_changePasswordRequest {
-  type: typeof E_profileActionType.CHANGE_PASSWORD_REQUEST;
+  type: E_profileActionType.CHANGE_PASSWORD_REQUEST;
   data: I_changePasswordInfo;
 }
 
 interface I_changePasswordSuccess {
-  type: typeof E_profileActionType.CHANGE_PASSWORD_SUCCESS;
+  type: E_profileActionType.CHANGE_PASSWORD_SUCCESS;
   message: string;
 }
 
 interface I_changePasswordFailure {
-  type: typeof E_profileActionType.CHANGE_PASSWORD_FAILURE;
+  type: E_profileActionType.CHANGE_PASSWORD_FAILURE;
   message: string;
 }
 
 interface I_changePasswordError {
-  type: typeof E_profileActionType.CHANGE_PASSWORD_ERROR;
+  type: E_profileActionType.CHANGE_PASSWORD_ERROR;
   error: Error;
 }
 
 interface I_initializeFailureMessage {
-  type: typeof E_profileActionType.INITIALIZE_FAILURE_MESSAGE;
+  type: E_profileActionType.INITIALIZE_FAILURE_MESSAGE;
   message: string;
 }
 
 interface I_initializeFailureMessageRequest {
-  type: typeof E_profileActionType.INITIALIZE_FAILURE_MESSAGE_REQUEST;
+  type: E_profileActionType.INITIALIZE_FAILURE_MESSAGE_REQUEST;
 }
 
 interface I_loadProfileInfoRequest {
-  type: typeof E_profileActionType.LOAD_PROFILE_INFO_REQUEST;
+  type: E_profileActionType.LOAD_PROFILE_INFO_REQUEST;
 }
 
 interface I_loadProfileInfoSuccess {
-  type: typeof E_profileActionType.LOAD_PROFILE_INFO_SUCCESS;
+  type: E_profileActionType.LOAD_PROFILE_INFO_SUCCESS;
   data: { profileImage: string; userName: string };
 }
 
 interface I_loadProfileInfoFailure {
-  type: typeof E_profileActionType.LOAD_PROFILE_INFO_FAILURE;
+  type: E_profileActionType.LOAD_PROFILE_INFO_FAILURE;
   message: string;
 }
 
 interface I_loadProfileInfoError {
-  type: typeof E_profileActionType.LOAD_PROFILE_INFO_ERROR;
+  type: E_profileActionType.LOAD_PROFILE_INFO_ERROR;
   error: Error;
+}
+
+interface I_userLogoutSuccess {
+  type: E_userActionType.USER_LOGOUT_SUCCESS;
 }
 
 export type I_profileAction =
@@ -164,4 +170,5 @@ export type I_profileAction =
   | I_loadProfileInfoRequest
   | I_loadProfileInfoSuccess
   | I_loadProfileInfoFailure
-  | I_loadProfileInfoError;
+  | I_loadProfileInfoError
+  | I_userLogoutSuccess;

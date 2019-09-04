@@ -1,8 +1,7 @@
 import { Router } from 'express';
-import multer from 'multer';
 import { Op } from 'sequelize';
 
-import { Image, Group, Post, Tag, Like, Reply, Follow } from '../models';
+import { Image, Group, Post, Tag, Like, Reply, Follow, Profile, User } from '../models';
 import upload from '../utils/upload';
 import isLogin from '../utils/isLogin';
 
@@ -113,6 +112,18 @@ router.get('/', isLogin, async (req, res, next) => {
     },
     include: [
       {
+        model: User,
+        as: 'userPost',
+        attributes: ['userId'],
+        include: [
+          {
+            model: Profile,
+            as: 'userProfile',
+            attributes: ['userName', 'profileImage']
+          }
+        ]
+      },
+      {
         model: Like,
         as: 'postLike'
       },
@@ -122,9 +133,11 @@ router.get('/', isLogin, async (req, res, next) => {
       },
       {
         model: Image,
-        as: 'postImage'
+        as: 'postImage',
+        attributes: ['src']
       }
-    ]
+    ],
+    order: [['updatedAt', 'DESC']]
   });
 
   res.json(posts);

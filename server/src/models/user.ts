@@ -15,7 +15,7 @@ export class User extends Model<User> {
 
   public addPost!: Sequelize.HasManyAddAssociationMixin<Post, number>;
 
-  public readonly posts?: Post[];
+  public readonly userPost?: Post[];
   public readonly postLike?: Like[];
   public readonly userProfile?: Profile;
 
@@ -49,7 +49,7 @@ export const initUserModel = () => {
 };
 
 export const associateUser = () => {
-  User.hasMany(Post, { foreignKey: 'authorId', sourceKey: 'userId', as: 'posts' });
+  User.hasMany(Post, { foreignKey: 'authorId', sourceKey: 'userId', as: 'userPost' });
   User.hasMany(Like, { foreignKey: 'userId', sourceKey: 'userId', as: 'userLike' });
   User.hasOne(Profile, { foreignKey: 'userId', sourceKey: 'userId', as: 'userProfile' });
 

@@ -28,21 +28,21 @@ export interface I_userSingupInfo {
 }
 
 interface I_userSignupRequest {
-  type: typeof E_userActionType.USER_SIGNUP_REQUEST;
+  type: E_userActionType.USER_SIGNUP_REQUEST;
   data: I_userSingupInfo;
 }
 
 interface I_userSignupSuccess {
-  type: typeof E_userActionType.USER_SIGNUP_SUCCESS;
+  type: E_userActionType.USER_SIGNUP_SUCCESS;
 }
 
 interface I_userSignupFailure {
-  type: typeof E_userActionType.USER_SIGNUP_FAILURE;
+  type: E_userActionType.USER_SIGNUP_FAILURE;
   message: string;
 }
 
 interface I_userSignupError {
-  type: typeof E_userActionType.USER_SIGNUP_ERROR;
+  type: E_userActionType.USER_SIGNUP_ERROR;
   error: Error;
 }
 
@@ -54,21 +54,21 @@ export interface I_userLoginInfoType {
 }
 
 interface I_userLoginRequest {
-  type: typeof E_userActionType.USER_LOGIN_REQUEST;
+  type: E_userActionType.USER_LOGIN_REQUEST;
 }
 
 interface I_userLoginSuccess {
-  type: typeof E_userActionType.USER_LOGIN_SUCCESS;
+  type: E_userActionType.USER_LOGIN_SUCCESS;
   data: I_userLoginInfoType;
 }
 
 interface I_userLoginFailure {
-  type: typeof E_userActionType.USER_LOGIN_FAILURE;
+  type: E_userActionType.USER_LOGIN_FAILURE;
   message: string;
 }
 
 interface I_userLoginError {
-  type: typeof E_userActionType.USER_LOGIN_ERROR;
+  type: E_userActionType.USER_LOGIN_ERROR;
   error: Error;
 }
 
@@ -79,41 +79,41 @@ interface I_loadUserInfo {
 }
 
 interface I_loadUserInfoRequest {
-  type: typeof E_userActionType.LOAD_USER_INFO_REQUEST;
+  type: E_userActionType.LOAD_USER_INFO_REQUEST;
 }
 
 interface I_loadUserInfoSuccess {
-  type: typeof E_userActionType.LOAD_USER_INFO_SUCCESS;
+  type: E_userActionType.LOAD_USER_INFO_SUCCESS;
   data: I_loadUserInfo;
 }
 
 interface I_loadUserInfoFailure {
-  type: typeof E_userActionType.LOAD_USER_INFO_FAILURE;
+  type: E_userActionType.LOAD_USER_INFO_FAILURE;
   message: string;
 }
 
 interface I_loadUserInfoError {
-  type: typeof E_userActionType.LOAD_USER_INFO_ERROR;
+  type: E_userActionType.LOAD_USER_INFO_ERROR;
   error: Error;
 }
 
 //logout type definition
 
 interface I_userLogoutRequest {
-  type: typeof E_userActionType.USER_LOGOUT_REQUEST;
+  type: E_userActionType.USER_LOGOUT_REQUEST;
 }
 
 interface I_userLogoutSuccess {
-  type: typeof E_userActionType.USER_LOGOUT_SUCCESS;
+  type: E_userActionType.USER_LOGOUT_SUCCESS;
 }
 
 interface I_userLogoutFailure {
-  type: typeof E_userActionType.USER_LOGOUT_FAILURE;
+  type: E_userActionType.USER_LOGOUT_FAILURE;
   message: string;
 }
 
 interface I_userLogoutError {
-  type: typeof E_userActionType.USER_LOGOUT_ERROR;
+  type: E_userActionType.USER_LOGOUT_ERROR;
   error: Error;
 }
 

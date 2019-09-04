@@ -1,10 +1,11 @@
 import produce from 'immer';
 
 import { I_postAction, E_postActionType } from '../actionTypes/postType';
+import { E_userActionType } from '../actionTypes/userType';
 
 const InitialState = {
+  postData: null,
   loadPlaceData: null,
-  postsData: null,
   images: null,
   message: null,
   error: null
@@ -21,7 +22,7 @@ const postReducer = (state = InitialState, action: I_postAction) => {
         break;
 
       case E_postActionType.LOAD_POST_SUCCESS:
-        draft.postsData = action.data;
+        draft.postData = action.data;
         break;
 
       case E_postActionType.NEW_POST_FAILURE:
@@ -36,6 +37,14 @@ const postReducer = (state = InitialState, action: I_postAction) => {
 
       case E_postActionType.LOAD_PLACE_DATA:
         draft.loadPlaceData = action.data;
+        break;
+
+      case E_userActionType.USER_LOGOUT_SUCCESS:
+        draft.postData = null;
+        draft.loadPlaceData = null;
+        draft.images = null;
+        draft.message = null;
+        draft.error = null;
         break;
 
       default:

@@ -1,6 +1,7 @@
 import produce from 'immer';
 
 import { I_groupAction, E_groupActionType } from '../actionTypes/groupType';
+import { E_userActionType } from '../actionTypes/userType';
 
 const initialState = {
   myGroupInfo: null,
@@ -36,6 +37,13 @@ const groupReducer = (state = initialState, action: I_groupAction) => {
       case E_groupActionType.INVITE_GROUP_ERROR:
       case E_groupActionType.LOAD_GROUP_INFO_ERROR:
         draft.error = action.error;
+        break;
+
+      case E_userActionType.USER_LOGOUT_SUCCESS:
+        draft.myGroupInfo = null;
+        draft.myGroupNameList = null;
+        draft.message = null;
+        draft.error = null;
         break;
 
       default:

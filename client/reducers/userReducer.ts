@@ -32,6 +32,9 @@ const userReducer = (state = initialState, action: I_userAction) => {
 
       case E_userActionType.USER_LOGOUT_SUCCESS:
         draft.myInfo.userId = null;
+        draft.isSignup = null;
+        draft.message = null;
+        draft.error = null;
         break;
 
       case E_userActionType.USER_SIGNUP_ERROR:

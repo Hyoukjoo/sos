@@ -8,13 +8,10 @@ const Profile: React.FC<{ userId: string }> = ({ userId }) => {
   const [category, setCategory] = useState(null);
 
   useEffect(() => {
-    const query = Router.query;
-    console.log('qeury', query);
-    if (query === {}) {
-      console.log('router');
+    if (Router.query === {}) {
       Router.push(`/user/${userId}`);
     }
-  }, []);
+  }, [userId]);
 
   const userName = useSelector((state: any) => state.profile.userName);
   const profileImage = useSelector((state: any) => state.profile.profileImage);

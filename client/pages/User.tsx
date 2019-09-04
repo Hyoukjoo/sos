@@ -14,7 +14,6 @@ const User: NextFC = () => {
 
   useEffect(() => {
     if (!userId) {
-      alert('Please Login');
       Router.push('/');
     }
   }, [userId]);
@@ -24,8 +23,6 @@ const User: NextFC = () => {
 
 User.getInitialProps = async (context: NextContext) => {
   const { store } = context as any;
-
-  console.log('user get', context.query.id);
 
   store.dispatch({
     type: E_profileActionType.LOAD_PROFILE_INFO_REQUEST

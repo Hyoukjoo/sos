@@ -1,6 +1,7 @@
 import produce from 'immer';
 
-import { E_followActionType } from '../actionTypes/followType';
+import { E_followActionType, I_followAction } from '../actionTypes/followType';
+import { E_userActionType } from '../actionTypes/userType';
 
 const initialState = {
   followees: null,
@@ -9,7 +10,7 @@ const initialState = {
   error: null
 };
 
-const followReducer = (state = initialState, action) => {
+const followReducer = (state = initialState, action: I_followAction) => {
   return produce(state, draft => {
     switch (action.type) {
       case E_followActionType.FOLLOW_REQUEST:
@@ -32,6 +33,13 @@ const followReducer = (state = initialState, action) => {
       case E_followActionType.FOLLOW_ERROR:
       case E_followActionType.LOAD_FOLLOW_INFO_ERROR:
         draft.error = action.error;
+        break;
+
+      case E_userActionType.USER_LOGOUT_SUCCESS:
+        draft.followers = null;
+        draft.followees = null;
+        draft.message = null;
+        draft.error = null;
         break;
 
       default:

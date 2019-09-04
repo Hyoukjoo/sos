@@ -19,7 +19,11 @@ export const initImageModel = () => {
   Image.init(
     {
       postId: {
-        type: DataTypes.INTEGER.UNSIGNED
+        type: DataTypes.INTEGER.UNSIGNED,
+        references: {
+          model: Post,
+          key: 'postId'
+        }
       },
       src: {
         type: DataTypes.STRING,

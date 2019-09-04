@@ -1,50 +1,82 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 
-const Feed: React.FC = () => {
+interface I_props {
+  postData: [
+    {
+      postId: number;
+      authorId: string;
+      content: string;
+      startTime: string;
+      finishTime: string;
+      privacyBound: string;
+      userPost: { userId: string; userProfile: { userName: string; profileImage: string } };
+      postImage: [{ id: number; postId: number; src: string }];
+      postLike: [];
+      postReply: [];
+    }
+  ];
+}
+
+const Feed: React.FC<I_props> = ({ postData }) => {
+  const router = useRouter();
+  console.log(router);
   return (
     <main className='Feed'>
-      <article>
-        <header>
-          <div className='profile-image'>
-            <div className='image' />
-          </div>
-          <div className='profile-name'>
-            <span>jo920208</span>
-          </div>
-          <div className='period'>
-            <span>20 Aug / 31 Aug</span>
-          </div>
-        </header>
-        <div className='cover'>
-          <div className='content'>
-            <span>I will complete sealrock!</span>
-          </div>
-        </div>
-        <div className='image'>
-          <img src='https://www.almanac.com/sites/default/files/styles/primary_image_in_article/public/image_nodes/summer-heat-fan.jpg?itok=nzeudR0Q' />
-        </div>
-        <footer>
-          <div className='like-button'>
-            <span>like 12</span>
-          </div>
-          <div className='reply-button'>
-            <span>reply 3 </span>
-          </div>
-          <div className='option-button'>
-            <span>...</span>
-          </div>
-        </footer>
-        {/* <div className='reply'>
-          <div className='input-form'>
-            <input type='text' placeholder='댓글 쓰기...' />
-          </div>
-          <div className='button-form'>
-            <button>
-              <FontAwesomeIcon icon={faPenSquare} size='2x' />
-            </button>
-          </div>
-        </div> */}
-      </article>
+      {postData &&
+        postData.map(data => {
+          const startTime = new Date(Date.parse(data.startTime));
+          const finishTime = new Date(Date.parse(data.finishTime));
+          const formatTime = `${startTime.getMonth() + 1}월${startTime.getDate()}일 / ${finishTime.getMonth() +
+            1}월${finishTime.getDate()}일`;
+          console.log(data);
+          return (
+            <article key={data.postId}>
+              <header>
+                <div className='profile-image'>
+                  <div className='image'>
+                    <img src={`http://localhost:4000/${data.userPost.userProfile.profileImage}`} alt='' />
+                  </div>
+                </div>
+                <div className='profile-name'>
+                  <span>{data.userPost.userProfile.userName}</span>
+                </div>
+                <div className='period'>
+                  <span>{formatTime}</span>
+                </div>
+              </header>
+              <div className='cover'>
+                <div className='content'>
+                  <span>{data.content}</span>
+                </div>
+              </div>
+              <div className='image'>
+                {data.postImage[0] && <img src={`http://localhost:4000/${data.postImage[0].src}`} />}
+              </div>
+              <footer>
+                <div className='like-button'>
+                  <span>like {data.postLike.length}</span>
+                </div>
+                <div className='reply-button'>
+                  <span>reply {data.postReply.length}</span>
+                </div>
+                <div className='option-button'>
+                  <span>...</span>
+                </div>
+              </footer>
+              {/* <div className='reply'>
+              <div className='input-form'>
+                <input type='text' placeholder='댓글 쓰기...' />
+              </div>
+              <div className='button-form'>
+                <button>
+                  <FontAwesomeIcon icon={faPenSquare} size='2x' />
+                </button>
+              </div>
+            </div> */}
+            </article>
+          );
+        })}
     </main>
   );
 };

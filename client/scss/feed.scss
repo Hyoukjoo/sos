@@ -17,10 +17,18 @@ main.Feed {
 
       .profile-image {
         .image {
-          border: 0.5px solid #b1b1b1;
-          border-radius: 50%;
+          align-items: center;
           width: 35px;
           height: 35px;
+          border: 0.5px solid #b1b1b1;
+          border-radius: 50%;
+
+          img {
+            width: 100%;
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+          }
         }
       }
       .profile-name {

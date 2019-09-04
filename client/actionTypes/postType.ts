@@ -1,3 +1,5 @@
+import { E_userActionType } from './userType';
+
 export enum E_postActionType {
   NEW_POST_REQUEST = 'NEW_POST_REQUEST',
   NEW_POST_SUCCESS = 'NEW_POST_SUCCESS',
@@ -63,6 +65,10 @@ interface I_loadPlaceData {
   data: string;
 }
 
+interface I_userLogoutSuccess {
+  type: E_userActionType.USER_LOGOUT_SUCCESS;
+}
+
 export type I_postAction =
   | I_newPostRequest
   | I_newPostSuccess
@@ -72,4 +78,5 @@ export type I_postAction =
   | I_loadPostSuccess
   | I_loadPostFailure
   | I_loadPostError
-  | I_loadPlaceData;
+  | I_loadPlaceData
+  | I_userLogoutSuccess;

@@ -2,6 +2,7 @@ import { all, fork, call, put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
 import { E_userActionType, I_userSingupInfo, I_userLoginInfoType } from '../actionTypes/userType';
+import { E_postActionType } from '../actionTypes/postType';
 
 const signupAPI = async (data: I_userSingupInfo) => {
   return await axios.post('/user/signup', data, {

@@ -41,9 +41,9 @@ export class Post extends Model<Post> {
   public readonly postReply?: Reply[];
 
   public static associations: {
+    userPost: Sequelize.Association<User, Post>;
     postImage: Sequelize.Association<Post, Image>;
     postTag: Sequelize.Association<Post, Tag>;
-    user: Sequelize.Association<Post, User>;
     postLike: Sequelize.Association<Post, Like>;
     postReply: Sequelize.Association<Post, Reply>;
   };
@@ -85,7 +85,7 @@ export const initPostModel = () => {
 };
 
 export const associatePost = () => {
-  Post.belongsTo(User, { targetKey: 'userId', foreignKey: 'authorId' });
+  Post.belongsTo(User, { targetKey: 'userId', foreignKey: 'authorId', as: 'userPost' });
   Post.belongsToMany(Tag, { through: 'PostTag', as: 'postTag', foreignKey: 'postId' });
   Post.hasMany(Like, { sourceKey: 'postId', foreignKey: 'postId', as: 'postLike' });
   Post.hasMany(Reply, { sourceKey: 'postId', foreignKey: 'postId', as: 'postReply' });

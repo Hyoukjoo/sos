@@ -37,7 +37,6 @@ const loadPostAPI = async data => {
 function* loadPostRequest(action) {
   try {
     const result = yield call(loadPostAPI, action.data);
-    console.dir(result.data);
     yield put({
       type: E_postActionType.LOAD_POST_SUCCESS,
       data: result.data
