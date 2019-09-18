@@ -8,7 +8,8 @@ const InitialState = {
   loadPlaceData: null,
   images: null,
   message: null,
-  error: null
+  error: null,
+  isLikes: false
 };
 
 const postReducer = (state = InitialState, action: I_postAction) => {
@@ -16,6 +17,7 @@ const postReducer = (state = InitialState, action: I_postAction) => {
     switch (action.type) {
       case E_postActionType.NEW_POST_REQUEST:
       case E_postActionType.LOAD_POST_REQUEST:
+      case E_postActionType.POST_LIKE_REQUEST:
         break;
 
       case E_postActionType.NEW_POST_SUCCESS:
@@ -25,18 +27,35 @@ const postReducer = (state = InitialState, action: I_postAction) => {
         draft.postData = action.data;
         break;
 
+      case E_postActionType.POST_LIKE_SUCCESS:
+        console.log(action.data);
+        const postIndex = draft.postData.findIndex(v => v.postId === action.data.postId);
+        const likeIndex = draft.postData[postIndex].postLike.findIndex(v => v.authorId === action.data.authorId);
+
+        if (likeIndex === -1) draft.postData[postIndex].postLike.unshift(action.data);
+        else draft.postData[postIndex].postLike.splice(likeIndex, 1);
+
+        break;
+
       case E_postActionType.NEW_POST_FAILURE:
       case E_postActionType.LOAD_POST_FAILURE:
+      case E_postActionType.POST_LIKE_FAILURE:
         draft.message = action.message;
         break;
 
       case E_postActionType.NEW_POST_ERROR:
       case E_postActionType.LOAD_POST_ERROR:
+      case E_postActionType.POST_LIKE_ERROR:
         draft.error = action.error;
         break;
 
       case E_postActionType.LOAD_PLACE_DATA:
         draft.loadPlaceData = action.data;
+        break;
+
+      case E_postActionType.SHOW_LIKES:
+        if (draft.isLikes) draft.isLikes = false;
+        else draft.isLikes = true;
         break;
 
       case E_userActionType.USER_LOGOUT_SUCCESS:
@@ -45,6 +64,7 @@ const postReducer = (state = InitialState, action: I_postAction) => {
         draft.images = null;
         draft.message = null;
         draft.error = null;
+        draft.isLikes = false;
         break;
 
       default:

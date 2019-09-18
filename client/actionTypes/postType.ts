@@ -9,7 +9,16 @@ export enum E_postActionType {
   LOAD_POST_SUCCESS = 'LOAD_POST_SUCCESS',
   LOAD_POST_FAILURE = 'LOAD_POST_FAILURE',
   LOAD_POST_ERROR = 'LOAD_POST_ERROR',
-  LOAD_PLACE_DATA = 'LOAD_PLACE_DATA'
+  LOAD_PLACE_DATA = 'LOAD_PLACE_DATA',
+  SHOW_LIKES = 'SHOW_LIKES',
+  POST_LIKE_REQUEST = 'POST_LIKE_REQUEST',
+  POST_LIKE_SUCCESS = 'POST_LIKE_SUCCESS',
+  POST_LIKE_FAILURE = 'POST_LIKE_FAILURE',
+  POST_LIKE_ERROR = 'POST_LIKE_ERROR',
+  POST_REPLY_REQUEST = 'POST_REPLY_REQUEST',
+  POST_REPLY_SUCCESS = 'POST_REPLY_SUCCESS',
+  POST_REPLY_FAILURE = 'POST_REPLY_FAILURE',
+  POST_REPLY_ERROR = 'POST_REPLY_ERROR'
 }
 
 export interface I_postInfo {
@@ -65,8 +74,33 @@ interface I_loadPlaceData {
   data: string;
 }
 
+interface I_showLikes {
+  type: E_postActionType.SHOW_LIKES;
+  bool: boolean;
+}
+
 interface I_userLogoutSuccess {
   type: E_userActionType.USER_LOGOUT_SUCCESS;
+}
+
+interface I_postLikeRequest {
+  type: E_postActionType.POST_LIKE_REQUEST;
+  data: { postId: number };
+}
+
+interface I_postLikeSuccess {
+  type: E_postActionType.POST_LIKE_SUCCESS;
+  data: { postId: number; authorId: string };
+}
+
+interface I_postLikeFailure {
+  type: E_postActionType.POST_LIKE_FAILURE;
+  message: string;
+}
+
+interface I_postLikeError {
+  type: E_postActionType.POST_LIKE_ERROR;
+  error: Error;
 }
 
 export type I_postAction =
@@ -79,4 +113,9 @@ export type I_postAction =
   | I_loadPostFailure
   | I_loadPostError
   | I_loadPlaceData
-  | I_userLogoutSuccess;
+  | I_userLogoutSuccess
+  | I_showLikes
+  | I_postLikeRequest
+  | I_postLikeSuccess
+  | I_postLikeFailure
+  | I_postLikeError;

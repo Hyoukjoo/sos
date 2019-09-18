@@ -13,7 +13,6 @@ const index: NextFC = () => {
   const { postData } = useSelector((state: any) => state.post);
 
   useEffect(() => {
-    console.log(E_postActionType.LOAD_POST_SUCCESS);
     if (userId === null) Router.push('/login');
   }, []);
 

@@ -39,8 +39,6 @@ export const initGroupModel = () => {
       collate: 'utf8mb4_unicode_ci'
     }
   );
-
-  Group.removeAttribute('id');
 };
 
 export const associateGroup = () => {

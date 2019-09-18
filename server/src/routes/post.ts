@@ -25,7 +25,7 @@ router.post('/', isLogin, upload.array('image'), async (req, res, next) => {
     console.log(req.body);
 
     const newPost = await Post.create({
-      authorId: req.user,
+      userId: req.user,
       content: req.body.content,
       startTime: req.body.startTime === 'undefined' ? null : req.body.startTime,
       finishTime: req.body.finishTime === 'undefined' ? null : req.body.finishTime,
@@ -63,84 +63,147 @@ router.post('/', isLogin, upload.array('image'), async (req, res, next) => {
 });
 
 router.get('/', isLogin, async (req, res, next) => {
-  const groupData = await Group.findAll({
-    where: {
-      userId: req.user
-    },
-    attributes: ['groupName']
-  });
+  try{
 
-  const followeeData = await Follow.findAll({
-    where: {
-      followerId: req.user
-    },
-    attributes: ['followeeId']
-  });
-
-  const groups = groupData.map(result => result.groupName);
-
-  const followees = followeeData.map(result => result.followeeId);
-  const findUserId = [req.user, ...followees];
-
-  console.log(groups);
-  console.log(followees);
-  console.log(findUserId);
-
-  let reg = '';
-
-  for (let i = 0; i < groups.length; i++) {
-    reg += groups[i].replace(/\$/, '\\$\\b') + '\\b';
-    if (i !== groups.length - 1) reg += '|';
-  }
-
-  const posts = await Post.findAll({
-    where: {
-      [Op.and]: [
-        { authorId: req.user },
-        {
-          privacyBound: {
-            [Op.or]: [
-              null,
-              {
-                [Op.regexp]: reg
-              },
-              { [Op.like]: '%@' + req.user + '%' }
-            ]
-          }
-        }
-      ]
-    },
-    include: [
-      {
-        model: User,
-        as: 'userPost',
-        attributes: ['userId'],
-        include: [
+    const groupData = await Group.findAll({
+      where: {
+        userId: req.user
+      },
+      attributes: ['groupName']
+    });
+  
+    const followeeData = await Follow.findAll({
+      where: {
+        followerId: req.user
+      },
+      attributes: ['followeeId']
+    });
+  
+    const groups = groupData.map(result => result.groupName);
+  
+    const followees = followeeData.map(result => result.followeeId);
+    const findUserId = [req.user, ...followees];
+  
+    console.log(groups);
+    console.log(followees);
+    console.log(findUserId);
+  
+    let reg = '';
+  
+    for (let i = 0; i < groups.length; i++) {
+      reg += groups[i].replace(/\$/, '\\$\\b') + '\\b';
+      if (i !== groups.length - 1) reg += '|';
+    }
+  
+    const posts = await Post.findAll({
+      where: {
+        [Op.and]: [
+          { userId: req.user },
           {
-            model: Profile,
-            as: 'userProfile',
-            attributes: ['userName', 'profileImage']
+            privacyBound: {
+              [Op.or]: [
+                null,
+                {
+                  [Op.regexp]: reg
+                },
+                { [Op.like]: '%@' + req.user + '%' }
+              ]
+            }
           }
         ]
       },
-      {
-        model: Like,
-        as: 'postLike'
-      },
-      {
-        model: Reply,
-        as: 'postReply'
-      },
-      {
-        model: Image,
-        as: 'postImage',
-        attributes: ['src']
-      }
-    ],
-    order: [['updatedAt', 'DESC']]
-  });
+      include: [
+        {
+          model: User,
+          as: 'userPost',
+          attributes: ['userId'],
+          include: [
+            {
+              model: Profile,
+              as: 'userProfile',
+              attributes: ['userName', 'profileImage']
+            }
+          ]
+        },
+        {
+          model: Like,
+          as: 'postLike'
+        },
+        {
+          model: Reply,
+          as: 'postReply'
+        },
+        {
+          model: Image,
+          as: 'postImage',
+          attributes: ['src']
+        }
+      ],
+      order: [['updatedAt', 'DESC']]
+    });
+  
+    res.json(posts);
+  } catch(e) {
+    console.log(e);
+    res.send(e);
+  }
+});
 
-  res.json(posts);
+router.post('/like', async (req, res, next) => {
+  try {
+    const postId = req.body.postId;
+
+    const data = await Like.findOne({ where: { postId } });
+    console.log(data);
+
+    if (data) {
+      await Like.destroy({ where: { postId } });
+    } else {
+      await Like.create({
+        postId,
+        userId: req.user
+      });
+    }
+
+    const newData = await Post.findOne({
+      where: { postId },
+      include: [
+        {
+          model: User,
+          as: 'userPost',
+          attributes: ['userId'],
+          include: [
+            {
+              model: Profile,
+              as: 'userProfile',
+              attributes: ['userName', 'profileImage']
+            }
+          ]
+        },
+        {
+          model: Like,
+          as: 'postLike'
+        },
+        {
+          model: Reply,
+          as: 'postReply'
+        },
+        {
+          model: Image,
+          as: 'postImage',
+          attributes: ['src']
+        }
+      ],
+      order: [['updatedAt', 'DESC']]
+    });
+
+    console.log(newData);
+
+    res.json(newData);
+  } catch (e) {
+    console.log(e);
+    res.send(e);
+  }
 });
 
 export default router;

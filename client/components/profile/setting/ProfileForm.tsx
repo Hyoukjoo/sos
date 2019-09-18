@@ -11,8 +11,6 @@ const ProfileForm: React.FC = () => {
   const profileImage = useSelector((state: any) => state.profile.profileImage);
   const failureMessage = useSelector((state: any) => state.profile.message);
 
-  const [exImage, setExImage] = useState(`http://localhost:4000/${profileImage}`);
-
   const [newUserName, resetNewUserName, onChangeNewUsereName] = useInput(userName);
 
   useEffect(() => {
@@ -25,8 +23,6 @@ const ProfileForm: React.FC = () => {
   }, [failureMessage]);
 
   const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setExImage(URL.createObjectURL(e.target.files[0]));
-
     const data = new FormData();
 
     const image = e.target.files[0];
@@ -53,7 +49,9 @@ const ProfileForm: React.FC = () => {
       <div className='set-profile-image'>
         <label htmlFor='upload-profile-image'>
           <div className='image' title='Change Profile Photo'>
-            <img src={exImage} alt='profileImage' />
+            {profileImage !== undefined && profileImage !== null ? (
+              <img src={`http://localhost:4000/${profileImage}`} alt='profileImage' />
+            ) : null}
           </div>
           <input type='file' name='' id='upload-profile-image' onChange={handleImage} />
         </label>

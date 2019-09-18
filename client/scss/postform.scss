@@ -15,7 +15,6 @@ main.Post-form {
       grid-template-columns: 10% auto 20%;
 
       div.cancel-button {
-        // height: 100%;
         justify-items: center;
 
         button {
@@ -77,10 +76,18 @@ main.Post-form {
         padding: 10px 0px;
 
         div.profile-image {
-          width: 40px;
-          height: 40px;
-          border: 1px solid #f0f0f0;
+          align-items: center;
+          width: 35px;
+          height: 35px;
+          border: 0.5px solid #b1b1b1;
           border-radius: 50%;
+          overflow: hidden;
+
+          img {
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+          }
         }
 
         div.profile-name {

@@ -58,7 +58,7 @@ export const initPostModel = () => {
         primaryKey: true,
         allowNull: false
       },
-      authorId: {
+      userId: {
         type: DataTypes.STRING,
         allowNull: false
       },
@@ -85,7 +85,7 @@ export const initPostModel = () => {
 };
 
 export const associatePost = () => {
-  Post.belongsTo(User, { targetKey: 'userId', foreignKey: 'authorId', as: 'userPost' });
+  Post.belongsTo(User, { targetKey: 'userId', foreignKey: 'userId', as: 'userPost' });
   Post.belongsToMany(Tag, { through: 'PostTag', as: 'postTag', foreignKey: 'postId' });
   Post.hasMany(Like, { sourceKey: 'postId', foreignKey: 'postId', as: 'postLike' });
   Post.hasMany(Reply, { sourceKey: 'postId', foreignKey: 'postId', as: 'postReply' });

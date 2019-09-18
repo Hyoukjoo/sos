@@ -53,6 +53,34 @@ function* watchLoadPost() {
   yield takeLatest(E_postActionType.LOAD_POST_REQUEST, loadPostRequest);
 }
 
+const postLikeAPI = async data => axios.post('/post/like', data, { withCredentials: true });
+
+function* postLikeRequest(action) {
+  try {
+    const result = yield call(postLikeAPI, action.data);
+    if (result.data.message === undefined) {
+      yield put({
+        type: E_postActionType.POST_LIKE_SUCCESS,
+        data: result.data
+      });
+    } else {
+      yield put({
+        type: E_postActionType.POST_LIKE_FAILURE,
+        message: result.data.message
+      });
+    }
+  } catch (e) {
+    yield put({
+      type: E_postActionType.POST_LIKE_ERROR,
+      error: e
+    });
+  }
+}
+
+function* watchPostLike() {
+  yield takeLatest(E_postActionType.POST_LIKE_REQUEST, postLikeRequest);
+}
+
 export default function* postSaga() {
-  yield all([fork(watchAddPost), fork(watchLoadPost)]);
+  yield all([fork(watchAddPost), fork(watchLoadPost), fork(watchPostLike)]);
 }

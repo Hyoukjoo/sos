@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import useInput from '../../hook_utils/useInput';
 import { E_postActionType } from '../../actionTypes/postType';
@@ -7,11 +7,8 @@ import { E_postActionType } from '../../actionTypes/postType';
 import PreviewImages from '../utils/PreviewImages';
 
 import DayPicker from 'react-day-picker';
-import '../../css/day-picker.css';
 
 import TimePicker from 'react-times';
-import '../../css/classic/default.css';
-import '../../css/material/default.css';
 
 const PostForm: React.FC = () => {
   const dispatch = useDispatch();
@@ -38,6 +35,8 @@ const PostForm: React.FC = () => {
   const [isImage, setIsImage] = useState(false);
   const [imageURL, setImageURL] = useState(null);
   const [image, setImage] = useState(null);
+
+  const profileImage = useSelector((state: any) => state.profile.profileImage);
 
   useEffect(() => {
     if (!clickStartTime && !clickFinishTime) setCnContent('text-content');
@@ -155,7 +154,11 @@ const PostForm: React.FC = () => {
 
         <div className='post-container'>
           <header>
-            <div className='profile-image' />
+            <div className='profile-image'>
+              {profileImage !== undefined && profileImage !== null ? (
+                <img src={`http://localhost:4000/${profileImage}`} alt='profileImage' />
+              ) : null}
+            </div>
             <div className='profile-name'>jo920208</div>
             <div className='period'>
               <div className='start-time'>

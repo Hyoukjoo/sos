@@ -49,7 +49,7 @@ export const initUserModel = () => {
 };
 
 export const associateUser = () => {
-  User.hasMany(Post, { foreignKey: 'authorId', sourceKey: 'userId', as: 'userPost' });
+  User.hasMany(Post, { foreignKey: 'userId', sourceKey: 'userId', as: 'userPost' });
   User.hasMany(Like, { foreignKey: 'userId', sourceKey: 'userId', as: 'userLike' });
   User.hasOne(Profile, { foreignKey: 'userId', sourceKey: 'userId', as: 'userProfile' });
 

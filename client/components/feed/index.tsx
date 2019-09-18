@@ -1,5 +1,7 @@
-import React from 'react';
-import { useRouter } from 'next/router';
+import React, { MouseEvent } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { E_postActionType } from '../../actionTypes/postType';
 
 interface I_props {
   postData: [
@@ -12,15 +14,30 @@ interface I_props {
       privacyBound: string;
       userPost: { userId: string; userProfile: { userName: string; profileImage: string } };
       postImage: [{ id: number; postId: number; src: string }];
-      postLike: [];
+      postLike: [{ id: number; postId: number; userId: string }];
       postReply: [];
     }
   ];
 }
 
 const Feed: React.FC<I_props> = ({ postData }) => {
-  const router = useRouter();
-  console.log(router);
+  const dispatch = useDispatch();
+
+  const userId = useSelector((state: any) => state.user.myInfo.userId);
+
+  const handleLikes = () => {
+    dispatch({
+      type: E_postActionType.SHOW_LIKES
+    });
+  };
+
+  const clickLike = (postId: number) => {
+    dispatch({
+      type: E_postActionType.POST_LIKE_REQUEST,
+      data: { postId }
+    });
+  };
+
   return (
     <main className='Feed'>
       {postData &&
@@ -29,7 +46,6 @@ const Feed: React.FC<I_props> = ({ postData }) => {
           const finishTime = new Date(Date.parse(data.finishTime));
           const formatTime = `${startTime.getMonth() + 1}월${startTime.getDate()}일 / ${finishTime.getMonth() +
             1}월${finishTime.getDate()}일`;
-          console.log(data);
           return (
             <article key={data.postId}>
               <header>
@@ -54,26 +70,34 @@ const Feed: React.FC<I_props> = ({ postData }) => {
                 {data.postImage[0] && <img src={`http://localhost:4000/${data.postImage[0].src}`} />}
               </div>
               <footer>
-                <div className='like-button'>
-                  <span>like {data.postLike.length}</span>
+                <div className='button-div'>
+                  <div
+                    onClick={() => {
+                      clickLike(data.postId);
+                    }}
+                  >
+                    <i className='material-icons '>favorite_border</i>
+                  </div>
+                  <span onClick={handleLikes}>{data.postLike.length}</span>
                 </div>
-                <div className='reply-button'>
-                  <span>reply {data.postReply.length}</span>
+                <div className='button-div'>
+                  <div>
+                    <i className='material-icons md-light'>sms</i>
+                  </div>
+                  <span>{data.postReply.length}</span>
                 </div>
                 <div className='option-button'>
                   <span>...</span>
                 </div>
               </footer>
               {/* <div className='reply'>
-              <div className='input-form'>
-                <input type='text' placeholder='댓글 쓰기...' />
-              </div>
-              <div className='button-form'>
-                <button>
-                  <FontAwesomeIcon icon={faPenSquare} size='2x' />
-                </button>
-              </div>
-            </div> */}
+                <div className='input-form'>
+                  <input type='text' placeholder='Add a comment...' />
+                </div>
+                <div className='button-form'>
+                  <button></button>
+                </div>
+              </div> */}
             </article>
           );
         })}
