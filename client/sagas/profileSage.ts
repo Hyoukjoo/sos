@@ -9,25 +9,25 @@ function* loadProfileInfo() {
     const result = yield call(loadProfileInfoAPI);
     if (result.data.message !== undefined) {
       yield put({
-        type: E_profileActionType.LOAD_PROFILE_INFO_FAILURE,
+        type: E_profileActionType.LOAD_MY_PROFILE_INFO_FAILURE,
         message: result.data.message
       });
     } else {
       yield put({
-        type: E_profileActionType.LOAD_PROFILE_INFO_SUCCESS,
+        type: E_profileActionType.LOAD_MY_PROFILE_INFO_SUCCESS,
         data: result.data
       });
     }
   } catch (e) {
     yield put({
-      type: E_profileActionType.LOAD_PROFILE_INFO_ERROR,
+      type: E_profileActionType.LOAD_MY_PROFILE_INFO_ERROR,
       error: e
     });
   }
 }
 
 function* watchLoadProfileInfo() {
-  yield takeLatest(E_profileActionType.LOAD_PROFILE_INFO_REQUEST, loadProfileInfo);
+  yield takeLatest(E_profileActionType.LOAD_MY_PROFILE_INFO_REQUEST, loadProfileInfo);
 }
 
 const changeProfileImageAPI = async data => axios.post('/profile/changeprofileimage', data, { withCredentials: true });

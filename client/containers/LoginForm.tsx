@@ -19,7 +19,7 @@ const LoginForm = () => {
 
   const onLogin = useCallback(() => {
     if (!userId.trim() || !password.trim()) {
-      console.log('input your id');
+      alert('input your id');
       return;
     }
 

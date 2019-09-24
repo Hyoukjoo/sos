@@ -38,7 +38,6 @@ const HeadLine: React.FC = memo(() => {
             </Link>
           </div>
           <div className='user'>
-            {/* <Link href={{ pathname: '/user' }}> */}
             <Link href={{ pathname: '/user', query: userId }} as={`/user/${userId}`}>
               <a>
                 <i className='material-icons md-36' style={{ fontSize: '1.7rem' }}>

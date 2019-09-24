@@ -10,6 +10,9 @@ import { config } from 'dotenv';
 import Layout from '../components/Layout';
 import { makeStore } from '../store';
 import { E_userActionType } from '../actionTypes/userType';
+import { E_profileActionType } from '../actionTypes/profileType';
+import { E_groupActionType } from '../actionTypes/groupType';
+import { E_followActionType } from '../actionTypes/followType';
 
 class MyApp extends App<AppProps> {
   static getInitialProps = async ({ Component, ctx }: NextAppContext) => {
@@ -23,11 +26,21 @@ class MyApp extends App<AppProps> {
 
     const state = store.getState();
 
-    if (!state.user.myInfo.userId) {
+    const { userId } = state.user.myInfo;
+
+    if (!userId) {
       store.dispatch({
         type: E_userActionType.LOAD_USER_INFO_REQUEST
       });
     }
+
+    store.dispatch({
+      type: E_profileActionType.LOAD_MY_PROFILE_INFO_REQUEST
+    });
+
+    store.dispatch({
+      type: E_followActionType.LOAD_MY_FOLLOW_INFO_REQUEST
+    });
 
     const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
 

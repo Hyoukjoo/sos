@@ -28,9 +28,6 @@ router.post('/signup', async (req, res, next) => {
       userName: req.body.userName
     });
 
-    console.log(newUser);
-    console.log(newProfile);
-
     res.json(newUser);
   } catch (e) {
     console.log(e);

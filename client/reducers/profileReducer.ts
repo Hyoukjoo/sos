@@ -2,8 +2,9 @@ import produce from 'immer';
 
 import { E_profileActionType, I_profileAction } from '../actionTypes/profileType';
 import { E_userActionType } from '../actionTypes/userType';
+import { I_profileState } from '../actionTypes';
 
-const initialState = {
+const initialState: I_profileState = {
   userName: null,
   profileImage: null,
   message: null,
@@ -21,7 +22,7 @@ const profileReducer = (state = initialState, action: I_profileAction) => {
         draft.error = null;
         break;
 
-      case E_profileActionType.LOAD_PROFILE_INFO_REQUEST:
+      case E_profileActionType.LOAD_MY_PROFILE_INFO_REQUEST:
         break;
 
       case E_profileActionType.CHANGE_PROFILE_IMAGE_SUCCESS:
@@ -38,7 +39,7 @@ const profileReducer = (state = initialState, action: I_profileAction) => {
         draft.message = action.message;
         break;
 
-      case E_profileActionType.LOAD_PROFILE_INFO_SUCCESS:
+      case E_profileActionType.LOAD_MY_PROFILE_INFO_SUCCESS:
         draft.profileImage = action.data.profileImage;
         draft.userName = action.data.userName;
         break;
@@ -47,7 +48,7 @@ const profileReducer = (state = initialState, action: I_profileAction) => {
       case E_profileActionType.CHANGE_PROFILE_IMAGE_FAILURE:
       case E_profileActionType.CHANGE_USER_NAME_FAILURE:
       case E_profileActionType.CHANGE_PASSWORD_FAILURE:
-      case E_profileActionType.LOAD_PROFILE_INFO_FAILURE:
+      case E_profileActionType.LOAD_MY_PROFILE_INFO_FAILURE:
         draft.message = action.message;
         break;
 
@@ -55,7 +56,7 @@ const profileReducer = (state = initialState, action: I_profileAction) => {
       case E_profileActionType.CHANGE_PROFILE_IMAGE_ERROR:
       case E_profileActionType.CHANGE_USER_NAME_ERROR:
       case E_profileActionType.CHANGE_PASSWORD_ERROR:
-      case E_profileActionType.LOAD_PROFILE_INFO_ERROR:
+      case E_profileActionType.LOAD_MY_PROFILE_INFO_ERROR:
         draft.error = action.error;
         break;
 

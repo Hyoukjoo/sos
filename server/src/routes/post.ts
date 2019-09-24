@@ -84,10 +84,6 @@ router.get('/', isLogin, async (req, res, next) => {
     const followees = followeeData.map(result => result.followeeId);
     const findUserId = [req.user, ...followees];
   
-    console.log(groups);
-    console.log(followees);
-    console.log(findUserId);
-  
     let reg = '';
   
     for (let i = 0; i < groups.length; i++) {
@@ -127,7 +123,15 @@ router.get('/', isLogin, async (req, res, next) => {
         },
         {
           model: Like,
-          as: 'postLike'
+          as: 'postLike',
+          attributes: ['postId', 'userId'],
+          include: [
+            {
+              model: Profile,
+              as: 'likeUserProfile',
+              attributes: ['userName', 'profileImage']
+            }
+          ]
         },
         {
           model: Reply,

@@ -1,40 +1,27 @@
 import React from 'react';
 import { NextFC } from 'next';
 import HeadLine from './HeadLine';
-import { useDispatch } from 'react-redux';
 
-import { E_postActionType } from '../actionTypes/postType';
+import { useSelector } from 'react-redux';
+import I_state from '../actionTypes';
 
 import '../scss/styles.scss';
 
 import '../css/day-picker.css';
 import '../css/classic/default.css';
 import '../css/material/default.css';
-import { useSelector } from 'react-redux';
+import Like from './like';
 
 const Layout: NextFC = ({ children }) => {
-  const { isLikes } = useSelector((state: any) => state.post);
-  const likes = useSelector((state: any) => state.post.postData);
-
-  const dispatch = useDispatch();
-
-  const handleLikes = () => {
-    dispatch({
-      type: E_postActionType.SHOW_LIKES
-    });
-  };
+  const { isLikes } = useSelector((state: I_state) => state.post);
 
   return (
     <div>
       <section className='app'>
         <HeadLine />
+        {isLikes && <Like />}
         {children}
       </section>
-      {isLikes && (
-        <div id='Likes' onClick={handleLikes}>
-          <div className='likes-container'></div>
-        </div>
-      )}
     </div>
   );
 };

@@ -1,23 +1,11 @@
-import React, { MouseEvent } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { E_postActionType } from '../../actionTypes/postType';
+import { I_postData } from '../../actionTypes';
 
 interface I_props {
-  postData: [
-    {
-      postId: number;
-      authorId: string;
-      content: string;
-      startTime: string;
-      finishTime: string;
-      privacyBound: string;
-      userPost: { userId: string; userProfile: { userName: string; profileImage: string } };
-      postImage: [{ id: number; postId: number; src: string }];
-      postLike: [{ id: number; postId: number; userId: string }];
-      postReply: [];
-    }
-  ];
+  postData: I_postData[];
 }
 
 const Feed: React.FC<I_props> = ({ postData }) => {
@@ -25,9 +13,10 @@ const Feed: React.FC<I_props> = ({ postData }) => {
 
   const userId = useSelector((state: any) => state.user.myInfo.userId);
 
-  const handleLikes = () => {
+  const handleLikes = (postData: I_postData) => {
     dispatch({
-      type: E_postActionType.SHOW_LIKES
+      type: E_postActionType.SHOW_LIKES,
+      data: { postData }
     });
   };
 
@@ -71,14 +60,10 @@ const Feed: React.FC<I_props> = ({ postData }) => {
               </div>
               <footer>
                 <div className='button-div'>
-                  <div
-                    onClick={() => {
-                      clickLike(data.postId);
-                    }}
-                  >
+                  <div onClick={() => clickLike(data.postId)}>
                     <i className='material-icons '>favorite_border</i>
                   </div>
-                  <span onClick={handleLikes}>{data.postLike.length}</span>
+                  <span onClick={() => handleLikes(data)}>{data.postLike.length}</span>
                 </div>
                 <div className='button-div'>
                   <div>

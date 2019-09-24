@@ -8,11 +8,18 @@ const followAPI = async data => await axios.post('/follow', data, { withCredenti
 function* followRequest(action) {
   try {
     const result = yield call(followAPI, action.data);
-    yield put({
-      type: E_followActionType.FOLLOW_SUCCESS
-    });
+    if (!result.data.failMessage) {
+      yield put({
+        type: E_followActionType.FOLLOW_SUCCESS,
+        data: result.data
+      });
+    } else {
+      yield put({
+        type: E_followActionType.FOLLOW_FAILURE,
+        message: result.data.failMessage
+      });
+    }
   } catch (e) {
-    console.error(e);
     yield put({
       type: E_followActionType.FOLLOW_ERROR,
       error: e
@@ -24,27 +31,58 @@ function* watchFollow() {
   yield takeLatest(E_followActionType.FOLLOW_REQUEST, followRequest);
 }
 
-const loadFollowersAPI = async data => await axios.get(`/follow/${data}`);
+const unFollowAPI = async data => await axios.delete('/follow', { withCredentials: true, data });
 
-function* loadFollowersRequest(action) {
+function* unFollowRequest(action) {
   try {
-    const result = yield call(loadFollowersAPI, action.data);
-    yield put({
-      type: E_followActionType.LOAD_FOLLOW_INFO_SUCCESS,
-      data: result.data
-    });
+    const result = yield call(unFollowAPI, action.data);
+    if (!result.data.failMessage) {
+      console.log('saga - success unfollow');
+      yield put({
+        type: E_followActionType.UNFOLLOW_SUCCESS,
+        message: result.data.successMessage,
+        data: { followeeId: result.data.followeeId }
+      });
+    } else {
+      yield put({
+        type: E_followActionType.UNFOLLOW_FAILURE,
+        message: result.data.failMessage
+      });
+    }
   } catch (e) {
     yield put({
-      type: E_followActionType.LOAD_FOLLOW_INFO_ERROR,
+      type: E_followActionType.UNFOLLOW_ERROR,
       error: e
     });
   }
 }
 
-function* watchLoadFollowers() {
-  yield takeLatest(E_followActionType.LOAD_FOLLOW_INFO_REQUEST, loadFollowersRequest);
+function* watchUnFollow() {
+  yield takeLatest(E_followActionType.UNFOLLOW_REQUEST, unFollowRequest);
+}
+
+const loadMyFollowInfoAPI = async () => await axios.get(`/follow`, { withCredentials: true });
+
+function* loadMyFollowInfoRequest() {
+  try {
+    const result = yield call(loadMyFollowInfoAPI);
+    console.log(result.data);
+    yield put({
+      type: E_followActionType.LOAD_MY_FOLLOW_INFO_SUCCESS,
+      data: result.data
+    });
+  } catch (e) {
+    yield put({
+      type: E_followActionType.LOAD_MY_FOLLOW_INFO_ERROR,
+      error: e
+    });
+  }
+}
+
+function* watchLoadMyFollowInfo() {
+  yield takeLatest(E_followActionType.LOAD_MY_FOLLOW_INFO_REQUEST, loadMyFollowInfoRequest);
 }
 
 export default function* followSaga() {
-  yield all([fork(watchFollow), fork(watchLoadFollowers)]);
+  yield all([fork(watchFollow), fork(watchLoadMyFollowInfo), fork(watchUnFollow)]);
 }

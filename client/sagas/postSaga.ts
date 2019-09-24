@@ -30,13 +30,13 @@ function* watchAddPost() {
   yield takeLatest(E_postActionType.NEW_POST_REQUEST, newPostRequest);
 }
 
-const loadPostAPI = async data => {
+const loadPostAPI = async () => {
   return await axios.get('/post', { withCredentials: true });
 };
 
-function* loadPostRequest(action) {
+function* loadPostRequest() {
   try {
-    const result = yield call(loadPostAPI, action.data);
+    const result = yield call(loadPostAPI);
     yield put({
       type: E_postActionType.LOAD_POST_SUCCESS,
       data: result.data

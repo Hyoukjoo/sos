@@ -115,3 +115,14 @@
 9. [ ] 19.09.03 TODO: 로그아웃 했을 때 STATE 초기화 하기. (로그인 정보가 없으면 자동으로 사라질지도)
 10. [ ] 19.09.04 TODO: feed component들을 분리하기(너무 복잡해)
 11. [ ] 19.09.04 TODO: time-picker css를 상위 컴포넌트(layout?)로 옮기기(import 시기를 당기기 위해서 안그러면 로딩이 느리다.)
+12. [V] 19.09.18 TODO: state type 정해주기
+13. [V] 19.09.18 TODO: LIKE LIST PAGE 외부 클릭으로 나가기
+14. [ ] 19.09.19 TODO: 시간 설정하지 않았을 때 기본 값 또는 시간이 없는 값으로 설정하는 고려 및 구현
+15. [ ] 19.09.19 TODO: followtype.ts interface 이름 확인 및 재설정
+16. [ ] 19.09.19 TODO: follow 정보 가져오는 구조 재설정
+17. [ ] 19.09.19 TODO: userId와 username을 구분하고 username으로 활용되도록(ex. 주소창 정보 등)
+
+
+## ISSUE:
+
+1. 19.09.24 ISSUE: user 정보가 없을 때 follow 정보를 요청하기 때문에 서버에서 에러가 발생한다.

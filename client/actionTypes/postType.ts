@@ -1,4 +1,5 @@
 import { E_userActionType } from './userType';
+import { I_postData } from '.';
 
 export enum E_postActionType {
   NEW_POST_REQUEST = 'NEW_POST_REQUEST',
@@ -21,7 +22,7 @@ export enum E_postActionType {
   POST_REPLY_ERROR = 'POST_REPLY_ERROR'
 }
 
-export interface I_postInfo {
+interface I_postInfo {
   title: string;
   images: string;
   start_time?: string;
@@ -56,7 +57,7 @@ interface I_loadPostRequest {
 
 interface I_loadPostSuccess {
   type: E_postActionType.LOAD_POST_SUCCESS;
-  data: I_postInfo;
+  data: I_postData[];
 }
 
 interface I_loadPostFailure {
@@ -76,7 +77,7 @@ interface I_loadPlaceData {
 
 interface I_showLikes {
   type: E_postActionType.SHOW_LIKES;
-  bool: boolean;
+  data: { postData: I_postData };
 }
 
 interface I_userLogoutSuccess {
@@ -90,7 +91,7 @@ interface I_postLikeRequest {
 
 interface I_postLikeSuccess {
   type: E_postActionType.POST_LIKE_SUCCESS;
-  data: { postId: number; authorId: string };
+  data: { postId: number; userId: string };
 }
 
 interface I_postLikeFailure {

@@ -3,6 +3,7 @@ import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '.';
 import { Post } from './post';
 import { User } from './user';
+import { Profile } from './profile';
 
 export class Like extends Model {
   public postId!: number;
@@ -36,6 +37,7 @@ export const initLikeModel = () => {
 export const associateLike = () => {
   Like.belongsTo(User, { targetKey: 'userId', foreignKey: 'userId', as: 'userLike' });
   Like.belongsTo(Post, { targetKey: 'postId', foreignKey: 'postId', as: 'postLike' });
+  Like.hasOne(Profile, { sourceKey: 'userId', foreignKey: 'userId', as: 'likeUserProfile' });
 
   return Like;
 };

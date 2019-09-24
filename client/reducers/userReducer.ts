@@ -1,8 +1,9 @@
 import produce from 'immer';
 
 import { I_userAction, E_userActionType } from '../actionTypes/userType';
+import { I_userState } from '../actionTypes';
 
-const initialState = {
+const initialState: I_userState = {
   myInfo: {
     userId: null
   },

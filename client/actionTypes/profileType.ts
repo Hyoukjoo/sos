@@ -19,10 +19,10 @@ export enum E_profileActionType {
   CHANGE_PASSWORD_ERROR = 'CHANGE_PASSWORD_ERROR',
   INITIALIZE_FAILURE_MESSAGE = 'INITIALIZE_FAILURE_MESSAGE',
   INITIALIZE_FAILURE_MESSAGE_REQUEST = 'INITIALIZE_FAILURE_MESSAGE_REQUEST',
-  LOAD_PROFILE_INFO_REQUEST = 'LOAD_PROFILE_INFO_REQUEST',
-  LOAD_PROFILE_INFO_SUCCESS = 'LOAD_PROFILE_INFO_SUCCESS',
-  LOAD_PROFILE_INFO_FAILURE = 'LOAD_PROFILE_INFO_FAILURE',
-  LOAD_PROFILE_INFO_ERROR = 'LOAD_PROFILE_INFO_ERROR'
+  LOAD_MY_PROFILE_INFO_REQUEST = 'LOAD_MY_PROFILE_INFO_REQUEST',
+  LOAD_MY_PROFILE_INFO_SUCCESS = 'LOAD_MY_PROFILE_INFO_SUCCESS',
+  LOAD_MY_PROFILE_INFO_FAILURE = 'LOAD_MY_PROFILE_INFO_FAILURE',
+  LOAD_MY_PROFILE_INFO_ERROR = 'LOAD_MY_PROFILE_INFO_ERROR'
 }
 
 interface I_changeProfileImageNameInfo {
@@ -125,22 +125,22 @@ interface I_initializeFailureMessageRequest {
   type: E_profileActionType.INITIALIZE_FAILURE_MESSAGE_REQUEST;
 }
 
-interface I_loadProfileInfoRequest {
-  type: E_profileActionType.LOAD_PROFILE_INFO_REQUEST;
+interface I_loadMyProfileInfoRequest {
+  type: E_profileActionType.LOAD_MY_PROFILE_INFO_REQUEST;
 }
 
-interface I_loadProfileInfoSuccess {
-  type: E_profileActionType.LOAD_PROFILE_INFO_SUCCESS;
+interface I_loadMyProfileInfoSuccess {
+  type: E_profileActionType.LOAD_MY_PROFILE_INFO_SUCCESS;
   data: { profileImage: string; userName: string };
 }
 
-interface I_loadProfileInfoFailure {
-  type: E_profileActionType.LOAD_PROFILE_INFO_FAILURE;
+interface I_loadMyProfileInfoFailure {
+  type: E_profileActionType.LOAD_MY_PROFILE_INFO_FAILURE;
   message: string;
 }
 
-interface I_loadProfileInfoError {
-  type: E_profileActionType.LOAD_PROFILE_INFO_ERROR;
+interface I_loadMyProfileInfoError {
+  type: E_profileActionType.LOAD_MY_PROFILE_INFO_ERROR;
   error: Error;
 }
 
@@ -167,8 +167,8 @@ export type I_profileAction =
   | I_changePasswordError
   | I_initializeFailureMessage
   | I_initializeFailureMessageRequest
-  | I_loadProfileInfoRequest
-  | I_loadProfileInfoSuccess
-  | I_loadProfileInfoFailure
-  | I_loadProfileInfoError
+  | I_loadMyProfileInfoRequest
+  | I_loadMyProfileInfoSuccess
+  | I_loadMyProfileInfoFailure
+  | I_loadMyProfileInfoError
   | I_userLogoutSuccess;

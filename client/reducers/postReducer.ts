@@ -2,14 +2,16 @@ import produce from 'immer';
 
 import { I_postAction, E_postActionType } from '../actionTypes/postType';
 import { E_userActionType } from '../actionTypes/userType';
+import { I_postState } from '../actionTypes';
 
-const InitialState = {
+const InitialState: I_postState = {
   postData: null,
   loadPlaceData: null,
   images: null,
   message: null,
   error: null,
-  isLikes: false
+  isLikes: false,
+  currentPostData: null
 };
 
 const postReducer = (state = InitialState, action: I_postAction) => {
@@ -28,9 +30,8 @@ const postReducer = (state = InitialState, action: I_postAction) => {
         break;
 
       case E_postActionType.POST_LIKE_SUCCESS:
-        console.log(action.data);
         const postIndex = draft.postData.findIndex(v => v.postId === action.data.postId);
-        const likeIndex = draft.postData[postIndex].postLike.findIndex(v => v.authorId === action.data.authorId);
+        const likeIndex = draft.postData[postIndex].postLike.findIndex(v => v.userId === action.data.userId);
 
         if (likeIndex === -1) draft.postData[postIndex].postLike.unshift(action.data);
         else draft.postData[postIndex].postLike.splice(likeIndex, 1);
@@ -54,8 +55,13 @@ const postReducer = (state = InitialState, action: I_postAction) => {
         break;
 
       case E_postActionType.SHOW_LIKES:
-        if (draft.isLikes) draft.isLikes = false;
-        else draft.isLikes = true;
+        if (draft.isLikes) {
+          draft.isLikes = false;
+          draft.currentPostData = null;
+        } else {
+          draft.isLikes = true;
+          draft.currentPostData = action.data.postData;
+        }
         break;
 
       case E_userActionType.USER_LOGOUT_SUCCESS:
@@ -65,6 +71,7 @@ const postReducer = (state = InitialState, action: I_postAction) => {
         draft.message = null;
         draft.error = null;
         draft.isLikes = false;
+        draft.currentPostData = null;
         break;
 
       default:

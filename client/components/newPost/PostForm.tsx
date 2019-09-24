@@ -1,13 +1,12 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import useInput from '../../hook_utils/useInput';
 import { E_postActionType } from '../../actionTypes/postType';
 
+import useInput from '../../hook_utils/useInput';
 import PreviewImages from '../utils/PreviewImages';
 
 import DayPicker from 'react-day-picker';
-
 import TimePicker from 'react-times';
 
 const PostForm: React.FC = () => {

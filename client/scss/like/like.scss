@@ -1,0 +1,108 @@
+div#Likes {
+  width: 100%;
+  height: 100%;
+  justify-items: center;
+  align-items: center;
+
+  div.likes-container {
+    width: 350px;
+    height: 400px;
+    grid-template-rows: 50px 350px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    overflow: hidden;
+    z-index: 1000;
+
+    header {
+      justify-items: center;
+      align-items: center;
+      grid-template-columns: 15% 70% 15%;
+      border-bottom: 1px solid #f0f0f0;
+
+      span {
+        font-weight: bold;
+        font-size: 1rem;
+      }
+
+      div.right {
+        i {
+          font-size: 2rem;
+          cursor: pointer;
+        }
+      }
+    }
+
+    div.like-list-container {
+      overflow: hidden auto;
+      align-content: flex-start;
+
+      div.like-list {
+        height: 60px;
+        padding: 5px 15px;
+        grid-template-columns: 50px auto 100px;
+        justify-items: center;
+        align-items: center;
+
+        div.profile-image {
+          img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+          }
+        }
+
+        div.username {
+          justify-self: left;
+          margin-left: 10px;
+
+          span {
+            font-size: 1rem;
+            font-weight: bold;
+          }
+        }
+
+        div.follow-container {
+          div.follow-button-container {
+            align-self: center;
+
+            button.following-button {
+              width: 90px;
+              height: 30px;
+              background-color: #ffffff;
+              border: 1px solid #f0f0f0;
+              border-radius: 5px;
+              font-size: 1rem;
+              font-weight: 600;
+              color: #000000;
+              outline: 0;
+              cursor: pointer;
+
+              &:active {
+                background-color: #73c7ff;
+                border: 1px solid #73c7ff;
+              }
+            }
+
+            button.follow-button {
+              width: 60px;
+              height: 30px;
+              background-color: #3ab0ff;
+              border: 1px solid #3ab0ff;
+              border-radius: 5px;
+              font-size: 1rem;
+              font-weight: 600;
+              color: #fff;
+              outline: 0;
+              cursor: pointer;
+
+              &:active {
+                background-color: #73c7ff;
+                border: 1px solid #73c7ff;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

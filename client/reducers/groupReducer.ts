@@ -2,8 +2,9 @@ import produce from 'immer';
 
 import { I_groupAction, E_groupActionType } from '../actionTypes/groupType';
 import { E_userActionType } from '../actionTypes/userType';
+import { I_groupState } from '../actionTypes';
 
-const initialState = {
+const initialState: I_groupState = {
   myGroupInfo: null,
   myGroupNameList: null,
   message: null,

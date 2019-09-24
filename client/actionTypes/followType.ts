@@ -5,18 +5,22 @@ export enum E_followActionType {
   FOLLOW_SUCCESS = 'FOLLOW_SUCCESS',
   FOLLOW_FAILURE = 'FOLLOW_FAILURE',
   FOLLOW_ERROR = 'FOLLOW_ERROR',
-  LOAD_FOLLOW_INFO_REQUEST = 'LOAD_FOLLOW_INFO_REQUEST',
-  LOAD_FOLLOW_INFO_SUCCESS = 'LOAD_FOLLOW_INFO_SUCCESS',
-  LOAD_FOLLOW_INFO_FAILURE = 'LOAD_FOLLOW_INFO_FAILURE',
-  LOAD_FOLLOW_INFO_ERROR = 'LOAD_FOLLOW_INFO_ERROR'
+  UNFOLLOW_REQUEST = 'UNFOLLOW_REQUEST',
+  UNFOLLOW_SUCCESS = 'UNFOLLOW_SUCCESS',
+  UNFOLLOW_FAILURE = 'UNFOLLOW_FAILURE',
+  UNFOLLOW_ERROR = 'UNFOLLOW_ERROR',
+  LOAD_MY_FOLLOW_INFO_REQUEST = 'LOAD_MY_FOLLOW_INFO_REQUEST',
+  LOAD_MY_FOLLOW_INFO_SUCCESS = 'LOAD_MY_FOLLOW_INFO_SUCCESS',
+  LOAD_MY_FOLLOW_INFO_FAILURE = 'LOAD_MY_FOLLOW_INFO_FAILURE',
+  LOAD_MY_FOLLOW_INFO_ERROR = 'LOAD_MY_FOLLOW_INFO_ERROR',
+  LOAD_USER_FOLLOW_INFO_REQUEST = 'LOAD_USER_FOLLOW_INFO_REQUEST',
+  LOAD_USER_FOLLOW_INFO_SUCCESS = 'LOAD_USER_FOLLOW_INFO_SUCCESS',
+  LOAD_USER_FOLLOW_INFO_FAILURE = 'LOAD_USER_FOLLOW_INFO_FAILURE',
+  LOAD_USER_FOLLOW_INFO_ERROR = 'LOAD_USER_FOLLOW_INFO_ERROR'
 }
 
 interface I_followInfo {
-  followeeId: string;
-}
-
-interface I_loadFollowInfoInfo {
-  userId: string;
+  followerId: string;
 }
 
 interface I_followerInfo {
@@ -31,6 +35,7 @@ interface I_followRequest {
 
 interface I_followSuccess {
   type: E_followActionType.FOLLOW_SUCCESS;
+  data: { followeeId: string };
 }
 
 interface I_followFailure {
@@ -43,23 +48,62 @@ interface I_followError {
   error: Error;
 }
 
-interface I_loadFollowInfoRequest {
-  type: E_followActionType.LOAD_FOLLOW_INFO_REQUEST;
-  data: I_loadFollowInfoInfo;
+interface I_unFollowRequest {
+  type: E_followActionType.UNFOLLOW_REQUEST;
+  data: { followeeId: string };
 }
 
-interface I_loadFollowInfoSuccess {
-  type: E_followActionType.LOAD_FOLLOW_INFO_SUCCESS;
-  data: I_followerInfo;
+interface I_unFollowSuccess {
+  type: E_followActionType.UNFOLLOW_SUCCESS;
+  data: { followeeId: string };
 }
 
-interface I_loadFollowInfoFailure {
-  type: E_followActionType.LOAD_FOLLOW_INFO_FAILURE;
+interface I_unFollowFailure {
+  type: E_followActionType.UNFOLLOW_FAILURE;
   message: string;
 }
 
-interface I_loadFollowInfoError {
-  type: E_followActionType.LOAD_FOLLOW_INFO_ERROR;
+interface I_unFollowError {
+  type: E_followActionType.UNFOLLOW_ERROR;
+  error: Error;
+}
+
+interface I_loadMyFollowInfoRequest {
+  type: E_followActionType.LOAD_MY_FOLLOW_INFO_REQUEST;
+}
+
+interface I_loadMyFollowInfoSuccess {
+  type: E_followActionType.LOAD_MY_FOLLOW_INFO_SUCCESS;
+  data: I_followerInfo;
+}
+
+interface I_loadMyFollowInfoFailure {
+  type: E_followActionType.LOAD_MY_FOLLOW_INFO_FAILURE;
+  message: string;
+}
+
+interface I_loadMyFollowInfoError {
+  type: E_followActionType.LOAD_MY_FOLLOW_INFO_ERROR;
+  error: Error;
+}
+
+interface I_loadUserFollowInfoRequest {
+  type: E_followActionType.LOAD_USER_FOLLOW_INFO_REQUEST;
+  data: { userId: string };
+}
+
+interface I_loadUserFollowInfoSuccess {
+  type: E_followActionType.LOAD_USER_FOLLOW_INFO_SUCCESS;
+  data: I_followInfo;
+}
+
+interface I_loadUserFollowInfoFailure {
+  type: E_followActionType.LOAD_USER_FOLLOW_INFO_FAILURE;
+  message: string;
+}
+
+interface I_loadUserFollowInfoError {
+  type: E_followActionType.LOAD_USER_FOLLOW_INFO_ERROR;
   error: Error;
 }
 
@@ -72,8 +116,16 @@ export type I_followAction =
   | I_followSuccess
   | I_followFailure
   | I_followError
-  | I_loadFollowInfoRequest
-  | I_loadFollowInfoSuccess
-  | I_loadFollowInfoFailure
-  | I_loadFollowInfoError
+  | I_unFollowRequest
+  | I_unFollowSuccess
+  | I_unFollowFailure
+  | I_unFollowError
+  | I_loadMyFollowInfoRequest
+  | I_loadMyFollowInfoSuccess
+  | I_loadMyFollowInfoFailure
+  | I_loadMyFollowInfoError
+  | I_loadUserFollowInfoRequest
+  | I_loadUserFollowInfoSuccess
+  | I_loadUserFollowInfoFailure
+  | I_loadUserFollowInfoError
   | I_userLogoutSuccess;
