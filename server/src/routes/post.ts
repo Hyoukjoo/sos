@@ -63,34 +63,33 @@ router.post('/', isLogin, upload.array('image'), async (req, res, next) => {
 });
 
 router.get('/', isLogin, async (req, res, next) => {
-  try{
-
+  try {
     const groupData = await Group.findAll({
       where: {
         userId: req.user
       },
       attributes: ['groupName']
     });
-  
+
     const followeeData = await Follow.findAll({
       where: {
         followerId: req.user
       },
       attributes: ['followeeId']
     });
-  
+
     const groups = groupData.map(result => result.groupName);
-  
+
     const followees = followeeData.map(result => result.followeeId);
     const findUserId = [req.user, ...followees];
-  
+
     let reg = '';
-  
+
     for (let i = 0; i < groups.length; i++) {
       reg += groups[i].replace(/\$/, '\\$\\b') + '\\b';
       if (i !== groups.length - 1) reg += '|';
     }
-  
+
     const posts = await Post.findAll({
       where: {
         [Op.and]: [
@@ -145,9 +144,9 @@ router.get('/', isLogin, async (req, res, next) => {
       ],
       order: [['updatedAt', 'DESC']]
     });
-  
+
     res.json(posts);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
     res.send(e);
   }
@@ -160,50 +159,48 @@ router.post('/like', async (req, res, next) => {
     const data = await Like.findOne({ where: { postId } });
     console.log(data);
 
-    if (data) {
-      await Like.destroy({ where: { postId } });
-    } else {
+    if (!data) {
       await Like.create({
         postId,
         userId: req.user
       });
+    } else {
+      res.json({ failMessage: 'Like info is not existed' });
     }
 
-    const newData = await Post.findOne({
-      where: { postId },
+    const newData = await Like.findOne({
+      where: { postId, userId: req.user },
+      attributes: ['postId', 'userId'],
       include: [
         {
-          model: User,
-          as: 'userPost',
-          attributes: ['userId'],
-          include: [
-            {
-              model: Profile,
-              as: 'userProfile',
-              attributes: ['userName', 'profileImage']
-            }
-          ]
-        },
-        {
-          model: Like,
-          as: 'postLike'
-        },
-        {
-          model: Reply,
-          as: 'postReply'
-        },
-        {
-          model: Image,
-          as: 'postImage',
-          attributes: ['src']
+          model: Profile,
+          as: 'likeUserProfile',
+          attributes: ['userName', 'profileImage']
         }
       ],
       order: [['updatedAt', 'DESC']]
     });
 
-    console.log(newData);
-
     res.json(newData);
+  } catch (e) {
+    console.log(e);
+    res.send(e);
+  }
+});
+
+router.delete('/unlike', isLogin, async (req, res, next) => {
+  try {
+    console.log(req.body);
+
+    const { postId } = req.body;
+
+    const result = await Like.destroy({ where: { postId } });
+
+    if (result) {
+      res.json({ successMessage: 'Success unlike', postId, userId: req.user });
+    } else {
+      res.json({ failMessage: 'Fail unlike' });
+    }
   } catch (e) {
     console.log(e);
     res.send(e);

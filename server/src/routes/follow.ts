@@ -25,8 +25,6 @@ router.get('/', isLogin, async (req, res, next) => {
       followees
     };
 
-    console.log(result);
-
     res.json(result);
   } catch (e) {
     console.log(e);
@@ -37,7 +35,6 @@ router.get('/', isLogin, async (req, res, next) => {
 router.post('/', isLogin, async (req, res, next) => {
   try {
     const exFollow = await Follow.findOne({ where: { followerId: req.user, followeeId: req.body.followeeId } });
-
     if (exFollow) {
       res.json({ failMessage: 'already following user' });
     } else {
@@ -57,9 +54,7 @@ router.post('/', isLogin, async (req, res, next) => {
 router.delete('/', isLogin, async (req, res, next) => {
   try {
     const result = await Follow.destroy({ where: { followerId: req.user, followeeId: req.body.followeeId } });
-    console.log(result);
     if (result > 0) {
-      console.log('suscess unfollow')
       res.json({ successMessage: 'Success delete follow', followeeId: req.body.followeeId });
     } else {
       res.json({ failMessage: 'Fail delete follow' });

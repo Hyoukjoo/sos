@@ -84,6 +84,11 @@ main.Feed {
           justify-self: end;
           cursor: pointer;
         }
+
+        i.like {
+          color: red;
+        }
+
         span {
           margin-left: 10px;
           justify-self: start;

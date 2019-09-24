@@ -16,6 +16,10 @@ export enum E_postActionType {
   POST_LIKE_SUCCESS = 'POST_LIKE_SUCCESS',
   POST_LIKE_FAILURE = 'POST_LIKE_FAILURE',
   POST_LIKE_ERROR = 'POST_LIKE_ERROR',
+  POST_UNLIKE_REQUEST = 'POST_UNLIKE_REQUEST',
+  POST_UNLIKE_SUCCESS = 'POST_UNLIKE_SUCCESS',
+  POST_UNLIKE_FAILURE = 'POST_UNLIKE_FAILURE',
+  POST_UNLIKE_ERROR = 'POST_UNLIKE_ERROR',
   POST_REPLY_REQUEST = 'POST_REPLY_REQUEST',
   POST_REPLY_SUCCESS = 'POST_REPLY_SUCCESS',
   POST_REPLY_FAILURE = 'POST_REPLY_FAILURE',
@@ -91,7 +95,7 @@ interface I_postLikeRequest {
 
 interface I_postLikeSuccess {
   type: E_postActionType.POST_LIKE_SUCCESS;
-  data: { postId: number; userId: string };
+  data: { postId: number; userId: string; likeUserProfile: { userName: string; profileImage: string } };
 }
 
 interface I_postLikeFailure {
@@ -101,6 +105,26 @@ interface I_postLikeFailure {
 
 interface I_postLikeError {
   type: E_postActionType.POST_LIKE_ERROR;
+  error: Error;
+}
+
+interface I_postUnLikeRequest {
+  type: E_postActionType.POST_UNLIKE_REQUEST;
+  data: { postId: number };
+}
+
+interface I_postUnLikeSuccess {
+  type: E_postActionType.POST_UNLIKE_SUCCESS;
+  data: { postId: number; userId: string };
+}
+
+interface I_postUnLikeFailure {
+  type: E_postActionType.POST_UNLIKE_FAILURE;
+  message: string;
+}
+
+interface I_postUnLikeError {
+  type: E_postActionType.POST_UNLIKE_ERROR;
   error: Error;
 }
 
@@ -119,4 +143,8 @@ export type I_postAction =
   | I_postLikeRequest
   | I_postLikeSuccess
   | I_postLikeFailure
-  | I_postLikeError;
+  | I_postLikeError
+  | I_postUnLikeRequest
+  | I_postUnLikeSuccess
+  | I_postUnLikeFailure
+  | I_postUnLikeError;

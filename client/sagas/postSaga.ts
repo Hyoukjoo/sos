@@ -58,6 +58,7 @@ const postLikeAPI = async data => axios.post('/post/like', data, { withCredentia
 function* postLikeRequest(action) {
   try {
     const result = yield call(postLikeAPI, action.data);
+    console.log(result.data);
     if (result.data.message === undefined) {
       yield put({
         type: E_postActionType.POST_LIKE_SUCCESS,
@@ -81,6 +82,35 @@ function* watchPostLike() {
   yield takeLatest(E_postActionType.POST_LIKE_REQUEST, postLikeRequest);
 }
 
+const postUnLikeAPI = async data => await axios.delete('/post/unlike', { data, withCredentials: true });
+
+function* postUnLikeRequest(action) {
+  try {
+    const result = yield call(postUnLikeAPI, action.data);
+
+    if (!result.data.failMessage) {
+      yield put({
+        type: E_postActionType.POST_UNLIKE_SUCCESS,
+        data: action.data
+      });
+    } else {
+      yield put({
+        type: E_postActionType.POST_UNLIKE_FAILURE,
+        message: result.data.failMessage
+      });
+    }
+  } catch (e) {
+    yield put({
+      type: E_postActionType.POST_UNLIKE_ERROR,
+      error: e
+    });
+  }
+}
+
+function* watchPostUnLike() {
+  yield takeLatest(E_postActionType.POST_UNLIKE_REQUEST, postUnLikeRequest);
+}
+
 export default function* postSaga() {
-  yield all([fork(watchAddPost), fork(watchLoadPost), fork(watchPostLike)]);
+  yield all([fork(watchAddPost), fork(watchLoadPost), fork(watchPostLike), fork(watchPostUnLike)]);
 }

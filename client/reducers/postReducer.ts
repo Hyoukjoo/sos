@@ -20,6 +20,7 @@ const postReducer = (state = InitialState, action: I_postAction) => {
       case E_postActionType.NEW_POST_REQUEST:
       case E_postActionType.LOAD_POST_REQUEST:
       case E_postActionType.POST_LIKE_REQUEST:
+      case E_postActionType.POST_UNLIKE_REQUEST:
         break;
 
       case E_postActionType.NEW_POST_SUCCESS:
@@ -30,23 +31,31 @@ const postReducer = (state = InitialState, action: I_postAction) => {
         break;
 
       case E_postActionType.POST_LIKE_SUCCESS:
-        const postIndex = draft.postData.findIndex(v => v.postId === action.data.postId);
-        const likeIndex = draft.postData[postIndex].postLike.findIndex(v => v.userId === action.data.userId);
+        const likePostIndex = draft.postData.findIndex(v => v.postId === action.data.postId);
 
-        if (likeIndex === -1) draft.postData[postIndex].postLike.unshift(action.data);
-        else draft.postData[postIndex].postLike.splice(likeIndex, 1);
+        draft.postData[likePostIndex].postLike.unshift(action.data);
+
+        break;
+
+      case E_postActionType.POST_UNLIKE_SUCCESS:
+        const unLikePostIndex = draft.postData.findIndex(v => v.postId === action.data.postId);
+        const likeIndex = draft.postData[unLikePostIndex].postLike.findIndex(v => v.userId === action.data.userId);
+
+        draft.postData[unLikePostIndex].postLike.splice(likeIndex, 1);
 
         break;
 
       case E_postActionType.NEW_POST_FAILURE:
       case E_postActionType.LOAD_POST_FAILURE:
       case E_postActionType.POST_LIKE_FAILURE:
+      case E_postActionType.POST_UNLIKE_FAILURE:
         draft.message = action.message;
         break;
 
       case E_postActionType.NEW_POST_ERROR:
       case E_postActionType.LOAD_POST_ERROR:
       case E_postActionType.POST_LIKE_ERROR:
+      case E_postActionType.POST_UNLIKE_ERROR:
         draft.error = action.error;
         break;
 

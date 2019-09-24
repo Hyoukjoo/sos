@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { E_postActionType } from '../../actionTypes/postType';
-import { I_postData } from '../../actionTypes';
+import I_state, { I_postData } from '../../actionTypes';
 
 interface I_props {
   postData: I_postData[];
@@ -11,7 +11,7 @@ interface I_props {
 const Feed: React.FC<I_props> = ({ postData }) => {
   const dispatch = useDispatch();
 
-  const userId = useSelector((state: any) => state.user.myInfo.userId);
+  const userId = useSelector((state: I_state) => state.user.myInfo.userId);
 
   const handleLikes = (postData: I_postData) => {
     dispatch({
@@ -20,9 +20,17 @@ const Feed: React.FC<I_props> = ({ postData }) => {
     });
   };
 
-  const clickLike = (postId: number) => {
+  const clickLike = postId => {
     dispatch({
       type: E_postActionType.POST_LIKE_REQUEST,
+      data: { postId }
+    });
+  };
+
+  const clickUnLike = postId => {
+    console.log(postId);
+    dispatch({
+      type: E_postActionType.POST_UNLIKE_REQUEST,
       data: { postId }
     });
   };
@@ -35,6 +43,8 @@ const Feed: React.FC<I_props> = ({ postData }) => {
           const finishTime = new Date(Date.parse(data.finishTime));
           const formatTime = `${startTime.getMonth() + 1}월${startTime.getDate()}일 / ${finishTime.getMonth() +
             1}월${finishTime.getDate()}일`;
+
+          const [isLike] = data.postLike.filter(v => v.userId === userId);
           return (
             <article key={data.postId}>
               <header>
@@ -60,9 +70,15 @@ const Feed: React.FC<I_props> = ({ postData }) => {
               </div>
               <footer>
                 <div className='button-div'>
-                  <div onClick={() => clickLike(data.postId)}>
-                    <i className='material-icons '>favorite_border</i>
-                  </div>
+                  {isLike ? (
+                    <div onClick={() => clickUnLike(data.postId)}>
+                      <i className='material-icons like'>favorite_border</i>
+                    </div>
+                  ) : (
+                    <div onClick={() => clickLike(data.postId)}>
+                      <i className='material-icons unLike'>favorite_border</i>
+                    </div>
+                  )}
                   <span onClick={() => handleLikes(data)}>{data.postLike.length}</span>
                 </div>
                 <div className='button-div'>

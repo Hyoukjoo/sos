@@ -37,7 +37,6 @@ function* unFollowRequest(action) {
   try {
     const result = yield call(unFollowAPI, action.data);
     if (!result.data.failMessage) {
-      console.log('saga - success unfollow');
       yield put({
         type: E_followActionType.UNFOLLOW_SUCCESS,
         message: result.data.successMessage,
@@ -66,7 +65,6 @@ const loadMyFollowInfoAPI = async () => await axios.get(`/follow`, { withCredent
 function* loadMyFollowInfoRequest() {
   try {
     const result = yield call(loadMyFollowInfoAPI);
-    console.log(result.data);
     yield put({
       type: E_followActionType.LOAD_MY_FOLLOW_INFO_SUCCESS,
       data: result.data
