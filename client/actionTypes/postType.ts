@@ -23,7 +23,8 @@ export enum E_postActionType {
   POST_REPLY_REQUEST = 'POST_REPLY_REQUEST',
   POST_REPLY_SUCCESS = 'POST_REPLY_SUCCESS',
   POST_REPLY_FAILURE = 'POST_REPLY_FAILURE',
-  POST_REPLY_ERROR = 'POST_REPLY_ERROR'
+  POST_REPLY_ERROR = 'POST_REPLY_ERROR',
+  SHOW_REPLY_INPUT = 'SHOW_REPLY_INPUT'
 }
 
 interface I_postInfo {
@@ -128,6 +129,31 @@ interface I_postUnLikeError {
   error: Error;
 }
 
+interface I_postReplyRequest {
+  type: E_postActionType.POST_REPLY_REQUEST;
+  data: { postId: number; comment: string };
+}
+
+interface I_postReplySuccess {
+  type: E_postActionType.POST_REPLY_SUCCESS;
+  data: { postId: number; userId: string; comment: string };
+}
+
+interface I_postReplyFailure {
+  type: E_postActionType.POST_REPLY_FAILURE;
+  message: string;
+}
+
+interface I_postReplyError {
+  type: E_postActionType.POST_REPLY_ERROR;
+  error: Error;
+}
+
+interface I_showReplyInput {
+  type: E_postActionType.SHOW_REPLY_INPUT;
+  data: { postId: number };
+}
+
 export type I_postAction =
   | I_newPostRequest
   | I_newPostSuccess
@@ -147,4 +173,9 @@ export type I_postAction =
   | I_postUnLikeRequest
   | I_postUnLikeSuccess
   | I_postUnLikeFailure
-  | I_postUnLikeError;
+  | I_postUnLikeError
+  | I_postReplyRequest
+  | I_postReplySuccess
+  | I_postReplyFailure
+  | I_postReplyError
+  | I_showReplyInput;

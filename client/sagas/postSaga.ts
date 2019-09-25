@@ -58,7 +58,6 @@ const postLikeAPI = async data => axios.post('/post/like', data, { withCredentia
 function* postLikeRequest(action) {
   try {
     const result = yield call(postLikeAPI, action.data);
-    console.log(result.data);
     if (result.data.message === undefined) {
       yield put({
         type: E_postActionType.POST_LIKE_SUCCESS,
@@ -87,11 +86,10 @@ const postUnLikeAPI = async data => await axios.delete('/post/unlike', { data, w
 function* postUnLikeRequest(action) {
   try {
     const result = yield call(postUnLikeAPI, action.data);
-
     if (!result.data.failMessage) {
       yield put({
         type: E_postActionType.POST_UNLIKE_SUCCESS,
-        data: action.data
+        data: result.data
       });
     } else {
       yield put({
@@ -111,6 +109,40 @@ function* watchPostUnLike() {
   yield takeLatest(E_postActionType.POST_UNLIKE_REQUEST, postUnLikeRequest);
 }
 
+const postReplyAPI = async data => axios.post('/post/reply', data, { withCredentials: true });
+
+function* postReplyRequest(action) {
+  try {
+    const result = yield call(postReplyAPI, action.data);
+    if (!result.data.failMessage) {
+      yield put({
+        type: E_postActionType.POST_REPLY_SUCCESS,
+        data: action.data
+      });
+    } else {
+      yield put({
+        type: E_postActionType.POST_REPLY_FAILURE,
+        message: result.data.failMessage
+      });
+    }
+  } catch (e) {
+    yield put({
+      type: E_postActionType.POST_REPLY_ERROR,
+      error: e
+    });
+  }
+}
+
+function* watchPostReply() {
+  yield takeLatest(E_postActionType.POST_REPLY_REQUEST, postReplyRequest);
+}
+
 export default function* postSaga() {
-  yield all([fork(watchAddPost), fork(watchLoadPost), fork(watchPostLike), fork(watchPostUnLike)]);
+  yield all([
+    fork(watchAddPost),
+    fork(watchLoadPost),
+    fork(watchPostLike),
+    fork(watchPostUnLike),
+    fork(watchPostReply)
+  ]);
 }

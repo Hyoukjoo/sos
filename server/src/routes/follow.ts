@@ -40,7 +40,7 @@ router.post('/', isLogin, async (req, res, next) => {
     } else {
       const result = await Follow.create({
         followerId: req.user,
-        followeeId: req.body.followerId,
+        followeeId: req.body.followeeId,
         status: 2
       });
       res.json(result);

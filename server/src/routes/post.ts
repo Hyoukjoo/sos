@@ -130,7 +130,8 @@ router.get('/', isLogin, async (req, res, next) => {
               as: 'likeUserProfile',
               attributes: ['userName', 'profileImage']
             }
-          ]
+          ],
+          order: [['updatedAt', 'DESC']]
         },
         {
           model: Reply,
@@ -156,7 +157,7 @@ router.post('/like', async (req, res, next) => {
   try {
     const postId = req.body.postId;
 
-    const data = await Like.findOne({ where: { postId } });
+    const data = await Like.findOne({ where: { postId, userId: req.user } });
     console.log(data);
 
     if (!data) {
@@ -177,8 +178,7 @@ router.post('/like', async (req, res, next) => {
           as: 'likeUserProfile',
           attributes: ['userName', 'profileImage']
         }
-      ],
-      order: [['updatedAt', 'DESC']]
+      ]
     });
 
     res.json(newData);
@@ -194,7 +194,7 @@ router.delete('/unlike', isLogin, async (req, res, next) => {
 
     const { postId } = req.body;
 
-    const result = await Like.destroy({ where: { postId } });
+    const result = await Like.destroy({ where: { postId, userId: req.user } });
 
     if (result) {
       res.json({ successMessage: 'Success unlike', postId, userId: req.user });
@@ -206,5 +206,26 @@ router.delete('/unlike', isLogin, async (req, res, next) => {
     res.send(e);
   }
 });
+
+router.post('/reply', isLogin, async (req, res, next) => {
+  try{
+    const exReply = await Reply.findOne({ where: {postId: req.body.postId, userId: req.user}})
+    if(!exReply) {
+      const result = await Reply.create({
+        postId: req.body.postId,
+        userId: req.user,
+        comment: req.body.comment,
+      })
+
+      console.log(result);
+      res.json({ successMessage: 'Success Reply'})
+    } else {
+      res.json({ failMessage: 'Reply is already existed'});
+    }
+  } catch (e) {
+    console.log(e);
+    res.send(e);
+  }
+})
 
 export default router;

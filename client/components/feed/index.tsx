@@ -11,7 +11,8 @@ interface I_props {
 const Feed: React.FC<I_props> = ({ postData }) => {
   const dispatch = useDispatch();
 
-  const userId = useSelector((state: I_state) => state.user.myInfo.userId);
+  const { userId } = useSelector((state: I_state) => state.user.myInfo);
+  const { currentReplyPostId } = useSelector((state: I_state) => state.post);
 
   const handleLikes = (postData: I_postData) => {
     dispatch({
@@ -28,10 +29,23 @@ const Feed: React.FC<I_props> = ({ postData }) => {
   };
 
   const clickUnLike = postId => {
-    console.log(postId);
     dispatch({
       type: E_postActionType.POST_UNLIKE_REQUEST,
       data: { postId }
+    });
+  };
+
+  const showReplyInput = postId => {
+    dispatch({
+      type: E_postActionType.SHOW_REPLY_INPUT,
+      data: { postId }
+    });
+  };
+
+  const submitReply = (postId, comment) => {
+    dispatch({
+      type: E_postActionType.POST_REPLY_REQUEST,
+      data: { postId, comment }
     });
   };
 
@@ -45,6 +59,9 @@ const Feed: React.FC<I_props> = ({ postData }) => {
             1}월${finishTime.getDate()}일`;
 
           const [isLike] = data.postLike.filter(v => v.userId === userId);
+
+          let isReplyInput = data.postId === currentReplyPostId;
+
           return (
             <article key={data.postId}>
               <header>
@@ -83,7 +100,9 @@ const Feed: React.FC<I_props> = ({ postData }) => {
                 </div>
                 <div className='button-div'>
                   <div>
-                    <i className='material-icons md-light'>sms</i>
+                    <i className='material-icons md-light' onClick={() => showReplyInput(data.postId)}>
+                      sms
+                    </i>
                   </div>
                   <span>{data.postReply.length}</span>
                 </div>
@@ -91,14 +110,16 @@ const Feed: React.FC<I_props> = ({ postData }) => {
                   <span>...</span>
                 </div>
               </footer>
-              {/* <div className='reply'>
-                <div className='input-form'>
-                  <input type='text' placeholder='Add a comment...' />
+              {isReplyInput && (
+                <div className='reply'>
+                  <div className='input-form'>
+                    <input type='text' placeholder='Add a comment...' />
+                  </div>
+                  <div className='button-form'>
+                    <button>submti</button>
+                  </div>
                 </div>
-                <div className='button-form'>
-                  <button></button>
-                </div>
-              </div> */}
+              )}
             </article>
           );
         })}
