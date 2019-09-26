@@ -26,8 +26,36 @@ function* newPostRequest(action) {
   }
 }
 
-function* watchAddPost() {
+function* watchNewPost() {
   yield takeLatest(E_postActionType.NEW_POST_REQUEST, newPostRequest);
+}
+
+const deletePostRequestAPI = async data => axios.delete('/post', { data, withCredentials: true });
+
+function* deletePostRequest(action) {
+  try {
+    const result = yield call(deletePostRequestAPI, action.data);
+    if (!result.data.failMessage) {
+      yield put({
+        type: E_postActionType.DELETE_POST_SUCCESS,
+        data: action.data
+      });
+    } else {
+      yield put({
+        type: E_postActionType.DELETE_POST_FAILURE,
+        message: result.data.failMessage
+      });
+    }
+  } catch (e) {
+    yield put({
+      type: E_postActionType.DELETE_POST_ERROR,
+      error: e
+    });
+  }
+}
+
+function* watchDeletePost() {
+  yield takeLatest(E_postActionType.DELETE_POST_REQUEST, deletePostRequest);
 }
 
 const loadPostAPI = async () => {
@@ -81,7 +109,7 @@ function* watchPostLike() {
   yield takeLatest(E_postActionType.POST_LIKE_REQUEST, postLikeRequest);
 }
 
-const postUnLikeAPI = async data => await axios.delete('/post/unlike', { data, withCredentials: true });
+const postUnLikeAPI = async data => await axios.delete('/post/like', { data, withCredentials: true });
 
 function* postUnLikeRequest(action) {
   try {
@@ -137,7 +165,7 @@ function* watchPostReply() {
   yield takeLatest(E_postActionType.POST_REPLY_REQUEST, postReplyRequest);
 }
 
-const postDeleteReplyRequestAPI = async data => axios.delete('/post/deletereply', { data, withCredentials: true });
+const postDeleteReplyRequestAPI = async data => axios.delete('/post/reply', { data, withCredentials: true });
 
 function* postDeleteReplyRequest(action) {
   try {
@@ -167,7 +195,8 @@ function* watchPostDeleteReply() {
 
 export default function* postSaga() {
   yield all([
-    fork(watchAddPost),
+    fork(watchNewPost),
+    fork(watchDeletePost),
     fork(watchLoadPost),
     fork(watchPostLike),
     fork(watchPostUnLike),

@@ -6,6 +6,10 @@ export enum E_postActionType {
   NEW_POST_SUCCESS = 'NEW_POST_SUCCESS',
   NEW_POST_FAILURE = 'NEW_POST_FAILURE',
   NEW_POST_ERROR = 'NEW_POST_ERROR',
+  DELETE_POST_REQUEST = 'DELETE_POST_REQUEST',
+  DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS',
+  DELETE_POST_FAILURE = 'DELETE_POST_FAILURE',
+  DELETE_POST_ERROR = 'DELETE_POST_ERROR',
   LOAD_POST_REQUEST = 'LOAD_POST_REQUEST',
   LOAD_POST_SUCCESS = 'LOAD_POST_SUCCESS',
   LOAD_POST_FAILURE = 'LOAD_POST_FAILURE',
@@ -58,6 +62,26 @@ interface I_newPostFailure {
 
 interface I_newPostError {
   type: E_postActionType.NEW_POST_ERROR;
+  error: Error;
+}
+
+interface I_deletePostRequest {
+  type: E_postActionType.DELETE_POST_REQUEST;
+  data: { postId: number };
+}
+
+interface I_deletePostSuccess {
+  type: E_postActionType.DELETE_POST_SUCCESS;
+  data: { postId: number };
+}
+
+interface I_deletePostFailure {
+  type: E_postActionType.DELETE_POST_FAILURE;
+  message: string;
+}
+
+interface I_deletePostError {
+  type: E_postActionType.DELETE_POST_ERROR;
   error: Error;
 }
 
@@ -189,6 +213,10 @@ export type I_postAction =
   | I_newPostSuccess
   | I_newPostFailure
   | I_newPostError
+  | I_deletePostRequest
+  | I_deletePostSuccess
+  | I_deletePostFailure
+  | I_deletePostError
   | I_loadPostRequest
   | I_loadPostSuccess
   | I_loadPostFailure

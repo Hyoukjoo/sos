@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { E_postActionType } from '../../actionTypes/postType';
 import I_state from '../../actionTypes';
+import useInput from '../../hook_utils/useInput';
 
 const Reply: React.FC = () => {
   const dispatch = useDispatch();
@@ -13,6 +14,8 @@ const Reply: React.FC = () => {
   const { postData } = useSelector((state: I_state) => state.post);
   const curerntPostDataId = useSelector((state: I_state) => state.post.currentPostData.postId);
   const [currentPostData] = postData.filter(v => v.postId === curerntPostDataId);
+
+  const [comment, resetComment, onChangeComment] = useInput('');
 
   const useOutsideClikc = (ref: React.MutableRefObject<HTMLDivElement>) => {
     const handleClickOutside = e => {
@@ -41,6 +44,15 @@ const Reply: React.FC = () => {
     dispatch({
       type: E_postActionType.POST_DELETE_REPLY_REQUEST,
       data: { postId, id }
+    });
+  };
+
+  const submitReply = (postId, e: React.MouseEvent<HTMLButtonElement>) => {
+    resetComment();
+
+    dispatch({
+      type: E_postActionType.POST_REPLY_REQUEST,
+      data: { postId, comment }
     });
   };
 
@@ -89,6 +101,14 @@ const Reply: React.FC = () => {
               </div>
             );
           })}
+        </div>
+        <div className='reply'>
+          <div className='input-form'>
+            <input type='text' placeholder='Add a comment...' value={comment} onChange={onChangeComment} />
+          </div>
+          <div className='button-form'>
+            <button onClick={e => submitReply(currentPostData.postId, e)}>Reply</button>
+          </div>
         </div>
       </div>
     </div>

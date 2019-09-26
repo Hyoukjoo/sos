@@ -65,10 +65,17 @@ const loadMyFollowInfoAPI = async () => await axios.get(`/follow`, { withCredent
 function* loadMyFollowInfoRequest() {
   try {
     const result = yield call(loadMyFollowInfoAPI);
-    yield put({
-      type: E_followActionType.LOAD_MY_FOLLOW_INFO_SUCCESS,
-      data: result.data
-    });
+    if (!result.data.failMessage) {
+      yield put({
+        type: E_followActionType.LOAD_MY_FOLLOW_INFO_SUCCESS,
+        data: result.data
+      });
+    } else {
+      yield put({
+        type: E_followActionType.LOAD_MY_FOLLOW_INFO_FAILURE,
+        message: result.data.failMessage
+      });
+    }
   } catch (e) {
     yield put({
       type: E_followActionType.LOAD_MY_FOLLOW_INFO_ERROR,

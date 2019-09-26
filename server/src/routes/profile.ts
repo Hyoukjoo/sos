@@ -8,16 +8,13 @@ const router = Router();
 
 router.get('/loadprofileinfo', async (req, res, next) => {
   try {
-    const profileData: any = await Profile.findOne({
-      where: { userId: req.user }
-    });
+    if (req.user) {
+      const profile = await Profile.findOne({ where: { userId: req.user } });
 
-    const profile = {
-      userName: profileData.dataValues.userName,
-      profileImage: profileData.dataValues.profileImage
-    };
-
-    res.json(profile);
+      res.json(profile);
+    } else {
+      res.json({ failMessage: 'Login info is not existed' });
+    }
   } catch (e) {
     console.log(e);
     res.send(e);

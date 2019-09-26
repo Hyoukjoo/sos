@@ -68,6 +68,15 @@ const Feed: React.FC<I_props> = ({ postData }) => {
     });
   };
 
+  const deletePost = postId => {
+    if (confirm('Delete this post?')) {
+      dispatch({
+        type: E_postActionType.DELETE_POST_REQUEST,
+        data: { postId }
+      });
+    }
+  };
+
   return (
     <main className='Feed'>
       {postData &&
@@ -78,6 +87,7 @@ const Feed: React.FC<I_props> = ({ postData }) => {
             1}월${finishTime.getDate()}일`;
 
           const [isLike] = data.postLike.filter(v => v.userId === userId);
+          const isMyPost = data.userId === userId;
 
           let isReplyInput = data.postId === currentReplyPostId;
 
@@ -125,8 +135,12 @@ const Feed: React.FC<I_props> = ({ postData }) => {
                   </div>
                   <span onClick={() => showReplyList(data)}>{data.postReply.length}</span>
                 </div>
-                <div className='option-button'>
-                  <span>...</span>
+                <div className='delete-container'>
+                  {isMyPost && (
+                    <i onClick={() => deletePost(data.postId)} className='material-icons'>
+                      delete_outline
+                    </i>
+                  )}
                 </div>
               </footer>
               {isReplyInput && (

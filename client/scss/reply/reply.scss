@@ -8,7 +8,7 @@ div#Reply {
     width: 500px;
     height: 500px;
     background-color: #ffffff;
-    grid-template-rows: 50px 450px;
+    grid-template-rows: 50px 400px 50px;
     border-radius: 15px;
     overflow: hidden;
     z-index: 1000;
@@ -17,7 +17,7 @@ div#Reply {
       justify-items: center;
       align-items: center;
       grid-template-columns: 50px auto 50px;
-      border-bottom: 1px solid #f0f0f0;
+      border-bottom: 1px solid #e6e6e6;
 
       span {
         font-weight: bold;
@@ -82,5 +82,39 @@ div#Reply {
         }
       }
     }
+
+    div.reply {
+      grid-template-columns: 85% 15%;
+      border-top: 1px solid #e6e6e6;
+      height: 50px;
+
+      div.input-form {
+        input {
+          padding: 15px;
+          border: 0px solid white;
+          &:focus {
+            outline: 0;
+          }
+        }
+      }
+
+      .button-form {
+        button {
+          font-size: 1rem;
+          font-weight: bolder;
+          background-color: white;
+          border: 0px solid white;
+          cursor: pointer;
+
+          &:focus {
+            outline: 0;
+          }
+
+          &:hover {
+            color: rgb(212, 212, 212);
+          }
+        }
+      }
+    } //reply
   }
 }

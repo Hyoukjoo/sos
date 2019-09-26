@@ -5,27 +5,31 @@ import { Follow } from '../models';
 
 const router = Router();
 
-router.get('/', isLogin, async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
-    const followersData = await Follow.findAll({
-      where: { followeeId: req.user },
-      attributes: ['followerId']
-    });
+    if (req.user) {
+      const followersData = await Follow.findAll({
+        where: { followeeId: req.user },
+        attributes: ['followerId']
+      });
 
-    const followeesData = await Follow.findAll({
-      where: { followerId: req.user },
-      attributes: ['followeeId']
-    });
+      const followeesData = await Follow.findAll({
+        where: { followerId: req.user },
+        attributes: ['followeeId']
+      });
 
-    const followers = followersData.map(follower => follower.followerId);
-    const followees = followeesData.map(followee => followee.followeeId);
+      const followers = followersData.map(follower => follower.followerId);
+      const followees = followeesData.map(followee => followee.followeeId);
 
-    const result = {
-      followers,
-      followees
-    };
+      const result = {
+        followers,
+        followees
+      };
 
-    res.json(result);
+      res.json(result);
+    } else {
+      res.json({ failMessage: 'Loing info is not existed' });
+    }
   } catch (e) {
     console.log(e);
     res.send(e);

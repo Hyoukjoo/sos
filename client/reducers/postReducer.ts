@@ -20,6 +20,7 @@ const postReducer = (state = InitialState, action: I_postAction) => {
   return produce(state, draft => {
     switch (action.type) {
       case E_postActionType.NEW_POST_REQUEST:
+      case E_postActionType.DELETE_POST_REQUEST:
       case E_postActionType.LOAD_POST_REQUEST:
       case E_postActionType.POST_LIKE_REQUEST:
       case E_postActionType.POST_UNLIKE_REQUEST:
@@ -29,6 +30,12 @@ const postReducer = (state = InitialState, action: I_postAction) => {
       }
 
       case E_postActionType.NEW_POST_SUCCESS: {
+        break;
+      }
+
+      case E_postActionType.DELETE_POST_SUCCESS: {
+        const postIndex = draft.postData.findIndex(v => v.postId === action.data.postId);
+        draft.postData.splice(postIndex, 1);
         break;
       }
 
@@ -64,6 +71,7 @@ const postReducer = (state = InitialState, action: I_postAction) => {
       }
 
       case E_postActionType.NEW_POST_FAILURE:
+      case E_postActionType.DELETE_POST_FAILURE:
       case E_postActionType.LOAD_POST_FAILURE:
       case E_postActionType.POST_LIKE_FAILURE:
       case E_postActionType.POST_UNLIKE_FAILURE:
@@ -74,6 +82,7 @@ const postReducer = (state = InitialState, action: I_postAction) => {
       }
 
       case E_postActionType.NEW_POST_ERROR:
+      case E_postActionType.DELETE_POST_ERROR:
       case E_postActionType.LOAD_POST_ERROR:
       case E_postActionType.POST_LIKE_ERROR:
       case E_postActionType.POST_UNLIKE_ERROR:

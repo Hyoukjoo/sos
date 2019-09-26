@@ -7,15 +7,15 @@ const loadProfileInfoAPI = async () => axios.get('/profile/loadprofileinfo', { w
 function* loadProfileInfo() {
   try {
     const result = yield call(loadProfileInfoAPI);
-    if (result.data.message !== undefined) {
-      yield put({
-        type: E_profileActionType.LOAD_MY_PROFILE_INFO_FAILURE,
-        message: result.data.message
-      });
-    } else {
+    if (!result.data.failMessage) {
       yield put({
         type: E_profileActionType.LOAD_MY_PROFILE_INFO_SUCCESS,
         data: result.data
+      });
+    } else {
+      yield put({
+        type: E_profileActionType.LOAD_MY_PROFILE_INFO_FAILURE,
+        message: result.data.message
       });
     }
   } catch (e) {
@@ -35,7 +35,7 @@ const changeProfileImageAPI = async data => axios.post('/profile/changeprofileim
 function* changeProfileImage(action) {
   try {
     const result = yield call(changeProfileImageAPI, action.data);
-    if (result.data.failMessage === undefined) {
+    if (!result.data.failMessage) {
       yield put({
         type: E_profileActionType.CHANGE_PROFILE_IMAGE_SUCCESS,
         message: result.data.successMessage,
@@ -43,12 +43,15 @@ function* changeProfileImage(action) {
       });
     } else {
       yield put({
-        type: typeof E_profileActionType.CHANGE_PROFILE_IMAGE_FAILURE,
+        type: E_profileActionType.CHANGE_PROFILE_IMAGE_FAILURE,
         message: result.data.failMessage
       });
     }
   } catch (e) {
-    console.log(e);
+    yield put({
+      type: E_profileActionType.CHANGE_PROFILE_IMAGE_ERROR,
+      error: e
+    });
   }
 }
 
@@ -61,7 +64,7 @@ const changeUserNameAPI = async data => axios.post('/profile/changeusername', da
 function* changeUserName(action) {
   try {
     const result = yield call(changeUserNameAPI, action.data);
-    if (result.data.failMessage === undefined) {
+    if (!result.data.failMessage) {
       yield put({
         type: E_profileActionType.CHANGE_USER_NAME_SUCCESS,
         message: result.data.successMessage,
@@ -74,7 +77,6 @@ function* changeUserName(action) {
       });
     }
   } catch (e) {
-    console.log(e);
     put({
       type: E_profileActionType.CHANGE_USER_NAME_ERROR,
       error: e
@@ -91,15 +93,15 @@ const changePasswordAPI = async data => await axios.post('/profile/changepasswor
 function* changePassword(action) {
   try {
     const result = yield call(changePasswordAPI, action.data);
-    if (result.data.failMessage !== undefined) {
-      yield put({
-        type: E_profileActionType.CHANGE_PASSWORD_FAILURE,
-        message: result.data.failMessage
-      });
-    } else {
+    if (!result.data.failMessage) {
       yield put({
         type: E_profileActionType.CHANGE_PASSWORD_SUCCESS,
         message: result.data.successMessage
+      });
+    } else {
+      yield put({
+        type: E_profileActionType.CHANGE_PASSWORD_FAILURE,
+        message: result.data.failMessage
       });
     }
   } catch (e) {

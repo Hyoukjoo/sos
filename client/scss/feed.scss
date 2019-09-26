@@ -98,9 +98,16 @@ main.Feed {
         }
       }
 
-      div.option-button {
+      div.delete-container {
         padding-right: 20px;
         justify-self: end;
+        i {
+          cursor: pointer;
+
+          &:hover {
+            color: #eb2f06;
+          }
+        }
       }
     } //footer
 

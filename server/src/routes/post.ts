@@ -62,6 +62,20 @@ router.post('/', isLogin, upload.array('image'), async (req, res, next) => {
   }
 });
 
+router.delete('/', isLogin, async (req, res, next) => {
+  try {
+    const result = await Post.destroy({where: { postId: req.body.postId }})
+    if(result > 0) {
+      res.json({successMessage: 'Success delete post'});
+    } else {
+      res.json({failMessage: 'Fail delete post'})
+    }
+  } catch (e) {
+    console.log(e);
+    res.send(e);
+  }
+})
+
 router.get('/', isLogin, async (req, res, next) => {
   try {
     const groupData = await Group.findAll({
@@ -93,7 +107,7 @@ router.get('/', isLogin, async (req, res, next) => {
     const posts = await Post.findAll({
       where: {
         [Op.and]: [
-          { userId: req.user },
+          { userId: findUserId },
           {
             privacyBound: {
               [Op.or]: [
@@ -197,14 +211,12 @@ router.post('/like', async (req, res, next) => {
   }
 });
 
-router.delete('/unlike', isLogin, async (req, res, next) => {
+router.delete('/like', isLogin, async (req, res, next) => {
   try {
-    const { postId } = req.body;
-
-    const result = await Like.destroy({ where: { postId, userId: req.user } });
+    const result = await Like.destroy({ where: { postId: req.body.postId, userId: req.user } });
 
     if (result) {
-      res.json({ successMessage: 'Success unlike', postId, userId: req.user });
+      res.json({ successMessage: 'Success unlike', postId: req.body.postId, userId: req.user });
     } else {
       res.json({ failMessage: 'Fail unlike' });
     }
@@ -241,11 +253,11 @@ router.post('/reply', isLogin, async (req, res, next) => {
   }
 });
 
-router.delete('/deletereply', isLogin, async (req, res, next) => {
+router.delete('/reply', isLogin, async (req, res, next) => {
   try {
     const result = await Reply.destroy({ where: { id: req.body.id } });
     if(result > 0) {
-      res.send({successMessage: 'Success delete reply'});
+      res.json({successMessage: 'Success delete reply'});
     } else {
       res.json({failMessage: 'Fail delete reply'})
     }
