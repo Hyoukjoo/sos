@@ -135,7 +135,16 @@ router.get('/', isLogin, async (req, res, next) => {
         },
         {
           model: Reply,
-          as: 'postReply'
+          as: 'postReply',
+          attributes: ['id', 'userId', 'comment', 'updatedAt'],
+          include: [
+            {
+              model: Profile,
+              as: 'replyUserProfile',
+              attributes: ['userName', 'profileImage']
+            }
+          ],
+          order: [['updateAt', 'DESC']]
         },
         {
           model: Image,
@@ -190,8 +199,6 @@ router.post('/like', async (req, res, next) => {
 
 router.delete('/unlike', isLogin, async (req, res, next) => {
   try {
-    console.log(req.body);
-
     const { postId } = req.body;
 
     const result = await Like.destroy({ where: { postId, userId: req.user } });
@@ -208,24 +215,44 @@ router.delete('/unlike', isLogin, async (req, res, next) => {
 });
 
 router.post('/reply', isLogin, async (req, res, next) => {
-  try{
-    const exReply = await Reply.findOne({ where: {postId: req.body.postId, userId: req.user}})
-    if(!exReply) {
-      const result = await Reply.create({
-        postId: req.body.postId,
-        userId: req.user,
-        comment: req.body.comment,
-      })
+  try {
+    const result = await Reply.create({
+      postId: req.body.postId,
+      userId: req.user,
+      comment: req.body.comment
+    });
 
-      console.log(result);
-      res.json({ successMessage: 'Success Reply'})
+    const replyUserProfile = await result.getReplyUserProfile();
+
+    const deliveryBox = {
+      id: result.id,
+      postId: result.postId,
+      userId: result.userId,
+      comment: result.comment,
+      replyUserProfile: {
+        userName: replyUserProfile.userName,
+        profileImage: replyUserProfile.profileImage
+      }
+    };
+    res.json(deliveryBox);
+  } catch (e) {
+    console.log(e);
+    res.send(e);
+  }
+});
+
+router.delete('/deletereply', isLogin, async (req, res, next) => {
+  try {
+    const result = await Reply.destroy({ where: { id: req.body.id } });
+    if(result > 0) {
+      res.send({successMessage: 'Success delete reply'});
     } else {
-      res.json({ failMessage: 'Reply is already existed'});
+      res.json({failMessage: 'Fail delete reply'})
     }
   } catch (e) {
     console.log(e);
     res.send(e);
   }
-})
+});
 
 export default router;

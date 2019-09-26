@@ -1,16 +1,27 @@
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes, Model, Association, HasOne, HasOneGetAssociationMixin } from 'sequelize';
 
 import { sequelize } from '.';
 import { Post } from './post';
 import { User } from './user';
+import { Profile } from './profile';
 
 export class Reply extends Model {
+  public id!: number;
   public postId!: number;
   public userId!: string;
   public comment!: string;
-
   public readonly createAt!: Date;
   public readonly updateAt!: Date;
+
+  public getReplyUserProfile!: HasOneGetAssociationMixin<Profile>;
+
+  public readonly postReply?: Post[];
+  public readonly replyUserProfile?: Profile;
+
+  public static associations: {
+    postReply: Association<Post, Reply>;
+    replyUserProfile: Association<Reply, Profile>;
+  };
 }
 
 export const initReplyModel = () => {
@@ -48,6 +59,7 @@ export const initReplyModel = () => {
 
 export const associateReply = () => {
   Reply.belongsTo(Post, { targetKey: 'postId', foreignKey: 'postId', as: 'postReply' });
+  Reply.hasOne(Profile, { sourceKey: 'userId', foreignKey: 'userId', as: 'replyUserProfile' });
 
   return Reply;
 };

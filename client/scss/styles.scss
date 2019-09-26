@@ -1,5 +1,5 @@
 @import 'headline', 'feed', 'loginForm', 'signupForm', './profile/profile.scss', 'layout', 'postform',
-  './like/like.scss';
+  './like/like.scss', './reply/reply.scss';
 
 body {
   margin: 0;
@@ -15,8 +15,9 @@ body {
 
 a {
   text-decoration: none;
+  color: #000000;
   &:visited {
-    color: black;
+    color: #000000;
   }
 }
 

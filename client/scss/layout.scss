@@ -8,7 +8,8 @@ section {
   align-items: baseline;
 }
 
-div#Likes {
+div#Likes,
+div#Reply {
   position: fixed;
   width: 100vw;
   height: 100vh;

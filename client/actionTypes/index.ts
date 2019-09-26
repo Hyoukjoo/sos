@@ -21,7 +21,8 @@ export interface I_postState {
   images: string;
   message: string;
   error: Error;
-  isLikes: boolean;
+  isLike: boolean;
+  isReply: boolean;
   currentPostData: I_postData;
   currentReplyPostId: number;
 }
@@ -36,10 +37,10 @@ export interface I_postData {
   userPost: { userId: string; userProfile: I_userProfile };
   postImage: [{ postId: number; src: string }];
   postLike: [{ postId: number; userId: string; likeUserProfile: I_userProfile }];
-  postReply: [{ postId: number; userId: string; comment: string }];
+  postReply: [{ id: number; userId: string; comment: string; replyUserProfile: I_userProfile }];
 }
 
-interface I_userProfile {
+export interface I_userProfile {
   userName: string;
   profileImage: string;
 }

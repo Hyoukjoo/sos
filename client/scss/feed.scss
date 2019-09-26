@@ -105,7 +105,7 @@ main.Feed {
     } //footer
 
     .reply {
-      grid-template-columns: 90% 10%;
+      grid-template-columns: 85% 15%;
       border-top: 1px solid #e6e6e6;
       height: 50px;
 
@@ -122,9 +122,10 @@ main.Feed {
       .button-form {
         button {
           font-size: 1rem;
-          font-weight: bold;
+          font-weight: bolder;
           background-color: white;
           border: 0px solid white;
+          cursor: pointer;
 
           &:focus {
             outline: 0;

@@ -117,7 +117,7 @@ function* postReplyRequest(action) {
     if (!result.data.failMessage) {
       yield put({
         type: E_postActionType.POST_REPLY_SUCCESS,
-        data: action.data
+        data: result.data
       });
     } else {
       yield put({
@@ -137,12 +137,41 @@ function* watchPostReply() {
   yield takeLatest(E_postActionType.POST_REPLY_REQUEST, postReplyRequest);
 }
 
+const postDeleteReplyRequestAPI = async data => axios.delete('/post/deletereply', { data, withCredentials: true });
+
+function* postDeleteReplyRequest(action) {
+  try {
+    const result = yield call(postDeleteReplyRequestAPI, action.data);
+    if (!result.data.failMessage) {
+      yield put({
+        type: E_postActionType.POST_DELETE_REPLY_SUCCESS,
+        data: action.data
+      });
+    } else {
+      yield put({
+        type: E_postActionType.POST_DELETE_REPLY_FAILURE,
+        message: result.data.failMessage
+      });
+    }
+  } catch (e) {
+    yield put({
+      type: E_postActionType.POST_DELETE_REPLY_ERROR,
+      error: e
+    });
+  }
+}
+
+function* watchPostDeleteReply() {
+  yield takeLatest(E_postActionType.POST_DELETE_REPLY_REQUEST, postDeleteReplyRequest);
+}
+
 export default function* postSaga() {
   yield all([
     fork(watchAddPost),
     fork(watchLoadPost),
     fork(watchPostLike),
     fork(watchPostUnLike),
-    fork(watchPostReply)
+    fork(watchPostReply),
+    fork(watchPostDeleteReply)
   ]);
 }

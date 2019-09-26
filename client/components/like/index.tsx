@@ -17,7 +17,7 @@ const Like: React.FC = () => {
     const handleClickOutside = e => {
       if (ref.current === e.target) {
         dispatch({
-          type: E_postActionType.SHOW_LIKES
+          type: E_postActionType.SHOW_LIKE_LIST
         });
       }
     };
@@ -32,7 +32,7 @@ const Like: React.FC = () => {
 
   const clearLikes = (e: React.MouseEvent<HTMLElement>) => {
     dispatch({
-      type: E_postActionType.SHOW_LIKES
+      type: E_postActionType.SHOW_LIKE_LIST
     });
   };
 
@@ -77,8 +77,10 @@ const Like: React.FC = () => {
             return (
               <div className='like-list' key={v.postId + v.userId}>
                 <div className='profile-image'>
-                  {likeUserProfile.profileImage && (
+                  {likeUserProfile.profileImage ? (
                     <img src={`http://localhost:4000/${likeUserProfile.profileImage}`} alt='profile-image' />
+                  ) : (
+                    <div className='empty-profile-image'></div>
                   )}
                 </div>
                 <div className='username'>
@@ -90,7 +92,6 @@ const Like: React.FC = () => {
                 </div>
                 <div className='follow-container'>
                   <div className='follow-button-container'>
-                    {/* 친구상태에 따른 버튼 상태 만들기 */}
                     {myFollowees && myFollowees.includes(v.userId) ? (
                       <button className='following-button' onClick={() => requestUnFollow(v.userId)}>
                         following

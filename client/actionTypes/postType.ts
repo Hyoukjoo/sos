@@ -1,5 +1,5 @@
 import { E_userActionType } from './userType';
-import { I_postData } from '.';
+import { I_postData, I_userProfile } from '.';
 
 export enum E_postActionType {
   NEW_POST_REQUEST = 'NEW_POST_REQUEST',
@@ -11,7 +11,7 @@ export enum E_postActionType {
   LOAD_POST_FAILURE = 'LOAD_POST_FAILURE',
   LOAD_POST_ERROR = 'LOAD_POST_ERROR',
   LOAD_PLACE_DATA = 'LOAD_PLACE_DATA',
-  SHOW_LIKES = 'SHOW_LIKES',
+  SHOW_LIKE_LIST = 'SHOW_LIKE_LIST',
   POST_LIKE_REQUEST = 'POST_LIKE_REQUEST',
   POST_LIKE_SUCCESS = 'POST_LIKE_SUCCESS',
   POST_LIKE_FAILURE = 'POST_LIKE_FAILURE',
@@ -24,7 +24,12 @@ export enum E_postActionType {
   POST_REPLY_SUCCESS = 'POST_REPLY_SUCCESS',
   POST_REPLY_FAILURE = 'POST_REPLY_FAILURE',
   POST_REPLY_ERROR = 'POST_REPLY_ERROR',
-  SHOW_REPLY_INPUT = 'SHOW_REPLY_INPUT'
+  POST_DELETE_REPLY_REQUEST = 'POST_DELETE_REPLY_REQUEST',
+  POST_DELETE_REPLY_SUCCESS = 'POST_DELETE_REPLY_SUCCESS',
+  POST_DELETE_REPLY_FAILURE = 'POST_DELETE_REPLY_FAILURE',
+  POST_DELETE_REPLY_ERROR = 'POST_DELETE_REPLY_ERROR',
+  SHOW_REPLY_INPUT = 'SHOW_REPLY_INPUT',
+  SHOW_REPLY_LIST = 'SHOW_REPLY_LIST'
 }
 
 interface I_postInfo {
@@ -80,8 +85,8 @@ interface I_loadPlaceData {
   data: string;
 }
 
-interface I_showLikes {
-  type: E_postActionType.SHOW_LIKES;
+interface I_showLikeList {
+  type: E_postActionType.SHOW_LIKE_LIST;
   data: { postData: I_postData };
 }
 
@@ -129,6 +134,11 @@ interface I_postUnLikeError {
   error: Error;
 }
 
+interface I_showReplyList {
+  type: E_postActionType.SHOW_REPLY_LIST;
+  data: { postData: I_postData };
+}
+
 interface I_postReplyRequest {
   type: E_postActionType.POST_REPLY_REQUEST;
   data: { postId: number; comment: string };
@@ -136,7 +146,7 @@ interface I_postReplyRequest {
 
 interface I_postReplySuccess {
   type: E_postActionType.POST_REPLY_SUCCESS;
-  data: { postId: number; userId: string; comment: string };
+  data: { id: number; postId: number; userId: string; comment: string; replyUserProfile: I_userProfile };
 }
 
 interface I_postReplyFailure {
@@ -146,6 +156,26 @@ interface I_postReplyFailure {
 
 interface I_postReplyError {
   type: E_postActionType.POST_REPLY_ERROR;
+  error: Error;
+}
+
+interface I_postDeleteReplyRequest {
+  type: E_postActionType.POST_DELETE_REPLY_REQUEST;
+  data: { id: number };
+}
+
+interface I_postDeleteReplySuccess {
+  type: E_postActionType.POST_DELETE_REPLY_SUCCESS;
+  data: { id: number; postId: number };
+}
+
+interface I_postDeleteReplyFailure {
+  type: E_postActionType.POST_DELETE_REPLY_FAILURE;
+  message: string;
+}
+
+interface I_postDeleteReplyError {
+  type: E_postActionType.POST_DELETE_REPLY_ERROR;
   error: Error;
 }
 
@@ -165,7 +195,7 @@ export type I_postAction =
   | I_loadPostError
   | I_loadPlaceData
   | I_userLogoutSuccess
-  | I_showLikes
+  | I_showLikeList
   | I_postLikeRequest
   | I_postLikeSuccess
   | I_postLikeFailure
@@ -178,4 +208,9 @@ export type I_postAction =
   | I_postReplySuccess
   | I_postReplyFailure
   | I_postReplyError
-  | I_showReplyInput;
+  | I_postDeleteReplyRequest
+  | I_postDeleteReplySuccess
+  | I_postDeleteReplyFailure
+  | I_postDeleteReplyError
+  | I_showReplyInput
+  | I_showReplyList;

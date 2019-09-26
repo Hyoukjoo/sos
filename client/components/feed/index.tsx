@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { E_postActionType } from '../../actionTypes/postType';
 import I_state, { I_postData } from '../../actionTypes';
+import useInput from '../../hook_utils/useInput';
 
 interface I_props {
   postData: I_postData[];
@@ -14,9 +15,11 @@ const Feed: React.FC<I_props> = ({ postData }) => {
   const { userId } = useSelector((state: I_state) => state.user.myInfo);
   const { currentReplyPostId } = useSelector((state: I_state) => state.post);
 
-  const handleLikes = (postData: I_postData) => {
+  const [comment, resetComment, onChangeComment] = useInput('');
+
+  const showLikeList = (postData: I_postData) => {
     dispatch({
-      type: E_postActionType.SHOW_LIKES,
+      type: E_postActionType.SHOW_LIKE_LIST,
       data: { postData }
     });
   };
@@ -35,17 +38,33 @@ const Feed: React.FC<I_props> = ({ postData }) => {
     });
   };
 
+  const showReplyList = (postData: I_postData) => {
+    dispatch({
+      type: E_postActionType.SHOW_REPLY_LIST,
+      data: { postData }
+    });
+  };
+
   const showReplyInput = postId => {
+    resetComment();
+
     dispatch({
       type: E_postActionType.SHOW_REPLY_INPUT,
       data: { postId }
     });
   };
 
-  const submitReply = (postId, comment) => {
+  const submitReply = (postId, e: React.MouseEvent<HTMLButtonElement>) => {
+    resetComment();
+
     dispatch({
       type: E_postActionType.POST_REPLY_REQUEST,
       data: { postId, comment }
+    });
+
+    dispatch({
+      type: E_postActionType.SHOW_REPLY_INPUT,
+      data: { postId }
     });
   };
 
@@ -96,7 +115,7 @@ const Feed: React.FC<I_props> = ({ postData }) => {
                       <i className='material-icons unLike'>favorite_border</i>
                     </div>
                   )}
-                  <span onClick={() => handleLikes(data)}>{data.postLike.length}</span>
+                  <span onClick={() => showLikeList(data)}>{data.postLike.length}</span>
                 </div>
                 <div className='button-div'>
                   <div>
@@ -104,7 +123,7 @@ const Feed: React.FC<I_props> = ({ postData }) => {
                       sms
                     </i>
                   </div>
-                  <span>{data.postReply.length}</span>
+                  <span onClick={() => showReplyList(data)}>{data.postReply.length}</span>
                 </div>
                 <div className='option-button'>
                   <span>...</span>
@@ -113,10 +132,10 @@ const Feed: React.FC<I_props> = ({ postData }) => {
               {isReplyInput && (
                 <div className='reply'>
                   <div className='input-form'>
-                    <input type='text' placeholder='Add a comment...' />
+                    <input type='text' placeholder='Add a comment...' value={comment} onChange={onChangeComment} />
                   </div>
                   <div className='button-form'>
-                    <button>submti</button>
+                    <button onClick={e => submitReply(data.postId, e)}>Reply</button>
                   </div>
                 </div>
               )}

@@ -10,7 +10,8 @@ const InitialState: I_postState = {
   images: null,
   message: null,
   error: null,
-  isLikes: false,
+  isLike: false,
+  isReply: false,
   currentPostData: null,
   currentReplyPostId: null
 };
@@ -22,7 +23,8 @@ const postReducer = (state = InitialState, action: I_postAction) => {
       case E_postActionType.LOAD_POST_REQUEST:
       case E_postActionType.POST_LIKE_REQUEST:
       case E_postActionType.POST_UNLIKE_REQUEST:
-      case E_postActionType.POST_REPLY_REQUEST: {
+      case E_postActionType.POST_REPLY_REQUEST:
+      case E_postActionType.POST_DELETE_REPLY_REQUEST: {
         break;
       }
 
@@ -54,11 +56,19 @@ const postReducer = (state = InitialState, action: I_postAction) => {
         break;
       }
 
+      case E_postActionType.POST_DELETE_REPLY_SUCCESS: {
+        const postIndex = draft.postData.findIndex(v => v.postId === action.data.postId);
+        const replyIndex = draft.postData[postIndex].postReply.findIndex(v => v.id === action.data.id);
+        draft.postData[postIndex].postReply.splice(replyIndex, 1);
+        break;
+      }
+
       case E_postActionType.NEW_POST_FAILURE:
       case E_postActionType.LOAD_POST_FAILURE:
       case E_postActionType.POST_LIKE_FAILURE:
       case E_postActionType.POST_UNLIKE_FAILURE:
-      case E_postActionType.POST_REPLY_FAILURE: {
+      case E_postActionType.POST_REPLY_FAILURE:
+      case E_postActionType.POST_DELETE_REPLY_FAILURE: {
         draft.message = action.message;
         break;
       }
@@ -67,7 +77,8 @@ const postReducer = (state = InitialState, action: I_postAction) => {
       case E_postActionType.LOAD_POST_ERROR:
       case E_postActionType.POST_LIKE_ERROR:
       case E_postActionType.POST_UNLIKE_ERROR:
-      case E_postActionType.POST_REPLY_ERROR: {
+      case E_postActionType.POST_REPLY_ERROR:
+      case E_postActionType.POST_DELETE_REPLY_ERROR: {
         draft.error = action.error;
         break;
       }
@@ -77,12 +88,23 @@ const postReducer = (state = InitialState, action: I_postAction) => {
         break;
       }
 
-      case E_postActionType.SHOW_LIKES: {
-        if (draft.isLikes) {
-          draft.isLikes = false;
+      case E_postActionType.SHOW_LIKE_LIST: {
+        if (draft.isLike) {
+          draft.isLike = false;
           draft.currentPostData = null;
         } else {
-          draft.isLikes = true;
+          draft.isLike = true;
+          draft.currentPostData = action.data.postData;
+        }
+        break;
+      }
+
+      case E_postActionType.SHOW_REPLY_LIST: {
+        if (draft.isReply) {
+          draft.isReply = false;
+          draft.currentPostData = null;
+        } else {
+          draft.isReply = true;
           draft.currentPostData = action.data.postData;
         }
         break;
@@ -100,7 +122,8 @@ const postReducer = (state = InitialState, action: I_postAction) => {
         draft.images = null;
         draft.message = null;
         draft.error = null;
-        draft.isLikes = false;
+        draft.isLike = false;
+        draft.isReply = false;
         draft.currentPostData = null;
         break;
       }

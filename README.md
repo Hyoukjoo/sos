@@ -121,10 +121,14 @@
 15. [ ] 19.09.19 TODO: followtype.ts interface 이름 확인 및 재설정
 16. [ ] 19.09.19 TODO: follow 정보 가져오는 구조 재설정
 17. [ ] 19.09.19 TODO: userId와 username을 구분하고 username으로 활용되도록(ex. 주소창 정보 등)
-18. [ ] 19.09.24 TODO: LIKE를 눌렀을 때 유저의 프로필 정보가 들어가지 않아 profileImage가 undefined가 되어 에러 발생
-19. [ ] 19.09.24 TODO: SERVER에서 LIKE와 UNLIKE 분리해야 할거 같은데 고민하고 수정
+18. [V]] 19.09.24 TODO: LIKE를 눌렀을 때 유저의 프로필 정보가 들어가지 않아 profileImage가 undefined가 되어 에러 발생
+19. [V] 19.09.24 TODO: SERVER에서 LIKE와 UNLIKE 분리해야 할거 같은데 고민하고 수정
 20. [ ] 19.09.25 TODO: USER 페이지 정보를 상대적으로 보여지도록 데이터 설정
-21. [ ] 19.09.25 TODO: REDUCER CASE 블록으로 감싸기
+21. [ ] 19.09.25 TODO: 모든 REDUCER CASE 블록으로 감싸기
+22. [ ] 19.09.25 TODO: 회원가입 후 isSignup 상태 초기화 하기
+23. [ ] 19.09.26 TODO: 프로필 사진, 유저 이름 컴포넌트로 따로 분리하기
+24. [ ] 19.09.26 TODO: 댓글, 좋아요 데이터를 시간 역 순으로 정렬하기
+25. [ ] 19.09.26 TODO: 댓글, 좋아요, 게시물 게시로부터 시간 계산
 
 ## ISSUE:
 

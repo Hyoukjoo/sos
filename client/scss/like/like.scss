@@ -5,9 +5,9 @@ div#Likes {
   align-items: center;
 
   div.likes-container {
-    width: 350px;
+    width: 400px;
     height: 400px;
-    grid-template-rows: 50px 350px;
+    grid-template-rows: 50px auto;
     background-color: #ffffff;
     border-radius: 15px;
     overflow: hidden;
@@ -16,7 +16,7 @@ div#Likes {
     header {
       justify-items: center;
       align-items: center;
-      grid-template-columns: 15% 70% 15%;
+      grid-template-columns: 50px auto 50px;
       border-bottom: 1px solid #f0f0f0;
 
       span {
@@ -45,8 +45,15 @@ div#Likes {
 
         div.profile-image {
           img {
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+          }
+
+          div.empty-profile-image {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #f0f0f0;
             border-radius: 50%;
           }
         }
@@ -56,7 +63,7 @@ div#Likes {
           margin-left: 10px;
 
           span {
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: bold;
           }
         }
