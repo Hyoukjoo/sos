@@ -12,10 +12,12 @@ import '../scss/styles.scss';
 import '../css/day-picker.css';
 import '../css/classic/default.css';
 import '../css/material/default.css';
+import PostForm from './newPost/PostForm';
 
 const Layout: NextFC = ({ children }) => {
   const { isLike } = useSelector((state: I_state) => state.post);
   const { isReply } = useSelector((state: I_state) => state.post);
+  const { isNewPost } = useSelector((state: I_state) => state.post);
 
   return (
     <div>
@@ -23,6 +25,7 @@ const Layout: NextFC = ({ children }) => {
         <HeadLine />
         {isLike && <Like />}
         {isReply && <Reply />}
+        {isNewPost && <PostForm />}
         {children}
       </section>
     </div>

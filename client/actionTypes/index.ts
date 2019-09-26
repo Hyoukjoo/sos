@@ -23,6 +23,7 @@ export interface I_postState {
   error: Error;
   isLike: boolean;
   isReply: boolean;
+  isNewPost: boolean;
   currentPostData: I_postData;
   currentReplyPostId: number;
 }

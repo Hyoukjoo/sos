@@ -17,7 +17,7 @@ const Feed: React.FC<I_props> = ({ postData }) => {
 
   const [comment, resetComment, onChangeComment] = useInput('');
 
-  const showLikeList = (postData: I_postData) => {
+  const showLikeList = postData => {
     dispatch({
       type: E_postActionType.SHOW_LIKE_LIST,
       data: { postData }
@@ -38,7 +38,7 @@ const Feed: React.FC<I_props> = ({ postData }) => {
     });
   };
 
-  const showReplyList = (postData: I_postData) => {
+  const showReplyList = postData => {
     dispatch({
       type: E_postActionType.SHOW_REPLY_LIST,
       data: { postData }
@@ -54,7 +54,7 @@ const Feed: React.FC<I_props> = ({ postData }) => {
     });
   };
 
-  const submitReply = (postId, e: React.MouseEvent<HTMLButtonElement>) => {
+  const submitReply = postId => {
     resetComment();
 
     dispatch({
@@ -89,7 +89,7 @@ const Feed: React.FC<I_props> = ({ postData }) => {
           const [isLike] = data.postLike.filter(v => v.userId === userId);
           const isMyPost = data.userId === userId;
 
-          let isReplyInput = data.postId === currentReplyPostId;
+          const isReplyInput = data.postId === currentReplyPostId;
 
           return (
             <article key={data.postId}>

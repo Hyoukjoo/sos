@@ -37,6 +37,16 @@ nav.HeadLine {
       .bell,
       .user {
         justify-items: center;
+        i {
+          font-size: 1.75rem;
+        }
+      }
+
+      div.plus {
+        i {
+          cursor: pointer;
+          padding-bottom: 2px;
+        }
       }
     }
   }

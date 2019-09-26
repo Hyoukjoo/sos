@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { E_postActionType } from '../../actionTypes/postType';
@@ -8,6 +8,7 @@ import PreviewImages from '../utils/PreviewImages';
 
 import DayPicker from 'react-day-picker';
 import TimePicker from 'react-times';
+import I_state from '../../actionTypes';
 
 const PostForm: React.FC = () => {
   const dispatch = useDispatch();
@@ -35,7 +36,7 @@ const PostForm: React.FC = () => {
   const [imageURL, setImageURL] = useState(null);
   const [image, setImage] = useState(null);
 
-  const profileImage = useSelector((state: any) => state.profile.profileImage);
+  const { profile } = useSelector((state: I_state) => state);
 
   useEffect(() => {
     if (!clickStartTime && !clickFinishTime) setCnContent('text-content');
@@ -129,19 +130,28 @@ const PostForm: React.FC = () => {
     data.append('image', image);
 
     if (image === null && (content as string).trim().length < 1) alert('No informations');
-    else if (confirm('Are you post it?'))
+    else if (confirm('Are you post it?')) {
       dispatch({
         type: E_postActionType.NEW_POST_REQUEST,
         data: data
       });
+
+      clear();
+    }
   }, [startTime, finishTime, content, image]);
 
+  const clear = () => {
+    dispatch({
+      type: E_postActionType.SHOW_NEW_POST
+    });
+  };
+
   return (
-    <main className='Post-form'>
+    <main id='Post-form'>
       <div className='container'>
         <div className='button-container'>
           <div className='cancel-button'>
-            <button>
+            <button onClick={clear}>
               <i className='material-icons'>clear</i>
             </button>
           </div>
@@ -153,16 +163,17 @@ const PostForm: React.FC = () => {
 
         <div className='post-container'>
           <header>
-            <div className='profile-image'>
-              {profileImage !== undefined && profileImage !== null ? (
-                <img src={`http://localhost:4000/${profileImage}`} alt='profileImage' />
-              ) : null}
-            </div>
+            {profile.profileImage ? (
+              <div className='profile-image'>
+                <img src={`http://localhost:4000/${profile.profileImage}`} alt='' />
+              </div>
+            ) : (
+              <div className='empty-profile-image'></div>
+            )}
             <div className='profile-name'>jo920208</div>
             <div className='period'>
               <div className='start-time'>
                 <button onClick={handleClickStartTime} className={cnStartTime}>
-                  {/* <i className='material-icons' >calendar_today</i> */}
                   <i className='material-icons opposite'>keyboard_tab</i>
                 </button>
               </div>
@@ -170,7 +181,6 @@ const PostForm: React.FC = () => {
                 <button onClick={handleClickFinishTime} className={cnFinishTime}>
                   <span>
                     <i className='material-icons'>keyboard_tab</i>
-                    {/* <i className='material-icons' >calendar_today</i> */}
                   </span>
                 </button>
               </div>

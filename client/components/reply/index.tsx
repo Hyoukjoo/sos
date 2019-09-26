@@ -41,10 +41,11 @@ const Reply: React.FC = () => {
   };
 
   const deleteReply = (postId, id) => {
-    dispatch({
-      type: E_postActionType.POST_DELETE_REPLY_REQUEST,
-      data: { postId, id }
-    });
+    if (confirm('Delete reply?'))
+      dispatch({
+        type: E_postActionType.POST_DELETE_REPLY_REQUEST,
+        data: { postId, id }
+      });
   };
 
   const submitReply = (postId, e: React.MouseEvent<HTMLButtonElement>) => {

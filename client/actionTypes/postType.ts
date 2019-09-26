@@ -33,7 +33,8 @@ export enum E_postActionType {
   POST_DELETE_REPLY_FAILURE = 'POST_DELETE_REPLY_FAILURE',
   POST_DELETE_REPLY_ERROR = 'POST_DELETE_REPLY_ERROR',
   SHOW_REPLY_INPUT = 'SHOW_REPLY_INPUT',
-  SHOW_REPLY_LIST = 'SHOW_REPLY_LIST'
+  SHOW_REPLY_LIST = 'SHOW_REPLY_LIST',
+  SHOW_NEW_POST = 'SHOW_NEW_POST'
 }
 
 interface I_postInfo {
@@ -44,6 +45,10 @@ interface I_postInfo {
   place?: string;
   privacyBounds?: string;
   tags?: string;
+}
+
+interface I_showNewPost {
+  type: E_postActionType.SHOW_NEW_POST;
 }
 
 interface I_newPostRequest {
@@ -209,6 +214,7 @@ interface I_showReplyInput {
 }
 
 export type I_postAction =
+  | I_showNewPost
   | I_newPostRequest
   | I_newPostSuccess
   | I_newPostFailure

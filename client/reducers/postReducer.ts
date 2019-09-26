@@ -12,6 +12,7 @@ const InitialState: I_postState = {
   error: null,
   isLike: false,
   isReply: false,
+  isNewPost: false,
   currentPostData: null,
   currentReplyPostId: null
 };
@@ -97,6 +98,12 @@ const postReducer = (state = InitialState, action: I_postAction) => {
         break;
       }
 
+      case E_postActionType.SHOW_NEW_POST: {
+        if (draft.isNewPost) draft.isNewPost = false;
+        else draft.isNewPost = true;
+        break;
+      }
+
       case E_postActionType.SHOW_LIKE_LIST: {
         if (draft.isLike) {
           draft.isLike = false;
@@ -133,6 +140,7 @@ const postReducer = (state = InitialState, action: I_postAction) => {
         draft.error = null;
         draft.isLike = false;
         draft.isReply = false;
+        draft.isNewPost = false;
         draft.currentPostData = null;
         break;
       }
