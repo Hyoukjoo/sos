@@ -10,9 +10,9 @@ nav.HeadLine {
   justify-items: center;
 
   .container {
-    width: 600px;
+    width: 900px;
     height: 100%;
-    grid-template-columns: 250px 100px 250px;
+    grid-template-columns: 250px auto 100px;
 
     .left {
       justify-items: start;
@@ -29,7 +29,7 @@ nav.HeadLine {
     }
 
     .right {
-      grid-template-columns: 100px 50px 50px 50px;
+      grid-template-columns: 50px 50px;
       justify-items: center;
       align-items: center;
 
@@ -45,7 +45,7 @@ nav.HeadLine {
       div.plus {
         i {
           cursor: pointer;
-          padding-bottom: 2px;
+          padding-bottom: 2.5px;
         }
       }
     }

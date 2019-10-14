@@ -4,12 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { E_postActionType } from '../../actionTypes/postType';
 import I_state, { I_postData } from '../../actionTypes';
 import useInput from '../../hook_utils/useInput';
+import monthArr from '../utils/month';
 
 interface I_props {
-  postData: I_postData[];
+  postDatas: I_postData[];
 }
 
-const Feed: React.FC<I_props> = ({ postData }) => {
+const Feed: React.FC<I_props> = ({ postDatas }) => {
   const dispatch = useDispatch();
 
   const { userId } = useSelector((state: I_state) => state.user.myInfo);
@@ -79,65 +80,73 @@ const Feed: React.FC<I_props> = ({ postData }) => {
 
   return (
     <main className='Feed'>
-      {postData &&
-        postData.map(data => {
-          const startTime = new Date(Date.parse(data.startTime));
-          const finishTime = new Date(Date.parse(data.finishTime));
-          const formatTime = `${startTime.getMonth() + 1}월${startTime.getDate()}일 / ${finishTime.getMonth() +
-            1}월${finishTime.getDate()}일`;
+      {postDatas &&
+        postDatas.map(postData => {
+          const startDate = new Date(Date.parse(postData.startTime));
+          const finishDate = new Date(Date.parse(postData.finishTime));
+          let formatDate = null;
+          if (
+            startDate.getFullYear() === finishDate.getFullYear() &&
+            startDate.getMonth() === finishDate.getMonth() &&
+            startDate.getDate() === finishDate.getDate()
+          )
+            formatDate = `${monthArr[startDate.getMonth()]} ${startDate.getDate()}`;
+          else
+            formatDate = `${monthArr[startDate.getMonth()]} ${startDate.getDate()}  
+          / ${monthArr[finishDate.getMonth()]} ${finishDate.getDate()} `;
 
-          const [isLike] = data.postLike.filter(v => v.userId === userId);
-          const isMyPost = data.userId === userId;
+          const [isLike] = postData.postLike.filter(v => v.userId === userId);
+          const isMyPost = postData.userId === userId;
 
-          const isReplyInput = data.postId === currentReplyPostId;
+          const isReplyInput = postData.postId === currentReplyPostId;
 
           return (
-            <article key={data.postId}>
+            <article key={postData.postId}>
               <header>
                 <div className='profile-image'>
                   <div className='image'>
-                    <img src={`http://localhost:4000/${data.userPost.userProfile.profileImage}`} alt='' />
+                    <img src={`http://localhost:4000/${postData.userPost.userProfile.profileImage}`} alt='' />
                   </div>
                 </div>
                 <div className='profile-name'>
-                  <span>{data.userPost.userProfile.userName}</span>
+                  <span>{postData.userPost.userProfile.userName}</span>
                 </div>
                 <div className='period'>
-                  <span>{formatTime}</span>
+                  <span>{formatDate}</span>
                 </div>
               </header>
               <div className='cover'>
                 <div className='content'>
-                  <span>{data.content}</span>
+                  <span>{postData.content}</span>
                 </div>
               </div>
               <div className='image'>
-                {data.postImage[0] && <img src={`http://localhost:4000/${data.postImage[0].src}`} />}
+                {postData.postImage[0] && <img src={`http://localhost:4000/${postData.postImage[0].src}`} />}
               </div>
               <footer>
                 <div className='button-div'>
                   {isLike ? (
-                    <div onClick={() => clickUnLike(data.postId)}>
+                    <div onClick={() => clickUnLike(postData.postId)}>
                       <i className='material-icons like'>favorite_border</i>
                     </div>
                   ) : (
-                    <div onClick={() => clickLike(data.postId)}>
+                    <div onClick={() => clickLike(postData.postId)}>
                       <i className='material-icons unLike'>favorite_border</i>
                     </div>
                   )}
-                  <span onClick={() => showLikeList(data)}>{data.postLike.length}</span>
+                  <span onClick={() => showLikeList(postData)}>{postData.postLike.length}</span>
                 </div>
                 <div className='button-div'>
                   <div>
-                    <i className='material-icons md-light' onClick={() => showReplyInput(data.postId)}>
+                    <i className='material-icons md-light' onClick={() => showReplyInput(postData.postId)}>
                       sms
                     </i>
                   </div>
-                  <span onClick={() => showReplyList(data)}>{data.postReply.length}</span>
+                  <span onClick={() => showReplyList(postData)}>{postData.postReply.length}</span>
                 </div>
                 <div className='delete-container'>
                   {isMyPost && (
-                    <i onClick={() => deletePost(data.postId)} className='material-icons'>
+                    <i onClick={() => deletePost(postData.postId)} className='material-icons'>
                       delete_outline
                     </i>
                   )}
@@ -149,7 +158,7 @@ const Feed: React.FC<I_props> = ({ postData }) => {
                     <input type='text' placeholder='Add a comment...' value={comment} onChange={onChangeComment} />
                   </div>
                   <div className='button-form'>
-                    <button onClick={e => submitReply(data.postId, e)}>Reply</button>
+                    <button onClick={() => submitReply(postData.postId)}>Reply</button>
                   </div>
                 </div>
               )}

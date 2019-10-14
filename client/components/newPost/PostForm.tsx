@@ -238,7 +238,7 @@ const PostForm: React.FC = () => {
                   />
                 </label>
               </div>
-              <div className='place'>
+              {/* <div className='place'>
                 <span>
                   <i className='material-icons'>location_searching</i>
                 </span>
@@ -247,7 +247,7 @@ const PostForm: React.FC = () => {
                 <span>
                   <i className='material-icons'>how_to_reg</i>
                 </span>
-              </div>
+              </div> */}
             </div>
             {isImage && (
               <div className='delete-button' onClick={deleteImage}>

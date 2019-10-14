@@ -1,5 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
+import I_state from '../../../actionTypes';
 import { E_profileActionType } from '../../../actionTypes/profileType';
 
 const PasswordForm: React.FC = () => {
@@ -10,7 +12,7 @@ const PasswordForm: React.FC = () => {
   const [checkPassword, setCheckPassword] = useState('');
   const [isMatchPassword, setIsMatchPassword] = useState(false);
 
-  const failureMessage = useSelector((state: any) => state.profile.message);
+  const failureMessage = useSelector((state: I_state) => state.profile.message);
 
   useEffect(() => {
     if (failureMessage !== null) {

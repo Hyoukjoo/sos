@@ -5,7 +5,7 @@ import { E_userActionType } from '../actionTypes/userType';
 import { I_postState } from '../actionTypes';
 
 const InitialState: I_postState = {
-  postData: null,
+  postDatas: null,
   loadPlaceData: null,
   images: null,
   message: null,
@@ -35,39 +35,39 @@ const postReducer = (state = InitialState, action: I_postAction) => {
       }
 
       case E_postActionType.DELETE_POST_SUCCESS: {
-        const postIndex = draft.postData.findIndex(v => v.postId === action.data.postId);
-        draft.postData.splice(postIndex, 1);
+        const postIndex = draft.postDatas.findIndex(v => v.postId === action.data.postId);
+        draft.postDatas.splice(postIndex, 1);
         break;
       }
 
       case E_postActionType.LOAD_POST_SUCCESS: {
-        draft.postData = action.data;
+        draft.postDatas = action.data;
         break;
       }
 
       case E_postActionType.POST_LIKE_SUCCESS: {
-        const postIndex = draft.postData.findIndex(v => v.postId === action.data.postId);
-        draft.postData[postIndex].postLike.unshift(action.data);
+        const postIndex = draft.postDatas.findIndex(v => v.postId === action.data.postId);
+        draft.postDatas[postIndex].postLike.unshift(action.data);
         break;
       }
 
       case E_postActionType.POST_UNLIKE_SUCCESS: {
-        const postIndex = draft.postData.findIndex(v => v.postId === action.data.postId);
-        const likeIndex = draft.postData[postIndex].postLike.findIndex(v => v.userId === action.data.userId);
-        draft.postData[postIndex].postLike.splice(likeIndex, 1);
+        const postIndex = draft.postDatas.findIndex(v => v.postId === action.data.postId);
+        const likeIndex = draft.postDatas[postIndex].postLike.findIndex(v => v.userId === action.data.userId);
+        draft.postDatas[postIndex].postLike.splice(likeIndex, 1);
         break;
       }
 
       case E_postActionType.POST_REPLY_SUCCESS: {
-        const postIndex = draft.postData.findIndex(v => v.postId === action.data.postId);
-        draft.postData[postIndex].postReply.unshift(action.data);
+        const postIndex = draft.postDatas.findIndex(v => v.postId === action.data.postId);
+        draft.postDatas[postIndex].postReply.unshift(action.data);
         break;
       }
 
       case E_postActionType.POST_DELETE_REPLY_SUCCESS: {
-        const postIndex = draft.postData.findIndex(v => v.postId === action.data.postId);
-        const replyIndex = draft.postData[postIndex].postReply.findIndex(v => v.id === action.data.id);
-        draft.postData[postIndex].postReply.splice(replyIndex, 1);
+        const postIndex = draft.postDatas.findIndex(v => v.postId === action.data.postId);
+        const replyIndex = draft.postDatas[postIndex].postReply.findIndex(v => v.id === action.data.id);
+        draft.postDatas[postIndex].postReply.splice(replyIndex, 1);
         break;
       }
 
@@ -133,7 +133,7 @@ const postReducer = (state = InitialState, action: I_postAction) => {
       }
 
       case E_userActionType.USER_LOGOUT_SUCCESS: {
-        draft.postData = null;
+        draft.postDatas = null;
         draft.loadPlaceData = null;
         draft.images = null;
         draft.message = null;

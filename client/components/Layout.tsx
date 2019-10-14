@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import HeadLine from './HeadLine';
 import Like from './like';
 import Reply from './reply';
+import PostForm from './newPost/PostForm';
 
 import I_state from '../actionTypes';
 
@@ -12,7 +13,6 @@ import '../scss/styles.scss';
 import '../css/day-picker.css';
 import '../css/classic/default.css';
 import '../css/material/default.css';
-import PostForm from './newPost/PostForm';
 
 const Layout: NextFC = ({ children }) => {
   const { isLike } = useSelector((state: I_state) => state.post);

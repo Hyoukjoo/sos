@@ -11,9 +11,9 @@ const Reply: React.FC = () => {
   const { userId } = useSelector((state: I_state) => state.user.myInfo);
 
   //댓글을 지웠을 때 업데이트 된 정보를 보여주기 위해서 postData를 가지고 옴
-  const { postData } = useSelector((state: I_state) => state.post);
+  const { postDatas } = useSelector((state: I_state) => state.post);
   const curerntPostDataId = useSelector((state: I_state) => state.post.currentPostData.postId);
-  const [currentPostData] = postData.filter(v => v.postId === curerntPostDataId);
+  const [currentPostData] = postDatas.filter(v => v.postId === curerntPostDataId);
 
   const [comment, resetComment, onChangeComment] = useInput('');
 

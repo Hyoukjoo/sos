@@ -12,13 +12,13 @@ import LoginForm from '../containers/LoginForm';
 
 const index: NextFC = () => {
   const { userId } = useSelector((state: I_state) => state.user.myInfo);
-  const { postData } = useSelector((state: I_state) => state.post);
+  const { postDatas } = useSelector((state: I_state) => state.post);
 
   useEffect(() => {
     if (userId === null) Router.push('/login');
   }, [userId]);
 
-  return <>{userId ? <Feed postData={postData} /> : <LoginForm />}</>;
+  return <>{userId ? <Feed postDatas={postDatas} /> : <LoginForm />}</>;
 };
 
 index.getInitialProps = async context => {
@@ -32,8 +32,6 @@ index.getInitialProps = async context => {
   store.dispatch({
     type: E_postActionType.LOAD_POST_REQUEST
   });
-
-  const state = store.getState();
 };
 
 export default index;

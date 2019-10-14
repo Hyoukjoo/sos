@@ -1,10 +1,16 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-
-import SettingForm from './setting';
 import Router from 'next/router';
 
-const Profile: React.FC<{ userId: string }> = ({ userId }) => {
+import I_state from '../../actionTypes';
+import SettingForm from './setting';
+import Posts from './post';
+
+interface I_props {
+  userId: string;
+}
+
+const Profile: React.FC<I_props> = ({ userId }) => {
   const [category, setCategory] = useState(null);
 
   useEffect(() => {
@@ -13,8 +19,10 @@ const Profile: React.FC<{ userId: string }> = ({ userId }) => {
     }
   }, [userId]);
 
-  const userName = useSelector((state: any) => state.profile.userName);
-  const profileImage = useSelector((state: any) => state.profile.profileImage);
+  const userName = useSelector((state: I_state) => state.profile.userName);
+  const profileImage = useSelector((state: I_state) => state.profile.profileImage);
+
+  const { postDatas } = useSelector((state: I_state) => state.post);
 
   const handleCategory = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const text = e.currentTarget.children[0].innerHTML;
@@ -24,8 +32,8 @@ const Profile: React.FC<{ userId: string }> = ({ userId }) => {
   const renderSwitch = useCallback(
     category => {
       switch (category) {
-        case 'POST':
-          return;
+        case 'POSTS':
+          return <Posts userId={userId} postDatas={postDatas} />;
         case 'FOLLOW':
           return;
         case 'FOLLOWER':
@@ -42,7 +50,7 @@ const Profile: React.FC<{ userId: string }> = ({ userId }) => {
   );
 
   return (
-    <main className='Profile'>
+    <div id='Profile'>
       <header>
         <div className='profile-image' title='Change Profile Photo'>
           {profileImage !== undefined && profileImage !== null ? (
@@ -55,25 +63,30 @@ const Profile: React.FC<{ userId: string }> = ({ userId }) => {
           </div>
         </div>
       </header>
-      <div className='category'>
-        <div className='category-list' onClick={handleCategory}>
-          <span>POST</span>
+
+      <div className='container'>
+        <div className='empty-div'></div>
+        <div className='category'>
+          <div className='category-list' onClick={handleCategory}>
+            <span>POSTS</span>
+          </div>
+          <div className='category-list' onClick={handleCategory}>
+            <span>FOLLOW</span>
+          </div>
+          <div className='category-list' onClick={handleCategory}>
+            <span>FOLLOWER</span>
+          </div>
+          {/* <div className='category-list' onClick={handleCategory}>
+            <span>GROUP</span>
+          </div> */}
+          <div className='category-list' onClick={handleCategory}>
+            <span>SETTING</span>
+          </div>
         </div>
-        <div className='category-list' onClick={handleCategory}>
-          <span>FOLLOW</span>
-        </div>
-        <div className='category-list' onClick={handleCategory}>
-          <span>FOLLOWER</span>
-        </div>
-        <div className='category-list' onClick={handleCategory}>
-          <span>GROUP</span>
-        </div>
-        <div className='category-list' onClick={handleCategory}>
-          <span>SETTING</span>
-        </div>
+        <div className='empty-div'></div>
       </div>
       {renderSwitch(category)}
-    </main>
+    </div>
   );
 };
 

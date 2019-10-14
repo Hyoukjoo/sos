@@ -16,7 +16,7 @@ export interface I_userState {
 }
 
 export interface I_postState {
-  postData: I_postData[];
+  postDatas: I_postData[];
   loadPlaceData: string;
   images: string;
   message: string;
@@ -54,13 +54,13 @@ export interface I_profileState {
 }
 
 export interface I_followState {
-  myFollow: follow;
-  userFollow: follow;
+  myFollow: I_follow;
+  userFollow: I_follow;
   message: string;
   error: Error;
 }
 
-interface follow {
+interface I_follow {
   followees: string[];
   followers: string[];
 }

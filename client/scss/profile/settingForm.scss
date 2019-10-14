@@ -2,6 +2,7 @@
 
 main#Setting-form {
   width: 600px;
+  justify-self: center;
 
   div.set-container {
     margin-top: 50px;
@@ -24,7 +25,6 @@ main#Setting-form {
         border-right: 1px solid #b4b4b4;
         font-size: 0.8rem;
         cursor: pointer;
-        // transition: all 0.2s ease-in-out;
 
         &:hover {
           background-color: #f0f0f0;
@@ -51,8 +51,6 @@ main#Setting-form {
     div.set-item-container {
       width: 100%;
       background-color: #fff;
-      // border-bottom: 1px solid #f0f0f0;
-      // border-right: 1px solid #f0f0f0;
     }
   }
 }

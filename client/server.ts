@@ -1,9 +1,8 @@
 import next from 'next';
-import express, { Response, Request } from 'express';
+import express from 'express';
 import cookieParser from 'cookie-parser';
 import expressSession from 'express-session';
 import { config } from 'dotenv';
-import morgan from 'morgan';
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
@@ -31,12 +30,12 @@ app
       })
     );
 
-    server.get('/user/:id', (req, res) => {
-      return app.render(req, res, '/user', { id: req.params.id });
-    });
-
     server.get('*', (req, res) => {
       return handler(req, res);
+    });
+
+    server.get('/user/:id', (req, res) => {
+      return app.render(req, res, '/user', { id: req.params.id });
     });
 
     server.listen(process.env.SERVER_PORT, () => {

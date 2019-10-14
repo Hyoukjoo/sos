@@ -30,7 +30,7 @@ const Like: React.FC = () => {
     });
   };
 
-  const clearLikes = (e: React.MouseEvent<HTMLElement>) => {
+  const clearLikes = () => {
     dispatch({
       type: E_postActionType.SHOW_LIKE_LIST
     });

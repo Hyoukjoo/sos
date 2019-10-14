@@ -22,30 +22,29 @@ const HeadLine: React.FC = memo(() => {
         <div className='left'>
           <Link href='/'>
             <a>
-              <span>SEALROCK</span>
+              <span>NONAME</span>
               <span className='beta'>beta</span>
             </a>
           </Link>
         </div>
         <div className='center' />
         <div className='right'>
-          <div />
           <div className='plus'>
             <i onClick={showNewPost} className='material-icons'>
               add_circle_outline
             </i>
           </div>
-          <div className='bell'>
+          {/* <div className='bell'>
             <Link href='/'>
               <a>
                 <i className='material-icons md-36'>notifications</i>
               </a>
             </Link>
-          </div>
+          </div> */}
           <div className='user'>
             <Link href={{ pathname: '/user', query: userId }} as={`/user/${userId}`}>
               <a>
-                <i className='material-icons md-36'>sentiment_satisfied_alt</i>
+                <i className='material-icons'>sentiment_satisfied_alt</i>
               </a>
             </Link>
           </div>
