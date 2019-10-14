@@ -1,5 +1,7 @@
 import React, { useCallback } from 'react';
 
+import '../../styles/css/checkbox.css';
+
 const Checkbox = ({ arr, data, dataHandler }) => {
   const onChangeCheckbox = useCallback(
     (e: React.SyntheticEvent<HTMLInputElement>) => {

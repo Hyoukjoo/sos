@@ -147,7 +147,7 @@ const PostForm: React.FC = () => {
   };
 
   return (
-    <main id='Post-form'>
+    <main id='NewPost-form'>
       <div className='container'>
         <div className='button-container'>
           <div className='cancel-button'>

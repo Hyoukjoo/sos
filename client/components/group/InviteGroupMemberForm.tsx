@@ -2,7 +2,8 @@ import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import useInput from '../../hook_utils/useInput';
-import { E_groupActionType } from '../../redux/group/groupType';
+
+import { E_groupType } from '../../redux/group/groupType';
 
 const InviteGroupMemberForm: React.FC = () => {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const InviteGroupMemberForm: React.FC = () => {
     const _inviteGroupMember = inviteGroupMember.match(/@\w+/g);
 
     dispatch({
-      type: E_groupActionType.INVITE_GROUP_REQUEST,
+      type: E_groupType.INVITE_GROUP_REQUEST,
       data: {
         groupName: _inviteGroupName,
         groupMember: _inviteGroupMember

@@ -4,9 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useInput from '../../hook_utils/useInput';
 import Checkbox from '../utils/Checkbox';
 
-import { E_groupActionType } from '../../redux/group/groupType';
-
-import '../css/checkbox.css';
+import { E_groupType } from '../../redux/group/groupType';
 
 const NewGroupForm: React.FC = () => {
   const dispatch = useDispatch();
@@ -44,7 +42,7 @@ const NewGroupForm: React.FC = () => {
     };
 
     dispatch({
-      type: E_groupActionType.NEW_GROUP_REQUEST,
+      type: E_groupType.NEW_GROUP_REQUEST,
       data: addGroupInfo
     });
   }, [groupName, groupMember, duplicatedGroupName]);

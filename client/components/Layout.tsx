@@ -9,10 +9,10 @@ import PostForm from './newPost/PostForm';
 
 import I_state from '../redux/rootType';
 
-import '../scss/styles.scss';
-import '../css/day-picker.css';
-import '../css/classic/default.css';
-import '../css/material/default.css';
+import '../styles/scss/styles.scss';
+import '../styles/css/day-picker.css';
+import '../styles/css/classic/default.css';
+import '../styles/css/material/default.css';
 
 const Layout: NextFC = ({ children }) => {
   const { isLike } = useSelector((state: I_state) => state.post);
