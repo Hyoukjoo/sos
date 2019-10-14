@@ -1,11 +1,14 @@
 import React from 'react';
 import { NextFC } from 'next';
-import LoginForm from '../containers/LoginForm';
 import { useSelector } from 'react-redux';
 import Router from 'next/router';
 
+import LoginForm from '../components/LoginForm';
+
+import I_state from '../redux/rootType';
+
 const Login: NextFC = () => {
-  const { userId } = useSelector((state: any) => state.user.myInfo);
+  const { userId } = useSelector((state: I_state) => state.user.myInfo);
 
   if (userId !== null) Router.push('/');
 

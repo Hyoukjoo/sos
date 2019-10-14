@@ -1,6 +1,6 @@
-import { E_userActionType } from './userType';
+import { E_userType } from '../user/userType';
 
-export enum E_followActionType {
+export enum E_followType {
   FOLLOW_REQUEST = 'FOLLOW_REQUEST',
   FOLLOW_SUCCESS = 'FOLLOW_SUCCESS',
   FOLLOW_FAILURE = 'FOLLOW_FAILURE',
@@ -29,86 +29,86 @@ interface I_followerInfo {
 }
 
 interface I_followRequest {
-  type: E_followActionType.FOLLOW_REQUEST;
+  type: E_followType.FOLLOW_REQUEST;
   data: I_followInfo;
 }
 
 interface I_followSuccess {
-  type: E_followActionType.FOLLOW_SUCCESS;
+  type: E_followType.FOLLOW_SUCCESS;
   data: { followeeId: string };
 }
 
 interface I_followFailure {
-  type: E_followActionType.FOLLOW_FAILURE;
+  type: E_followType.FOLLOW_FAILURE;
   message: string;
 }
 
 interface I_followError {
-  type: E_followActionType.FOLLOW_ERROR;
+  type: E_followType.FOLLOW_ERROR;
   error: Error;
 }
 
 interface I_unFollowRequest {
-  type: E_followActionType.UNFOLLOW_REQUEST;
+  type: E_followType.UNFOLLOW_REQUEST;
   data: { followeeId: string };
 }
 
 interface I_unFollowSuccess {
-  type: E_followActionType.UNFOLLOW_SUCCESS;
+  type: E_followType.UNFOLLOW_SUCCESS;
   data: { followeeId: string };
 }
 
 interface I_unFollowFailure {
-  type: E_followActionType.UNFOLLOW_FAILURE;
+  type: E_followType.UNFOLLOW_FAILURE;
   message: string;
 }
 
 interface I_unFollowError {
-  type: E_followActionType.UNFOLLOW_ERROR;
+  type: E_followType.UNFOLLOW_ERROR;
   error: Error;
 }
 
 interface I_loadMyFollowInfoRequest {
-  type: E_followActionType.LOAD_MY_FOLLOW_INFO_REQUEST;
+  type: E_followType.LOAD_MY_FOLLOW_INFO_REQUEST;
 }
 
 interface I_loadMyFollowInfoSuccess {
-  type: E_followActionType.LOAD_MY_FOLLOW_INFO_SUCCESS;
+  type: E_followType.LOAD_MY_FOLLOW_INFO_SUCCESS;
   data: I_followerInfo;
 }
 
 interface I_loadMyFollowInfoFailure {
-  type: E_followActionType.LOAD_MY_FOLLOW_INFO_FAILURE;
+  type: E_followType.LOAD_MY_FOLLOW_INFO_FAILURE;
   message: string;
 }
 
 interface I_loadMyFollowInfoError {
-  type: E_followActionType.LOAD_MY_FOLLOW_INFO_ERROR;
+  type: E_followType.LOAD_MY_FOLLOW_INFO_ERROR;
   error: Error;
 }
 
 interface I_loadUserFollowInfoRequest {
-  type: E_followActionType.LOAD_USER_FOLLOW_INFO_REQUEST;
+  type: E_followType.LOAD_USER_FOLLOW_INFO_REQUEST;
   data: { userId: string };
 }
 
 interface I_loadUserFollowInfoSuccess {
-  type: E_followActionType.LOAD_USER_FOLLOW_INFO_SUCCESS;
+  type: E_followType.LOAD_USER_FOLLOW_INFO_SUCCESS;
   data: I_followInfo;
 }
 
 interface I_loadUserFollowInfoFailure {
-  type: E_followActionType.LOAD_USER_FOLLOW_INFO_FAILURE;
+  type: E_followType.LOAD_USER_FOLLOW_INFO_FAILURE;
   message: string;
 }
 
 interface I_loadUserFollowInfoError {
-  type: E_followActionType.LOAD_USER_FOLLOW_INFO_ERROR;
+  type: E_followType.LOAD_USER_FOLLOW_INFO_ERROR;
   error: Error;
 }
 
 interface I_userLogoutSuccess {
-  type: E_userActionType.USER_LOGOUT_SUCCESS;
+  type: E_userType.USER_LOGOUT_SUCCESS;
 }
 
 export type I_followAction =

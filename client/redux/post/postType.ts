@@ -1,7 +1,7 @@
-import { E_userActionType } from './userType';
-import { I_postData, I_userProfile } from '.';
+import { E_userType } from '../user/userType';
+import { I_postData, I_userProfile } from '../rootType';
 
-export enum E_postActionType {
+export enum E_postType {
   NEW_POST_REQUEST = 'NEW_POST_REQUEST',
   NEW_POST_SUCCESS = 'NEW_POST_SUCCESS',
   NEW_POST_FAILURE = 'NEW_POST_FAILURE',
@@ -48,168 +48,168 @@ interface I_postInfo {
 }
 
 interface I_showNewPost {
-  type: E_postActionType.SHOW_NEW_POST;
+  type: E_postType.SHOW_NEW_POST;
 }
 
 interface I_newPostRequest {
-  type: E_postActionType.NEW_POST_REQUEST;
+  type: E_postType.NEW_POST_REQUEST;
   data: I_postInfo;
 }
 
 interface I_newPostSuccess {
-  type: E_postActionType.NEW_POST_SUCCESS;
+  type: E_postType.NEW_POST_SUCCESS;
 }
 
 interface I_newPostFailure {
-  type: E_postActionType.NEW_POST_FAILURE;
+  type: E_postType.NEW_POST_FAILURE;
   message: string;
 }
 
 interface I_newPostError {
-  type: E_postActionType.NEW_POST_ERROR;
+  type: E_postType.NEW_POST_ERROR;
   error: Error;
 }
 
 interface I_deletePostRequest {
-  type: E_postActionType.DELETE_POST_REQUEST;
+  type: E_postType.DELETE_POST_REQUEST;
   data: { postId: number };
 }
 
 interface I_deletePostSuccess {
-  type: E_postActionType.DELETE_POST_SUCCESS;
+  type: E_postType.DELETE_POST_SUCCESS;
   data: { postId: number };
 }
 
 interface I_deletePostFailure {
-  type: E_postActionType.DELETE_POST_FAILURE;
+  type: E_postType.DELETE_POST_FAILURE;
   message: string;
 }
 
 interface I_deletePostError {
-  type: E_postActionType.DELETE_POST_ERROR;
+  type: E_postType.DELETE_POST_ERROR;
   error: Error;
 }
 
 interface I_loadPostRequest {
-  type: E_postActionType.LOAD_POST_REQUEST;
+  type: E_postType.LOAD_POST_REQUEST;
 }
 
 interface I_loadPostSuccess {
-  type: E_postActionType.LOAD_POST_SUCCESS;
+  type: E_postType.LOAD_POST_SUCCESS;
   data: I_postData[];
 }
 
 interface I_loadPostFailure {
-  type: E_postActionType.LOAD_POST_FAILURE;
+  type: E_postType.LOAD_POST_FAILURE;
   message: string;
 }
 
 interface I_loadPostError {
-  type: E_postActionType.LOAD_POST_ERROR;
+  type: E_postType.LOAD_POST_ERROR;
   error: Error;
 }
 
 interface I_loadPlaceData {
-  type: E_postActionType.LOAD_PLACE_DATA;
+  type: E_postType.LOAD_PLACE_DATA;
   data: string;
 }
 
 interface I_showLikeList {
-  type: E_postActionType.SHOW_LIKE_LIST;
+  type: E_postType.SHOW_LIKE_LIST;
   data: { postData: I_postData };
 }
 
 interface I_userLogoutSuccess {
-  type: E_userActionType.USER_LOGOUT_SUCCESS;
+  type: E_userType.USER_LOGOUT_SUCCESS;
 }
 
 interface I_postLikeRequest {
-  type: E_postActionType.POST_LIKE_REQUEST;
+  type: E_postType.POST_LIKE_REQUEST;
   data: { postId: number };
 }
 
 interface I_postLikeSuccess {
-  type: E_postActionType.POST_LIKE_SUCCESS;
+  type: E_postType.POST_LIKE_SUCCESS;
   data: { postId: number; userId: string; likeUserProfile: { userName: string; profileImage: string } };
 }
 
 interface I_postLikeFailure {
-  type: E_postActionType.POST_LIKE_FAILURE;
+  type: E_postType.POST_LIKE_FAILURE;
   message: string;
 }
 
 interface I_postLikeError {
-  type: E_postActionType.POST_LIKE_ERROR;
+  type: E_postType.POST_LIKE_ERROR;
   error: Error;
 }
 
 interface I_postUnLikeRequest {
-  type: E_postActionType.POST_UNLIKE_REQUEST;
+  type: E_postType.POST_UNLIKE_REQUEST;
   data: { postId: number };
 }
 
 interface I_postUnLikeSuccess {
-  type: E_postActionType.POST_UNLIKE_SUCCESS;
+  type: E_postType.POST_UNLIKE_SUCCESS;
   data: { postId: number; userId: string };
 }
 
 interface I_postUnLikeFailure {
-  type: E_postActionType.POST_UNLIKE_FAILURE;
+  type: E_postType.POST_UNLIKE_FAILURE;
   message: string;
 }
 
 interface I_postUnLikeError {
-  type: E_postActionType.POST_UNLIKE_ERROR;
+  type: E_postType.POST_UNLIKE_ERROR;
   error: Error;
 }
 
 interface I_showReplyList {
-  type: E_postActionType.SHOW_REPLY_LIST;
+  type: E_postType.SHOW_REPLY_LIST;
   data: { postData: I_postData };
 }
 
 interface I_postReplyRequest {
-  type: E_postActionType.POST_REPLY_REQUEST;
+  type: E_postType.POST_REPLY_REQUEST;
   data: { postId: number; comment: string };
 }
 
 interface I_postReplySuccess {
-  type: E_postActionType.POST_REPLY_SUCCESS;
+  type: E_postType.POST_REPLY_SUCCESS;
   data: { id: number; postId: number; userId: string; comment: string; replyUserProfile: I_userProfile };
 }
 
 interface I_postReplyFailure {
-  type: E_postActionType.POST_REPLY_FAILURE;
+  type: E_postType.POST_REPLY_FAILURE;
   message: string;
 }
 
 interface I_postReplyError {
-  type: E_postActionType.POST_REPLY_ERROR;
+  type: E_postType.POST_REPLY_ERROR;
   error: Error;
 }
 
 interface I_postDeleteReplyRequest {
-  type: E_postActionType.POST_DELETE_REPLY_REQUEST;
+  type: E_postType.POST_DELETE_REPLY_REQUEST;
   data: { id: number };
 }
 
 interface I_postDeleteReplySuccess {
-  type: E_postActionType.POST_DELETE_REPLY_SUCCESS;
+  type: E_postType.POST_DELETE_REPLY_SUCCESS;
   data: { id: number; postId: number };
 }
 
 interface I_postDeleteReplyFailure {
-  type: E_postActionType.POST_DELETE_REPLY_FAILURE;
+  type: E_postType.POST_DELETE_REPLY_FAILURE;
   message: string;
 }
 
 interface I_postDeleteReplyError {
-  type: E_postActionType.POST_DELETE_REPLY_ERROR;
+  type: E_postType.POST_DELETE_REPLY_ERROR;
   error: Error;
 }
 
 interface I_showReplyInput {
-  type: E_postActionType.SHOW_REPLY_INPUT;
+  type: E_postType.SHOW_REPLY_INPUT;
   data: { postId: number };
 }
 

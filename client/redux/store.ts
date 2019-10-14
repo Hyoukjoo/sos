@@ -2,10 +2,10 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
 
-import reducer from './reducers';
-import rootSaga from './sagas';
+import reducer from './rootReducer';
+import rootSaga from './rootSaga';
 
-export const makeStore = (initailState: any) => {
+const makeStore = (initailState: any) => {
   const sagaMiddleware = createSagaMiddleware();
   const middleWares: any[] = [
     sagaMiddleware,
@@ -24,3 +24,5 @@ export const makeStore = (initailState: any) => {
 
   return store;
 };
+
+export default makeStore;

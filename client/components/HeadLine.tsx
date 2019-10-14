@@ -2,8 +2,8 @@ import React, { memo } from 'react';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 
-import I_state from '../actionTypes';
-import { E_postActionType } from '../actionTypes/postType';
+import I_state from '../redux/rootType';
+import { E_postType } from '../redux/post/postType';
 
 const HeadLine: React.FC = memo(() => {
   const dispatch = useDispatch();
@@ -12,7 +12,7 @@ const HeadLine: React.FC = memo(() => {
 
   const showNewPost = () => {
     dispatch({
-      type: E_postActionType.SHOW_NEW_POST
+      type: E_postType.SHOW_NEW_POST
     });
   };
 

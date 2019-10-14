@@ -1,6 +1,6 @@
-import { E_userActionType } from './userType';
+import { E_userType } from '../user/userType';
 
-export enum E_groupActionType {
+export enum E_groupType {
   NEW_GROUP_REQUEST = 'NEW_GROUP_REQUEST',
   NEW_GROUP_SUCCESS = 'NEW_GROUP_SUCCESS',
   NEW_GROUP_FAILURE = 'NEW_GROUP_FAILURE',
@@ -37,65 +37,65 @@ interface I_loadGroupInfo {
 }
 
 interface I_newGroupRequest {
-  type: E_groupActionType.NEW_GROUP_REQUEST;
+  type: E_groupType.NEW_GROUP_REQUEST;
   data: I_newGroupInfo;
 }
 
 interface I_newGroupSuccess {
-  type: E_groupActionType.NEW_GROUP_SUCCESS;
+  type: E_groupType.NEW_GROUP_SUCCESS;
 }
 
 interface I_newGroupFailure {
-  type: E_groupActionType.NEW_GROUP_FAILURE;
+  type: E_groupType.NEW_GROUP_FAILURE;
   message: string;
 }
 
 interface I_newGroupError {
-  type: E_groupActionType.NEW_GROUP_ERROR;
+  type: E_groupType.NEW_GROUP_ERROR;
   error: Error;
 }
 
 interface I_inviteGroupRequest {
-  type: E_groupActionType.INVITE_GROUP_REQUEST;
+  type: E_groupType.INVITE_GROUP_REQUEST;
   data: I_inviteGroupInfo;
 }
 
 interface I_inviteGroupSuccess {
-  type: E_groupActionType.INVITE_GROUP_SUCCESS;
+  type: E_groupType.INVITE_GROUP_SUCCESS;
 }
 
 interface I_inviteGroupFailure {
-  type: E_groupActionType.INVITE_GROUP_FAILURE;
+  type: E_groupType.INVITE_GROUP_FAILURE;
   message: string;
 }
 
 interface I_inviteGroupError {
-  type: E_groupActionType.INVITE_GROUP_ERROR;
+  type: E_groupType.INVITE_GROUP_ERROR;
   error: Error;
 }
 
 interface I_loadGroupInfoRequest {
-  type: E_groupActionType.LOAD_GROUP_INFO_REQUEST;
+  type: E_groupType.LOAD_GROUP_INFO_REQUEST;
   data: string;
 }
 
 interface I_loadGroupInfoSuccess {
-  type: E_groupActionType.LOAD_GROUP_INFO_SUCCESS;
+  type: E_groupType.LOAD_GROUP_INFO_SUCCESS;
   data: I_loadGroupInfo;
 }
 
 interface I_loadGroupInfoFailure {
-  type: E_groupActionType.LOAD_GROUP_INFO_FAILURE;
+  type: E_groupType.LOAD_GROUP_INFO_FAILURE;
   message: string;
 }
 
 interface I_loadGroupInfoError {
-  type: E_groupActionType.LOAD_GROUP_INFO_ERROR;
+  type: E_groupType.LOAD_GROUP_INFO_ERROR;
   error: Error;
 }
 
 interface I_userLogoutSuccess {
-  type: E_userActionType.USER_LOGOUT_SUCCESS;
+  type: E_userType.USER_LOGOUT_SUCCESS;
 }
 
 export type I_groupAction =

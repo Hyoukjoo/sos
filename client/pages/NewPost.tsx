@@ -4,10 +4,12 @@ import { NextFC } from 'next';
 import Router from 'next/router';
 
 import PostForm from '../components/newPost/PostForm';
-import LoginForm from '../containers/LoginForm';
+import LoginForm from '../components/LoginForm';
+
+import I_state from '../redux/rootType';
 
 const NewPost: NextFC = () => {
-  const { userId } = useSelector((state: any) => state.user.myInfo);
+  const { userId } = useSelector((state: I_state) => state.user.myInfo);
 
   useEffect(() => {
     if (!userId) {

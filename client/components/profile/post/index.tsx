@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { I_postData } from '../../../actionTypes';
+import { I_postData } from '../../../redux/rootType';
 import monthArr from '../../utils/month';
 
 interface I_props {

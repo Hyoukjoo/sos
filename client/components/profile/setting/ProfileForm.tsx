@@ -1,8 +1,8 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import useInput from '../../../hook_utils/useInput';
-import { E_profileActionType } from '../../../actionTypes/profileType';
+import { E_profileType } from '../../../redux/profile/profileType';
 
 const ProfileForm: React.FC = () => {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const ProfileForm: React.FC = () => {
     if (failureMessage !== null) {
       alert(failureMessage);
       dispatch({
-        type: E_profileActionType.INITIALIZE_FAILURE_MESSAGE
+        type: E_profileType.INITIALIZE_FAILURE_MESSAGE
       });
     }
   }, [failureMessage]);
@@ -30,7 +30,7 @@ const ProfileForm: React.FC = () => {
     data.append('image', image);
 
     dispatch({
-      type: E_profileActionType.CHANGE_PROFILE_IMAGE_REQUEST,
+      type: E_profileType.CHANGE_PROFILE_IMAGE_REQUEST,
       data
     });
   };
@@ -39,7 +39,7 @@ const ProfileForm: React.FC = () => {
     const data = { userName: newUserName };
 
     dispatch({
-      type: E_profileActionType.CHANGE_USER_NAME_REQUEST,
+      type: E_profileType.CHANGE_USER_NAME_REQUEST,
       data
     });
   }, [newUserName]);

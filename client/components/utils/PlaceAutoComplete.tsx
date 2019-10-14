@@ -1,7 +1,9 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import PlacesAutocomplete from 'react-places-autocomplete';
 import { useDispatch } from 'react-redux';
-import { E_postActionType } from '../../actionTypes/postType';
+
+import PlacesAutocomplete from 'react-places-autocomplete';
+
+import { E_postType } from '../../redux/post/postType';
 
 const PlaceAutocomplete = () => {
   const dispatch = useDispatch();
@@ -30,7 +32,7 @@ const PlaceAutocomplete = () => {
     (address: string) => {
       setAddress(resultAddress);
       dispatch({
-        type: E_postActionType.LOAD_PLACE_DATA,
+        type: E_postType.LOAD_PLACE_DATA,
         data: resultAddress
       });
     },

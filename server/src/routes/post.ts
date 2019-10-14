@@ -22,8 +22,6 @@ router.post('/', isLogin, upload.array('image'), async (req, res, next) => {
 
     // const privacyBound = privacyBoundGroup.concat(privacyBoundFollower).join(' ');
 
-    console.log(req.body);
-
     const newPost = await Post.create({
       userId: req.user,
       content: req.body.content,
@@ -34,7 +32,6 @@ router.post('/', isLogin, upload.array('image'), async (req, res, next) => {
     });
 
     const tags = req.body.content.match(/#[\wㄱ-ㅎㅏ-ㅣ가-힣]+/g);
-    console.log(tags);
 
     if (tags) {
       await Promise.all(
@@ -55,7 +52,55 @@ router.post('/', isLogin, upload.array('image'), async (req, res, next) => {
       );
     }
 
-    res.send('nice!');
+    const result = await Post.findOne({
+      where: {postId: newPost.postId}, 
+      include: [
+        {
+          model: User,
+          as: 'userPost',
+          attributes: ['userId'],
+          include: [
+            {
+              model: Profile,
+              as: 'userProfile',
+              attributes: ['userName', 'profileImage']
+            }
+          ]
+        },
+        {
+          model: Like,
+          as: 'postLike',
+          attributes: ['postId', 'userId'],
+          include: [
+            {
+              model: Profile,
+              as: 'likeUserProfile',
+              attributes: ['userName', 'profileImage']
+            }
+          ],
+          order: [['updatedAt', 'DESC']]
+        },
+        {
+          model: Reply,
+          as: 'postReply',
+          attributes: ['id', 'userId', 'comment', 'updatedAt'],
+          include: [
+            {
+              model: Profile,
+              as: 'replyUserProfile',
+              attributes: ['userName', 'profileImage']
+            }
+          ],
+          order: [['updateAt', 'DESC']]
+        },
+        {
+          model: Image,
+          as: 'postImage',
+          attributes: ['src']
+        }
+      ]});
+
+    res.send(result);
   } catch (e) {
     console.log(e);
     res.send(e);

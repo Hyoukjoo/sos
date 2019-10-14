@@ -1,12 +1,8 @@
 import React from 'react';
-import Document, { Head, Main, NextScript } from 'next/document';
-import { config } from 'dotenv';
-import Helmet from 'react-helmet';
-
-config();
+import Document, { Head, Main, NextScript, NextDocumentContext } from 'next/document';
 
 export default class MyDocument extends Document {
-  static async getInitialProps(ctx: any) {
+  static async getInitialProps(ctx: NextDocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
     return { ...initialProps };
   }

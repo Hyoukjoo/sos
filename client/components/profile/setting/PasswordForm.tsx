@@ -1,8 +1,8 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import I_state from '../../../actionTypes';
-import { E_profileActionType } from '../../../actionTypes/profileType';
+import I_state from '../../../redux/rootType';
+import { E_profileType } from '../../../redux/profile/profileType';
 
 const PasswordForm: React.FC = () => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const PasswordForm: React.FC = () => {
     if (failureMessage !== null) {
       alert(failureMessage);
       dispatch({
-        type: E_profileActionType.INITIALIZE_FAILURE_MESSAGE
+        type: E_profileType.INITIALIZE_FAILURE_MESSAGE
       });
     }
   }, [failureMessage]);
@@ -59,7 +59,7 @@ const PasswordForm: React.FC = () => {
     };
 
     dispatch({
-      type: E_profileActionType.CHANGE_PASSWORD_REQUEST,
+      type: E_profileType.CHANGE_PASSWORD_REQUEST,
       data: password
     });
 

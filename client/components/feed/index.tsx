@@ -1,10 +1,11 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { E_postActionType } from '../../actionTypes/postType';
-import I_state, { I_postData } from '../../actionTypes';
 import useInput from '../../hook_utils/useInput';
 import monthArr from '../utils/month';
+
+import I_state, { I_postData } from '../../redux/rootType';
+import { E_postType } from '../../redux/post/postType';
 
 interface I_props {
   postDatas: I_postData[];
@@ -20,28 +21,28 @@ const Feed: React.FC<I_props> = ({ postDatas }) => {
 
   const showLikeList = postData => {
     dispatch({
-      type: E_postActionType.SHOW_LIKE_LIST,
+      type: E_postType.SHOW_LIKE_LIST,
       data: { postData }
     });
   };
 
   const clickLike = postId => {
     dispatch({
-      type: E_postActionType.POST_LIKE_REQUEST,
+      type: E_postType.POST_LIKE_REQUEST,
       data: { postId }
     });
   };
 
   const clickUnLike = postId => {
     dispatch({
-      type: E_postActionType.POST_UNLIKE_REQUEST,
+      type: E_postType.POST_UNLIKE_REQUEST,
       data: { postId }
     });
   };
 
   const showReplyList = postData => {
     dispatch({
-      type: E_postActionType.SHOW_REPLY_LIST,
+      type: E_postType.SHOW_REPLY_LIST,
       data: { postData }
     });
   };
@@ -50,7 +51,7 @@ const Feed: React.FC<I_props> = ({ postDatas }) => {
     resetComment();
 
     dispatch({
-      type: E_postActionType.SHOW_REPLY_INPUT,
+      type: E_postType.SHOW_REPLY_INPUT,
       data: { postId }
     });
   };
@@ -59,12 +60,12 @@ const Feed: React.FC<I_props> = ({ postDatas }) => {
     resetComment();
 
     dispatch({
-      type: E_postActionType.POST_REPLY_REQUEST,
+      type: E_postType.POST_REPLY_REQUEST,
       data: { postId, comment }
     });
 
     dispatch({
-      type: E_postActionType.SHOW_REPLY_INPUT,
+      type: E_postType.SHOW_REPLY_INPUT,
       data: { postId }
     });
   };
@@ -72,7 +73,7 @@ const Feed: React.FC<I_props> = ({ postDatas }) => {
   const deletePost = postId => {
     if (confirm('Delete this post?')) {
       dispatch({
-        type: E_postActionType.DELETE_POST_REQUEST,
+        type: E_postType.DELETE_POST_REQUEST,
         data: { postId }
       });
     }

@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
+import Link from 'next/link';
 
 import useInput from '../hook_utils/useInput';
-import { E_userActionType } from '../actionTypes/userType';
-import Link from 'next/link';
-import Router from 'next/router';
+
+import { E_userType } from '../redux/user/userType';
 
 const LoginForm = () => {
   const [userId, resetUserId, onChangeUserId] = useInput();
@@ -24,7 +24,7 @@ const LoginForm = () => {
     }
 
     dispatch({
-      type: E_userActionType.USER_LOGIN_REQUEST,
+      type: E_userType.USER_LOGIN_REQUEST,
       data
     });
 

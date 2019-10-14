@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { E_userActionType } from '../../../actionTypes/userType';
+import { E_userType } from '../../../redux/user/userType';
 import Router from 'next/router';
 
 const LogoutForm: React.FC = () => {
@@ -9,7 +9,7 @@ const LogoutForm: React.FC = () => {
 
   const onLogout = () => {
     dispatch({
-      type: E_userActionType.USER_LOGOUT_REQUEST
+      type: E_userType.USER_LOGOUT_REQUEST
     });
 
     Router.push('/');

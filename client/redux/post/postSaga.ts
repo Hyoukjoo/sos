@@ -1,7 +1,7 @@
 import { all, takeLatest, fork, put, call } from 'redux-saga/effects';
 import axios from 'axios';
 
-import { E_postActionType } from '../actionTypes/postType';
+import { E_postType } from './postType';
 
 const newPostAPI = async data => {
   return await axios.post('/post', data, {
@@ -15,19 +15,20 @@ const newPostAPI = async data => {
 function* newPostRequest(action) {
   try {
     const result = yield call(newPostAPI, action.data);
+    console.log(result.data);
     yield put({
-      type: E_postActionType.NEW_POST_SUCCESS
+      type: E_postType.NEW_POST_SUCCESS
     });
   } catch (e) {
     yield put({
-      type: E_postActionType.NEW_POST_ERROR,
+      type: E_postType.NEW_POST_ERROR,
       message: e
     });
   }
 }
 
 function* watchNewPost() {
-  yield takeLatest(E_postActionType.NEW_POST_REQUEST, newPostRequest);
+  yield takeLatest(E_postType.NEW_POST_REQUEST, newPostRequest);
 }
 
 const deletePostRequestAPI = async data => axios.delete('/post', { data, withCredentials: true });
@@ -37,25 +38,25 @@ function* deletePostRequest(action) {
     const result = yield call(deletePostRequestAPI, action.data);
     if (!result.data.failMessage) {
       yield put({
-        type: E_postActionType.DELETE_POST_SUCCESS,
+        type: E_postType.DELETE_POST_SUCCESS,
         data: action.data
       });
     } else {
       yield put({
-        type: E_postActionType.DELETE_POST_FAILURE,
+        type: E_postType.DELETE_POST_FAILURE,
         message: result.data.failMessage
       });
     }
   } catch (e) {
     yield put({
-      type: E_postActionType.DELETE_POST_ERROR,
+      type: E_postType.DELETE_POST_ERROR,
       error: e
     });
   }
 }
 
 function* watchDeletePost() {
-  yield takeLatest(E_postActionType.DELETE_POST_REQUEST, deletePostRequest);
+  yield takeLatest(E_postType.DELETE_POST_REQUEST, deletePostRequest);
 }
 
 const loadPostAPI = async () => {
@@ -66,19 +67,19 @@ function* loadPostRequest() {
   try {
     const result = yield call(loadPostAPI);
     yield put({
-      type: E_postActionType.LOAD_POST_SUCCESS,
+      type: E_postType.LOAD_POST_SUCCESS,
       data: result.data
     });
   } catch (e) {
     yield put({
-      type: E_postActionType.LOAD_POST_ERROR,
+      type: E_postType.LOAD_POST_ERROR,
       error: e
     });
   }
 }
 
 function* watchLoadPost() {
-  yield takeLatest(E_postActionType.LOAD_POST_REQUEST, loadPostRequest);
+  yield takeLatest(E_postType.LOAD_POST_REQUEST, loadPostRequest);
 }
 
 const postLikeAPI = async data => axios.post('/post/like', data, { withCredentials: true });
@@ -88,25 +89,25 @@ function* postLikeRequest(action) {
     const result = yield call(postLikeAPI, action.data);
     if (result.data.message === undefined) {
       yield put({
-        type: E_postActionType.POST_LIKE_SUCCESS,
+        type: E_postType.POST_LIKE_SUCCESS,
         data: result.data
       });
     } else {
       yield put({
-        type: E_postActionType.POST_LIKE_FAILURE,
+        type: E_postType.POST_LIKE_FAILURE,
         message: result.data.message
       });
     }
   } catch (e) {
     yield put({
-      type: E_postActionType.POST_LIKE_ERROR,
+      type: E_postType.POST_LIKE_ERROR,
       error: e
     });
   }
 }
 
 function* watchPostLike() {
-  yield takeLatest(E_postActionType.POST_LIKE_REQUEST, postLikeRequest);
+  yield takeLatest(E_postType.POST_LIKE_REQUEST, postLikeRequest);
 }
 
 const postUnLikeAPI = async data => await axios.delete('/post/like', { data, withCredentials: true });
@@ -116,25 +117,25 @@ function* postUnLikeRequest(action) {
     const result = yield call(postUnLikeAPI, action.data);
     if (!result.data.failMessage) {
       yield put({
-        type: E_postActionType.POST_UNLIKE_SUCCESS,
+        type: E_postType.POST_UNLIKE_SUCCESS,
         data: result.data
       });
     } else {
       yield put({
-        type: E_postActionType.POST_UNLIKE_FAILURE,
+        type: E_postType.POST_UNLIKE_FAILURE,
         message: result.data.failMessage
       });
     }
   } catch (e) {
     yield put({
-      type: E_postActionType.POST_UNLIKE_ERROR,
+      type: E_postType.POST_UNLIKE_ERROR,
       error: e
     });
   }
 }
 
 function* watchPostUnLike() {
-  yield takeLatest(E_postActionType.POST_UNLIKE_REQUEST, postUnLikeRequest);
+  yield takeLatest(E_postType.POST_UNLIKE_REQUEST, postUnLikeRequest);
 }
 
 const postReplyAPI = async data => axios.post('/post/reply', data, { withCredentials: true });
@@ -144,25 +145,25 @@ function* postReplyRequest(action) {
     const result = yield call(postReplyAPI, action.data);
     if (!result.data.failMessage) {
       yield put({
-        type: E_postActionType.POST_REPLY_SUCCESS,
+        type: E_postType.POST_REPLY_SUCCESS,
         data: result.data
       });
     } else {
       yield put({
-        type: E_postActionType.POST_REPLY_FAILURE,
+        type: E_postType.POST_REPLY_FAILURE,
         message: result.data.failMessage
       });
     }
   } catch (e) {
     yield put({
-      type: E_postActionType.POST_REPLY_ERROR,
+      type: E_postType.POST_REPLY_ERROR,
       error: e
     });
   }
 }
 
 function* watchPostReply() {
-  yield takeLatest(E_postActionType.POST_REPLY_REQUEST, postReplyRequest);
+  yield takeLatest(E_postType.POST_REPLY_REQUEST, postReplyRequest);
 }
 
 const postDeleteReplyRequestAPI = async data => axios.delete('/post/reply', { data, withCredentials: true });
@@ -172,25 +173,25 @@ function* postDeleteReplyRequest(action) {
     const result = yield call(postDeleteReplyRequestAPI, action.data);
     if (!result.data.failMessage) {
       yield put({
-        type: E_postActionType.POST_DELETE_REPLY_SUCCESS,
+        type: E_postType.POST_DELETE_REPLY_SUCCESS,
         data: action.data
       });
     } else {
       yield put({
-        type: E_postActionType.POST_DELETE_REPLY_FAILURE,
+        type: E_postType.POST_DELETE_REPLY_FAILURE,
         message: result.data.failMessage
       });
     }
   } catch (e) {
     yield put({
-      type: E_postActionType.POST_DELETE_REPLY_ERROR,
+      type: E_postType.POST_DELETE_REPLY_ERROR,
       error: e
     });
   }
 }
 
 function* watchPostDeleteReply() {
-  yield takeLatest(E_postActionType.POST_DELETE_REPLY_REQUEST, postDeleteReplyRequest);
+  yield takeLatest(E_postType.POST_DELETE_REPLY_REQUEST, postDeleteReplyRequest);
 }
 
 export default function* postSaga() {

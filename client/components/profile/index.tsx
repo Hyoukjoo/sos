@@ -2,9 +2,10 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Router from 'next/router';
 
-import I_state from '../../actionTypes';
 import SettingForm from './setting';
 import Posts from './post';
+
+import I_state from '../../redux/rootType';
 
 interface I_props {
   userId: string;
@@ -21,8 +22,8 @@ const Profile: React.FC<I_props> = ({ userId }) => {
 
   const userName = useSelector((state: I_state) => state.profile.userName);
   const profileImage = useSelector((state: I_state) => state.profile.profileImage);
-
   const { postDatas } = useSelector((state: I_state) => state.post);
+  const { myFollow } = useSelector((state: I_state) => state.follow);
 
   const handleCategory = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const text = e.currentTarget.children[0].innerHTML;
@@ -34,9 +35,9 @@ const Profile: React.FC<I_props> = ({ userId }) => {
       switch (category) {
         case 'POSTS':
           return <Posts userId={userId} postDatas={postDatas} />;
-        case 'FOLLOW':
+        case 'FOLLOWS':
           return;
-        case 'FOLLOWER':
+        case 'FOLLOWERS':
           return;
         case 'GROUP':
           return;
@@ -71,10 +72,10 @@ const Profile: React.FC<I_props> = ({ userId }) => {
             <span>POSTS</span>
           </div>
           <div className='category-list' onClick={handleCategory}>
-            <span>FOLLOW</span>
+            <span>FOLLOWS</span>
           </div>
           <div className='category-list' onClick={handleCategory}>
-            <span>FOLLOWER</span>
+            <span>FOLLOWERS</span>
           </div>
           {/* <div className='category-list' onClick={handleCategory}>
             <span>GROUP</span>

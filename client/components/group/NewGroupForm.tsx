@@ -1,9 +1,10 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import useInput from '../hook_utils/useInput';
-import { E_groupActionType } from '../actionTypes/groupType';
-import Checkbox from '../components/Checkbox';
+import useInput from '../../hook_utils/useInput';
+import Checkbox from '../utils/Checkbox';
+
+import { E_groupActionType } from '../../redux/group/groupType';
 
 import '../css/checkbox.css';
 

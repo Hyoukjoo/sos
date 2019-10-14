@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { E_postActionType } from '../../actionTypes/postType';
-import I_state from '../../actionTypes';
+import { E_postType } from '../../redux/post/postType';
+import I_state from '../../redux/rootType';
 import useInput from '../../hook_utils/useInput';
 
 const Reply: React.FC = () => {
@@ -21,7 +21,7 @@ const Reply: React.FC = () => {
     const handleClickOutside = e => {
       if (ref.current === e.target) {
         dispatch({
-          type: E_postActionType.SHOW_REPLY_LIST
+          type: E_postType.SHOW_REPLY_LIST
         });
       }
     };
@@ -36,14 +36,14 @@ const Reply: React.FC = () => {
 
   const clearReply = (e: React.MouseEvent<HTMLElement>) => {
     dispatch({
-      type: E_postActionType.SHOW_REPLY_LIST
+      type: E_postType.SHOW_REPLY_LIST
     });
   };
 
   const deleteReply = (postId, id) => {
     if (confirm('Delete reply?'))
       dispatch({
-        type: E_postActionType.POST_DELETE_REPLY_REQUEST,
+        type: E_postType.POST_DELETE_REPLY_REQUEST,
         data: { postId, id }
       });
   };
@@ -52,7 +52,7 @@ const Reply: React.FC = () => {
     resetComment();
 
     dispatch({
-      type: E_postActionType.POST_REPLY_REQUEST,
+      type: E_postType.POST_REPLY_REQUEST,
       data: { postId, comment }
     });
   };

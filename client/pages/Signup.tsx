@@ -1,10 +1,11 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
+import Link from 'next/link';
 
 import useInput from '../hook_utils/useInput';
-import { E_userActionType } from '../actionTypes/userType';
-import Link from 'next/link';
+
+import { E_userType } from '../redux/user/userType';
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -62,7 +63,7 @@ const Signup = () => {
     }
 
     dispatch({
-      type: E_userActionType.USER_SIGNUP_REQUEST,
+      type: E_userType.USER_SIGNUP_REQUEST,
       data: {
         userId,
         password,

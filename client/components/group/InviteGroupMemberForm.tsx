@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
-import useInput from '../hook_utils/useInput';
-import { E_groupActionType } from '../actionTypes/groupType';
+import useInput from '../../hook_utils/useInput';
+import { E_groupActionType } from '../../redux/group/groupType';
 
 const InviteGroupMemberForm: React.FC = () => {
   const dispatch = useDispatch();

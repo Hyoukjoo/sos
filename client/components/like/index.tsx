@@ -2,9 +2,9 @@ import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 
-import { E_postActionType } from '../../actionTypes/postType';
-import I_state from '../../actionTypes';
-import { E_followActionType } from '../../actionTypes/followType';
+import { E_postType } from '../../redux/post/postType';
+import I_state from '../../redux/rootType';
+import { E_followType } from '../../redux/follow/followType';
 
 const Like: React.FC = () => {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const Like: React.FC = () => {
     const handleClickOutside = e => {
       if (ref.current === e.target) {
         dispatch({
-          type: E_postActionType.SHOW_LIKE_LIST
+          type: E_postType.SHOW_LIKE_LIST
         });
       }
     };
@@ -32,13 +32,13 @@ const Like: React.FC = () => {
 
   const clearLikes = () => {
     dispatch({
-      type: E_postActionType.SHOW_LIKE_LIST
+      type: E_postType.SHOW_LIKE_LIST
     });
   };
 
   const requestFollow = followeeId => {
     dispatch({
-      type: E_followActionType.FOLLOW_REQUEST,
+      type: E_followType.FOLLOW_REQUEST,
       data: {
         followerId: userId,
         followeeId
@@ -48,7 +48,7 @@ const Like: React.FC = () => {
 
   const requestUnFollow = followeeId => {
     dispatch({
-      type: E_followActionType.UNFOLLOW_REQUEST,
+      type: E_followType.UNFOLLOW_REQUEST,
       data: { followeeId }
     });
   };

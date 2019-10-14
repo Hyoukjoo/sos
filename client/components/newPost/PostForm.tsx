@@ -1,14 +1,14 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { E_postActionType } from '../../actionTypes/postType';
 
 import useInput from '../../hook_utils/useInput';
 import PreviewImages from '../utils/PreviewImages';
 
+import I_state from '../../redux/rootType';
+import { E_postType } from '../../redux/post/postType';
+
 import DayPicker from 'react-day-picker';
 import TimePicker from 'react-times';
-import I_state from '../../actionTypes';
 
 const PostForm: React.FC = () => {
   const dispatch = useDispatch();
@@ -132,7 +132,7 @@ const PostForm: React.FC = () => {
     if (image === null && (content as string).trim().length < 1) alert('No informations');
     else if (confirm('Are you post it?')) {
       dispatch({
-        type: E_postActionType.NEW_POST_REQUEST,
+        type: E_postType.NEW_POST_REQUEST,
         data: data
       });
 
@@ -142,7 +142,7 @@ const PostForm: React.FC = () => {
 
   const clear = () => {
     dispatch({
-      type: E_postActionType.SHOW_NEW_POST
+      type: E_postType.SHOW_NEW_POST
     });
   };
 

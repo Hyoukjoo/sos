@@ -7,7 +7,7 @@ import Like from './like';
 import Reply from './reply';
 import PostForm from './newPost/PostForm';
 
-import I_state from '../actionTypes';
+import I_state from '../redux/rootType';
 
 import '../scss/styles.scss';
 import '../css/day-picker.css';
