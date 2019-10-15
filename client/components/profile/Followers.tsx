@@ -2,20 +2,19 @@ import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 
-import { E_postType } from '../../redux/post/postType';
 import I_state from '../../redux/rootType';
+import { E_profileType } from '../../redux/profile/profileType';
 import { E_followType } from '../../redux/follow/followType';
 
-const Like: React.FC = () => {
+const Followers: React.FC = () => {
   const dispatch = useDispatch();
 
-  const { userId } = useSelector((state: I_state) => state.user.myInfo);
-  const { currentPostData } = useSelector((state: I_state) => state.post);
-  const myFollowees = useSelector((state: I_state) => state.follow.myFollow.followees);
+  const { followers } = useSelector((state: I_state) => state.follow.myFollow);
+  const { followees } = useSelector((state: I_state) => state.follow.myFollow);
 
-  const clearLikes = () => {
+  const clear = () => {
     dispatch({
-      type: E_postType.SHOW_LIKE_LIST
+      type: E_profileType.SHOW_FOLLOWERS
     });
   };
 
@@ -23,7 +22,6 @@ const Like: React.FC = () => {
     dispatch({
       type: E_followType.FOLLOW_REQUEST,
       data: {
-        followerId: userId,
         followeeId
       }
     });
@@ -40,7 +38,7 @@ const Like: React.FC = () => {
     const handleClickOutside = e => {
       if (ref.current === e.target) {
         dispatch({
-          type: E_postType.SHOW_LIKE_LIST
+          type: E_profileType.SHOW_FOLLOWERS
         });
       }
     };
@@ -58,45 +56,45 @@ const Like: React.FC = () => {
   useOutsideClikc(wrappedRef);
 
   return (
-    <div ref={wrappedRef} id='Likes'>
-      <div className='likes-container'>
+    <div ref={wrappedRef} id='Followers'>
+      <div className='container'>
         <header>
           <div className='left'></div>
           <div className='center'>
-            <span>Likes</span>
+            <span>Followers</span>
           </div>
           <div className='right'>
-            <i className='material-icons' onClick={clearLikes}>
+            <i className='material-icons' onClick={clear}>
               clear
             </i>
           </div>
         </header>
-        <div className='like-list-container'>
-          {currentPostData.postLike.map(v => {
+        <div className='list-container'>
+          {followers.map(follower => {
             return (
-              <div className='like-list' key={v.postId + v.userId}>
+              <div className='list' key={follower.followerId}>
                 <div className='profile-image'>
-                  {v.likeUserProfile.profileImage ? (
-                    <img src={`http://localhost:4000/${v.likeUserProfile.profileImage}`} alt='profile-image' />
+                  {follower.followerProfile.profileImage ? (
+                    <img src={`http://localhost:4000/${follower.followerProfile.profileImage}`} alt='' />
                   ) : (
                     <div className='empty-profile-image'></div>
                   )}
                 </div>
                 <div className='username'>
-                  <Link href={{ pathname: '/user', query: v.userId }} as={`/user/${v.userId}`}>
-                    <a onClick={clearLikes}>
-                      <span>{v.likeUserProfile.userName}</span>
+                  <Link href={{ pathname: '/user', query: follower.followerId }} as={`/user/${follower.followerId}`}>
+                    <a>
+                      <span>{follower.followerProfile.userName}</span>
                     </a>
                   </Link>
                 </div>
                 <div className='follow-container'>
                   <div className='follow-button-container'>
-                    {myFollowees && myFollowees.filter(followee => followee.followeeId === v.userId).length > 0 ? (
-                      <button className='following-button' onClick={() => requestUnFollow(v.userId)}>
+                    {followees.filter(followee => followee.followeeId === follower.followerId).length > 0 ? (
+                      <button className='following-button' onClick={() => requestUnFollow(follower.followerId)}>
                         following
                       </button>
                     ) : (
-                      <button className='follow-button' onClick={() => requestFollow(v.userId)}>
+                      <button className='follow-button' onClick={() => requestFollow(follower.followerId)}>
                         follow
                       </button>
                     )}
@@ -111,4 +109,4 @@ const Like: React.FC = () => {
   );
 };
 
-export default Like;
+export default Followers;

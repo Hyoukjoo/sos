@@ -10,9 +10,12 @@ section {
 
 div#Likes,
 div#Reply,
-main#NewPost-form {
+main#NewPost-form,
+div#Followings,
+div#Followers {
   position: fixed;
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
 }

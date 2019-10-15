@@ -1,4 +1,5 @@
 import { E_userType } from '../user/userType';
+import { I_followInfo, I_userProfile } from '../rootType';
 
 export enum E_followType {
   FOLLOW_REQUEST = 'FOLLOW_REQUEST',
@@ -19,23 +20,14 @@ export enum E_followType {
   LOAD_USER_FOLLOW_INFO_ERROR = 'LOAD_USER_FOLLOW_INFO_ERROR'
 }
 
-interface I_followInfo {
-  followerId: string;
-}
-
-interface I_followerInfo {
-  followers: string[];
-  followees: string[];
-}
-
 interface I_followRequest {
   type: E_followType.FOLLOW_REQUEST;
-  data: I_followInfo;
+  data: { followerId: string };
 }
 
 interface I_followSuccess {
   type: E_followType.FOLLOW_SUCCESS;
-  data: { followeeId: string };
+  data: { followeeId: string; followeeProfile: I_userProfile };
 }
 
 interface I_followFailure {
@@ -74,7 +66,7 @@ interface I_loadMyFollowInfoRequest {
 
 interface I_loadMyFollowInfoSuccess {
   type: E_followType.LOAD_MY_FOLLOW_INFO_SUCCESS;
-  data: I_followerInfo;
+  data: I_followInfo;
 }
 
 interface I_loadMyFollowInfoFailure {
@@ -94,7 +86,7 @@ interface I_loadUserFollowInfoRequest {
 
 interface I_loadUserFollowInfoSuccess {
   type: E_followType.LOAD_USER_FOLLOW_INFO_SUCCESS;
-  data: I_followInfo;
+  data: { followerId: string };
 }
 
 interface I_loadUserFollowInfoFailure {

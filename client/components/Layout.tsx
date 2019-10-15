@@ -13,22 +13,26 @@ import '../styles/scss/styles.scss';
 import '../styles/css/day-picker.css';
 import '../styles/css/classic/default.css';
 import '../styles/css/material/default.css';
+import Followings from './profile/Followings';
+import Followers from './profile/Followers';
 
 const Layout: NextFC = ({ children }) => {
   const { isLike } = useSelector((state: I_state) => state.post);
   const { isReply } = useSelector((state: I_state) => state.post);
   const { isNewPost } = useSelector((state: I_state) => state.post);
+  const { showFollowings } = useSelector((state: I_state) => state.profile);
+  const { showFollowers } = useSelector((state: I_state) => state.profile);
 
   return (
-    <div>
-      <section className='app'>
-        <HeadLine />
-        {isLike && <Like />}
-        {isReply && <Reply />}
-        {isNewPost && <PostForm />}
-        {children}
-      </section>
-    </div>
+    <section className='app'>
+      <HeadLine />
+      {isLike && <Like />}
+      {isReply && <Reply />}
+      {isNewPost && <PostForm />}
+      {showFollowings && <Followings />}
+      {showFollowers && <Followers />}
+      {children}
+    </section>
   );
 };
 

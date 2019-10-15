@@ -1,25 +1,36 @@
 import { Router } from 'express';
 
 import isLogin from '../utils/isLogin';
-import { Follow } from '../models';
+import { Follow, Profile } from '../models';
 
 const router = Router();
 
 router.get('/', async (req, res, next) => {
   try {
     if (req.user) {
-      const followersData = await Follow.findAll({
+      const followers = await Follow.findAll({
         where: { followeeId: req.user },
-        attributes: ['followerId']
+        attributes: ['followerId'],
+        include: [
+          {
+            model: Profile,
+            attributes: ['userName', 'profileImage'],
+            as: 'followerProfile'
+          }
+        ]
       });
 
-      const followeesData = await Follow.findAll({
+      const followees = await Follow.findAll({
         where: { followerId: req.user },
-        attributes: ['followeeId']
+        attributes: ['followeeId'],
+        include: [
+          {
+            model: Profile,
+            attributes: ['userName', 'profileImage'],
+            as: 'followeeProfile'
+          }
+        ]
       });
-
-      const followers = followersData.map(follower => follower.followerId);
-      const followees = followeesData.map(followee => followee.followeeId);
 
       const result = {
         followers,
@@ -38,15 +49,30 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', isLogin, async (req, res, next) => {
   try {
+    const { followeeId } = req.body;
+
     const exFollow = await Follow.findOne({ where: { followerId: req.user, followeeId: req.body.followeeId } });
     if (exFollow) {
       res.json({ failMessage: 'already following user' });
     } else {
-      const result = await Follow.create({
+      await Follow.create({
         followerId: req.user,
-        followeeId: req.body.followeeId,
+        followeeId,
         status: 2
       });
+
+      const result = await Follow.findOne({
+        where: { followerId: req.user, followeeId },
+        attributes: ['followeeId'],
+        include: [
+          {
+            model: Profile,
+            attributes: ['userName', 'profileImage'],
+            as: 'followeeProfile'
+          }
+        ]
+      });
+
       res.json(result);
     }
   } catch (e) {

@@ -4,6 +4,7 @@ import { sequelize } from '.';
 import { Post } from './post';
 import { Like } from './like';
 import { Profile } from './profile';
+import { Follow } from './follow';
 
 export class User extends Model<User> {
   public userId!: string;

@@ -49,20 +49,22 @@ export interface I_userProfile {
 export interface I_profileState {
   userName: string;
   profileImage: string;
+  showFollowings: Boolean;
+  showFollowers: Boolean;
   message: string;
   error: Error;
 }
 
 export interface I_followState {
-  myFollow: I_follow;
-  userFollow: I_follow;
+  myFollow: I_followInfo;
+  userFollow: I_followInfo;
   message: string;
   error: Error;
 }
 
-interface I_follow {
-  followees: string[];
-  followers: string[];
+export interface I_followInfo {
+  followees: { followeeId: string; followeeProfile: I_userProfile }[];
+  followers: { followerId: string; followerProfile: I_userProfile }[];
 }
 
 export interface I_groupState {

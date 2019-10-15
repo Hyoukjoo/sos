@@ -22,7 +22,9 @@ export enum E_profileType {
   LOAD_MY_PROFILE_INFO_REQUEST = 'LOAD_MY_PROFILE_INFO_REQUEST',
   LOAD_MY_PROFILE_INFO_SUCCESS = 'LOAD_MY_PROFILE_INFO_SUCCESS',
   LOAD_MY_PROFILE_INFO_FAILURE = 'LOAD_MY_PROFILE_INFO_FAILURE',
-  LOAD_MY_PROFILE_INFO_ERROR = 'LOAD_MY_PROFILE_INFO_ERROR'
+  LOAD_MY_PROFILE_INFO_ERROR = 'LOAD_MY_PROFILE_INFO_ERROR',
+  SHOW_FOLLOWINGS = 'SHOW_FOLLOWINGS',
+  SHOW_FOLLOWERS = 'SHOW_FOLLOWERS'
 }
 
 interface I_changeProfileImageNameInfo {
@@ -148,6 +150,14 @@ interface I_userLogoutSuccess {
   type: E_userType.USER_LOGOUT_SUCCESS;
 }
 
+interface I_showFollowings {
+  type: E_profileType.SHOW_FOLLOWINGS;
+}
+
+interface I_showFollowers {
+  type: E_profileType.SHOW_FOLLOWERS;
+}
+
 export type I_profileAction =
   | I_changeProfileImageNameRequest
   | I_changeProfileImageNameSuccesss
@@ -171,4 +181,6 @@ export type I_profileAction =
   | I_loadMyProfileInfoSuccess
   | I_loadMyProfileInfoFailure
   | I_loadMyProfileInfoError
-  | I_userLogoutSuccess;
+  | I_userLogoutSuccess
+  | I_showFollowings
+  | I_showFollowers;

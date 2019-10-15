@@ -1,7 +1,7 @@
 import Sequelize, { DataTypes, Model } from 'sequelize';
 
 import { sequelize } from '.';
-import { User } from './user';
+import { Profile } from './profile';
 
 export class Follow extends Model {
   public followerId!: string;
@@ -10,6 +10,11 @@ export class Follow extends Model {
 
   public readonly createAt!: Date;
   public readonly updateAt!: Date;
+
+  public static associations: {
+    followeeProfile: Sequelize.Association<Follow, Profile>;
+    followerProfile: Sequelize.Association<Follow, Profile>;
+  };
 }
 
 export const initFollowModel = () => {
@@ -17,19 +22,11 @@ export const initFollowModel = () => {
     {
       followerId: {
         type: DataTypes.STRING,
-        allowNull: false,
-        references: {
-          model: User,
-          key: 'userId'
-        }
+        allowNull: false
       },
       followeeId: {
         type: DataTypes.STRING,
-        allowNull: false,
-        references: {
-          model: User,
-          key: 'userId'
-        }
+        allowNull: false
       },
       status: {
         type: DataTypes.INTEGER.UNSIGNED,
@@ -46,5 +43,7 @@ export const initFollowModel = () => {
 };
 
 export const associateFollow = () => {
+  Follow.belongsTo(Profile, { targetKey: 'userId', foreignKey: 'followeeId', as: 'followeeProfile' });
+  Follow.belongsTo(Profile, { targetKey: 'userId', foreignKey: 'followerId', as: 'followerProfile' });
   return Follow;
 };

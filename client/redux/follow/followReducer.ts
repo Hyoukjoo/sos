@@ -26,11 +26,11 @@ const followReducer = (state = initialState, action: I_followAction) => {
         break;
 
       case E_followType.FOLLOW_SUCCESS:
-        draft.myFollow.followees.unshift(action.data.followeeId);
+        draft.myFollow.followees.unshift(action.data);
         break;
 
       case E_followType.UNFOLLOW_SUCCESS:
-        const myFolloweeIndex = draft.myFollow.followees.findIndex(v => v === action.data.followeeId);
+        const myFolloweeIndex = draft.myFollow.followees.findIndex(v => v.followeeId === action.data.followeeId);
         draft.myFollow.followees.splice(myFolloweeIndex, 1);
         break;
 

@@ -22,7 +22,7 @@ const HeadLine: React.FC = memo(() => {
         <div className='left'>
           <Link href='/'>
             <a>
-              <span>NONAME</span>
+              <span>BISTAGRAM</span>
               <span className='beta'>beta</span>
             </a>
           </Link>

@@ -1,4 +1,4 @@
-@import './settingForm.scss', 'posts';
+@import './setting/settingForm', 'posts', 'followings', 'followers';
 
 div#Profile {
   width: 900px;
@@ -6,40 +6,59 @@ div#Profile {
   header {
     margin-top: 50px;
     width: 100%;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 35% 65%;
     justify-items: center;
     align-items: center;
 
     div.profile-image {
-      justify-self: end;
+      justify-self: center;
       align-items: center;
       width: 150px;
       height: 150px;
-      margin-right: 20px;
       border: 1px solid #b1b1b1;
       border-radius: 50%;
       overflow: hidden;
 
       img {
-        top: 0;
-        left: 0;
-        width: 150px;
+        width: 100%;
       }
     }
 
     div.profile-description {
       justify-self: start;
-      margin-left: 20px;
-      span {
-        font-size: 1.5rem;
-        font-weight: 600;
+      align-items: center;
+      grid-template-rows: 50px 50px;
+
+      div.username {
+        span {
+          font-size: 1.5rem;
+        }
+      }
+
+      div.sub-description {
+        grid-template-columns: repeat(3, auto);
+        column-gap: 40px;
+
+        div.sub-followings,
+        div.sub-followers {
+          cursor: pointer;
+        }
+
+        span {
+          display: inline;
+          font-size: 1rem;
+
+          span.length {
+            font-weight: 900;
+          }
+        }
       }
     }
   }
 
   div.container {
     margin-top: 40px;
-    grid-template-columns: auto minmax(200px, 500px) auto;
+    grid-template-columns: auto 300px auto;
 
     div.empty-div {
       border-top: 2px solid #dddddd;
@@ -47,7 +66,7 @@ div#Profile {
 
     div.category {
       width: 100%;
-      grid-template-columns: repeat(4, 25%);
+      grid-template-columns: repeat(2, 1fr);
 
       div.category-list {
         justify-items: center;

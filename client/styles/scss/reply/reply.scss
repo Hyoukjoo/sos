@@ -42,10 +42,15 @@ div#Reply {
         align-items: center;
 
         div.profile-image {
+          justify-self: center;
+          align-items: center;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          border: 1px solid #f0f0f0;
+          overflow: hidden;
           img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+            width: 100%;
           }
 
           div.empty-profile-image {

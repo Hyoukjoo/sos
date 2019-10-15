@@ -1,17 +1,20 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Router from 'next/router';
 
 import SettingForm from './setting';
 import Posts from './post';
 
 import I_state from '../../redux/rootType';
+import { E_profileType } from '../../redux/profile/profileType';
 
 interface I_props {
   userId: string;
 }
 
 const Profile: React.FC<I_props> = ({ userId }) => {
+  const dispatch = useDispatch();
+
   const [category, setCategory] = useState(null);
 
   useEffect(() => {
@@ -20,10 +23,12 @@ const Profile: React.FC<I_props> = ({ userId }) => {
     }
   }, [userId]);
 
-  const userName = useSelector((state: I_state) => state.profile.userName);
-  const profileImage = useSelector((state: I_state) => state.profile.profileImage);
+  const { userName } = useSelector((state: I_state) => state.profile);
+  const { profileImage } = useSelector((state: I_state) => state.profile);
   const { postDatas } = useSelector((state: I_state) => state.post);
   const { myFollow } = useSelector((state: I_state) => state.follow);
+
+  const myPostDatas = postDatas.filter(postData => postData.userId === userId);
 
   const handleCategory = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const text = e.currentTarget.children[0].innerHTML;
@@ -34,13 +39,7 @@ const Profile: React.FC<I_props> = ({ userId }) => {
     category => {
       switch (category) {
         case 'POSTS':
-          return <Posts userId={userId} postDatas={postDatas} />;
-        case 'FOLLOWS':
-          return;
-        case 'FOLLOWERS':
-          return;
-        case 'GROUP':
-          return;
+          return <Posts myPostDatas={myPostDatas} />;
         case 'SETTING':
           return <SettingForm />;
         default:
@@ -49,6 +48,18 @@ const Profile: React.FC<I_props> = ({ userId }) => {
     },
     [category]
   );
+
+  const showFollowings = () => {
+    dispatch({
+      type: E_profileType.SHOW_FOLLOWINGS
+    });
+  };
+
+  const showFollowers = () => {
+    dispatch({
+      type: E_profileType.SHOW_FOLLOWERS
+    });
+  };
 
   return (
     <div id='Profile'>
@@ -62,6 +73,23 @@ const Profile: React.FC<I_props> = ({ userId }) => {
           <div className='username'>
             <span>{userName}</span>
           </div>
+          <div className='sub-description'>
+            <div className='sub-posts'>
+              <span>
+                <span className='length'>{postDatas ? postDatas.length : 0}</span> posts
+              </span>
+            </div>
+            <div className='sub-followings' onClick={showFollowings}>
+              <span>
+                <span className='length'>{myFollow ? myFollow.followees.length : 0}</span> following
+              </span>
+            </div>
+            <div className='sub-followers' onClick={showFollowers}>
+              <span>
+                <span className='length'>{myFollow ? myFollow.followers.length : 0}</span> followers
+              </span>
+            </div>
+          </div>
         </div>
       </header>
 
@@ -71,13 +99,13 @@ const Profile: React.FC<I_props> = ({ userId }) => {
           <div className='category-list' onClick={handleCategory}>
             <span>POSTS</span>
           </div>
-          <div className='category-list' onClick={handleCategory}>
+          {/* <div className='category-list' onClick={handleCategory}>
             <span>FOLLOWS</span>
           </div>
           <div className='category-list' onClick={handleCategory}>
             <span>FOLLOWERS</span>
           </div>
-          {/* <div className='category-list' onClick={handleCategory}>
+          <div className='category-list' onClick={handleCategory}>
             <span>GROUP</span>
           </div> */}
           <div className='category-list' onClick={handleCategory}>

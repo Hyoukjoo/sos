@@ -1,8 +1,13 @@
-@import 'headline', 'feed', 'loginForm', 'signupForm', './profile/profile.scss', 'layout', 'postform',
-  './like/like.scss', './reply/reply.scss';
+@import 'headline', 'feed', 'loginForm', 'signupForm', './profile/profile', 'layout', 'postform', './like/like',
+  './reply/reply';
+
+html {
+  overflow-y: scroll;
+}
 
 body {
   margin: 0;
+  width: 100%;
   height: 100%;
   box-sizing: border-box;
   font-size: 12px;

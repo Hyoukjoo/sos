@@ -2,6 +2,7 @@ import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '.';
 
 import { User } from './user';
+import { Follow } from './follow';
 
 export class Profile extends Model {
   public userId!: string;
@@ -44,6 +45,8 @@ export const initProfileModel = () => {
 
 export const associateProfile = () => {
   Profile.belongsTo(User, { foreignKey: 'userId', targetKey: 'userId', as: 'userProfile' });
+  Profile.hasMany(Follow, { foreignKey: 'followeeId', sourceKey: 'userId', as: 'followeeProfile' });
+  Profile.hasMany(Follow, { foreignKey: 'followerId', sourceKey: 'userId', as: 'followerProfile' });
 
   return Profile;
 };

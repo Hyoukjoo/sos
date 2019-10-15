@@ -2,19 +2,21 @@ import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import useInput from '../../../hook_utils/useInput';
+
 import { E_profileType } from '../../../redux/profile/profileType';
+import I_state from '../../../redux/rootType';
 
 const ProfileForm: React.FC = () => {
   const dispatch = useDispatch();
 
-  const userName = useSelector((state: any) => state.profile.userName);
-  const profileImage = useSelector((state: any) => state.profile.profileImage);
-  const failureMessage = useSelector((state: any) => state.profile.message);
+  const userName = useSelector((state: I_state) => state.profile.userName);
+  const profileImage = useSelector((state: I_state) => state.profile.profileImage);
+  const failureMessage = useSelector((state: I_state) => state.profile.message);
 
   const [newUserName, resetNewUserName, onChangeNewUsereName] = useInput(userName);
 
   useEffect(() => {
-    if (failureMessage !== null) {
+    if (failureMessage) {
       alert(failureMessage);
       dispatch({
         type: E_profileType.INITIALIZE_FAILURE_MESSAGE

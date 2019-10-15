@@ -1,10 +1,10 @@
-div#Likes {
+div#Followings {
   width: 100%;
   height: 100%;
   justify-items: center;
   align-items: center;
 
-  div.likes-container {
+  div.container {
     width: 400px;
     height: 400px;
     grid-template-rows: 50px auto;
@@ -32,11 +32,11 @@ div#Likes {
       }
     }
 
-    div.like-list-container {
+    div.list-container {
       overflow: hidden auto;
       align-content: flex-start;
 
-      div.like-list {
+      div.list {
         height: 60px;
         padding: 5px 15px;
         grid-template-columns: 50px auto 100px;
@@ -51,6 +51,7 @@ div#Likes {
           border-radius: 50%;
           border: 1px solid #f0f0f0;
           overflow: hidden;
+
           img {
             width: 100%;
           }

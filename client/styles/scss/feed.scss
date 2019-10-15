@@ -17,17 +17,16 @@ main.Feed {
 
       .profile-image {
         .image {
+          justify-items: center;
           align-items: center;
           width: 35px;
           height: 35px;
-          border: 0.5px solid #b1b1b1;
+          border: 1px solid #f0f0f0;
           border-radius: 50%;
           overflow: hidden;
 
           img {
-            top: 0;
-            left: 0;
-            border-radius: 50%;
+            width: 100%;
           }
         }
       }
