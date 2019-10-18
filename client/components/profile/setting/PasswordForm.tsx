@@ -104,7 +104,9 @@ const PasswordForm: React.FC = () => {
           </div>
         </div>
         <div className='submit-div'>
-          <button onClick={onSubmit}>submit</button>
+          <button onClick={onSubmit}>
+            <span>submit</span>
+          </button>
         </div>
       </div>
     </div>

@@ -17,6 +17,7 @@ import Followings from './profile/Followings';
 import Followers from './profile/Followers';
 
 const Layout: NextFC = ({ children }) => {
+  const { userId } = useSelector((state: I_state) => state.user.myInfo);
   const { isLike } = useSelector((state: I_state) => state.post);
   const { isReply } = useSelector((state: I_state) => state.post);
   const { isNewPost } = useSelector((state: I_state) => state.post);
@@ -25,7 +26,7 @@ const Layout: NextFC = ({ children }) => {
 
   return (
     <section className='app'>
-      <HeadLine />
+      {userId && <HeadLine />}
       {isLike && <Like />}
       {isReply && <Reply />}
       {isNewPost && <PostForm />}

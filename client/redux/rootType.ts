@@ -10,7 +10,8 @@ export interface I_userState {
   myInfo: {
     userId: string;
   };
-  isSignup: string;
+  searchUsers: I_profileState[];
+  isSignup: Boolean;
   message: string;
   error: Error;
 }
@@ -35,20 +36,21 @@ export interface I_postData {
   startTime: string;
   finishTime: string;
   privacyBound: string;
-  userPost: { userId: string; userProfile: I_userProfile };
+  userPost: { userId: string; userProfile: I_profile };
   postImage: [{ postId: number; src: string }];
-  postLike: [{ postId: number; userId: string; likeUserProfile: I_userProfile }];
-  postReply: [{ id: number; userId: string; comment: string; replyUserProfile: I_userProfile }];
+  postLike: [{ postId: number; userId: string; likeUserProfile: I_profile }];
+  postReply: [{ id: number; userId: string; comment: string; replyUserProfile: I_profile }];
 }
 
-export interface I_userProfile {
+export interface I_profile {
+  userId?: string;
   userName: string;
   profileImage: string;
 }
 
 export interface I_profileState {
-  userName: string;
-  profileImage: string;
+  myProfile: I_profile;
+  someoneProfile: I_profile;
   showFollowings: Boolean;
   showFollowers: Boolean;
   message: string;
@@ -57,14 +59,18 @@ export interface I_profileState {
 
 export interface I_followState {
   myFollow: I_followInfo;
-  userFollow: I_followInfo;
+  someoneFollow: {
+    someoneId: string;
+    followees: { followeeId: string; followeeProfile: I_profile }[];
+    followers: { followerId: string; followerProfile: I_profile }[];
+  };
   message: string;
   error: Error;
 }
 
 export interface I_followInfo {
-  followees: { followeeId: string; followeeProfile: I_userProfile }[];
-  followers: { followerId: string; followerProfile: I_userProfile }[];
+  followees: { followeeId: string; followeeProfile: I_profile }[];
+  followers: { followerId: string; followerProfile: I_profile }[];
 }
 
 export interface I_groupState {

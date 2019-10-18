@@ -31,7 +31,9 @@ app
     );
 
     server.get('/user/:id', (req, res) => {
-      return app.render(req, res, '/user', { id: req.params.id });
+      const { id } = req.params;
+
+      return app.render(req, res, '/user', { id });
     });
 
     server.get('*', (req, res) => {

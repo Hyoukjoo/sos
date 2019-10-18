@@ -11,10 +11,17 @@ const signupAPI = async (data: I_userSingupInfo) => {
 
 function* signupRequest(action) {
   try {
-    yield call(signupAPI, action.data);
-    yield put({
-      type: E_userType.USER_SIGNUP_SUCCESS
-    });
+    const result = yield call(signupAPI, action.data);
+    if (!result.data.failMessage) {
+      yield put({
+        type: E_userType.USER_SIGNUP_SUCCESS
+      });
+    } else {
+      yield put({
+        type: E_userType.USER_SIGNUP_FAILURE,
+        message: result.data.failMessage
+      });
+    }
   } catch (e) {
     yield put({
       type: E_userType.USER_SIGNUP_ERROR,
@@ -102,6 +109,41 @@ function* watchLogout() {
   yield takeLatest(E_userType.USER_LOGOUT_REQUEST, logoutRequest);
 }
 
+const searchUserRequestAPI = async data => await axios.post('user/search', data);
+
+function* searchUserRequest(action) {
+  try {
+    if (action.data.search.trim().length > 0) {
+      const result = yield call(searchUserRequestAPI, action.data);
+      if (!result.data.failMessage) {
+        yield put({
+          type: E_userType.SEARCH_USER_SUCCESS,
+          data: result.data
+        });
+      } else {
+        yield put({
+          type: E_userType.SEARCH_USER_FAILURE,
+          message: result.data.failMessage
+        });
+      }
+    } else {
+      yield put({
+        type: E_userType.SEARCH_USER_SUCCESS,
+        data: []
+      });
+    }
+  } catch (e) {
+    yield put({
+      type: E_userType.SEARCH_USER_ERROR,
+      error: e
+    });
+  }
+}
+
+function* watchSearchUser() {
+  yield takeLatest(E_userType.SEARCH_USER_REQUEST, searchUserRequest);
+}
+
 export default function* userSaga() {
-  yield all([fork(watchSginup), fork(watchLogin), fork(watchLaodUser), fork(watchLogout)]);
+  yield all([fork(watchSginup), fork(watchLogin), fork(watchLaodUser), fork(watchLogout), fork(watchSearchUser)]);
 }

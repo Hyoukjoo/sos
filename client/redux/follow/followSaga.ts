@@ -88,6 +88,38 @@ function* watchLoadMyFollowInfo() {
   yield takeLatest(E_followType.LOAD_MY_FOLLOW_INFO_REQUEST, loadMyFollowInfoRequest);
 }
 
+const loadSomeoneFollowInfoRequestAPI = async data => axios.get(`/follow/${data}`);
+
+function* loadSomeoneFollowInfoRequest(action) {
+  try {
+    const result = yield call(loadSomeoneFollowInfoRequestAPI, action.data);
+    if (!result.data.failMessage) {
+      yield put({
+        type: E_followType.LOAD_SOMEONE_FOLLOW_INFO_SUCCESS,
+        data: {
+          someoneId: action.data,
+          followees: result.data.followees,
+          followers: result.data.followers
+        }
+      });
+    } else {
+      yield put({
+        type: E_followType.LOAD_SOMEONE_FOLLOW_INFO_FAILURE,
+        message: result.data.failMessage
+      });
+    }
+  } catch (e) {
+    yield put({
+      type: E_followType.LOAD_SOMEONE_FOLLOW_INFO_ERROR,
+      error: e
+    });
+  }
+}
+
+function* watchLoadSomeoneFollowInfo() {
+  yield takeLatest(E_followType.LOAD_SOMEONE_FOLLOW_INFO_REQUEST, loadSomeoneFollowInfoRequest);
+}
+
 export default function* followSaga() {
-  yield all([fork(watchFollow), fork(watchLoadMyFollowInfo), fork(watchUnFollow)]);
+  yield all([fork(watchFollow), fork(watchUnFollow), fork(watchLoadMyFollowInfo), fork(watchLoadSomeoneFollowInfo)]);
 }

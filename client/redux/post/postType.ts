@@ -1,5 +1,5 @@
 import { E_userType } from '../user/userType';
-import { I_postData, I_userProfile } from '../rootType';
+import { I_postData, I_profile } from '../rootType';
 
 export enum E_postType {
   NEW_POST_REQUEST = 'NEW_POST_REQUEST',
@@ -175,7 +175,7 @@ interface I_postReplyRequest {
 
 interface I_postReplySuccess {
   type: E_postType.POST_REPLY_SUCCESS;
-  data: { id: number; postId: number; userId: string; comment: string; replyUserProfile: I_userProfile };
+  data: { id: number; postId: number; userId: string; comment: string; replyUserProfile: I_profile };
 }
 
 interface I_postReplyFailure {

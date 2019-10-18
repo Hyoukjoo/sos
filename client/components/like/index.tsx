@@ -93,11 +93,11 @@ const Like: React.FC = () => {
                   <div className='follow-button-container'>
                     {myFollowees && myFollowees.filter(followee => followee.followeeId === v.userId).length > 0 ? (
                       <button className='following-button' onClick={() => requestUnFollow(v.userId)}>
-                        following
+                        <span>following</span>
                       </button>
                     ) : (
                       <button className='follow-button' onClick={() => requestFollow(v.userId)}>
-                        follow
+                        <span>follow</span>
                       </button>
                     )}
                   </div>

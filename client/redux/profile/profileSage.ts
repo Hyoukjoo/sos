@@ -117,22 +117,11 @@ function* watchChangePassword() {
   yield takeLatest(E_profileType.CHANGE_PASSWORD_REQUEST, changePassword);
 }
 
-function* initialPassword() {
-  yield put({
-    type: E_profileType.INITIALIZE_FAILURE_MESSAGE
-  });
-}
-
-function* watchInitialPassword() {
-  yield takeEvery(E_profileType.INITIALIZE_FAILURE_MESSAGE_REQUEST, initialPassword);
-}
-
 export default function* profileSaga() {
   yield all([
     fork(watchLoadProfileInfo),
     fork(watchChangeProfileImage),
     fork(watchChangeUserName),
-    fork(watchChangePassword),
-    fork(watchInitialPassword)
+    fork(watchChangePassword)
   ]);
 }

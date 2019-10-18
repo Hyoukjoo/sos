@@ -3,14 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import useInput from '../../../hook_utils/useInput';
 
-import { E_profileType } from '../../../redux/profile/profileType';
 import I_state from '../../../redux/rootType';
+import { E_profileType } from '../../../redux/profile/profileType';
 
 const ProfileForm: React.FC = () => {
   const dispatch = useDispatch();
 
-  const userName = useSelector((state: I_state) => state.profile.userName);
-  const profileImage = useSelector((state: I_state) => state.profile.profileImage);
+  const { userName } = useSelector((state: I_state) => state.profile.myProfile);
+  const { profileImage } = useSelector((state: I_state) => state.profile.myProfile);
   const failureMessage = useSelector((state: I_state) => state.profile.message);
 
   const [newUserName, resetNewUserName, onChangeNewUsereName] = useInput(userName);
@@ -63,7 +63,9 @@ const ProfileForm: React.FC = () => {
           <input type='text' value={newUserName} onChange={onChangeNewUsereName} />
         </div>
         <div className='submit-div'>
-          <button onClick={onSubmit}>submit</button>
+          <button onClick={onSubmit}>
+            <span>submit</span>
+          </button>
         </div>
       </div>
     </div>

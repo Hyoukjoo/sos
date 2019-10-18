@@ -37,7 +37,6 @@ div#Followers {
       align-content: flex-start;
 
       div.list {
-        height: 60px;
         padding: 5px 15px;
         grid-template-columns: 50px auto 100px;
         justify-items: center;
@@ -46,8 +45,8 @@ div#Followers {
         div.profile-image {
           justify-self: center;
           align-items: center;
-          width: 40px;
-          height: 40px;
+          width: 35px;
+          height: 35px;
           border-radius: 50%;
           border: 1px solid #f0f0f0;
           overflow: hidden;
@@ -57,8 +56,8 @@ div#Followers {
           }
 
           div.empty-profile-image {
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             border: 1px solid #f0f0f0;
             border-radius: 50%;
           }
@@ -69,8 +68,8 @@ div#Followers {
           margin-left: 10px;
 
           span {
-            font-size: 0.9rem;
-            font-weight: bold;
+            font-size: 1rem;
+            font-weight: 600;
           }
         }
 
@@ -79,12 +78,12 @@ div#Followers {
             align-self: center;
 
             button.following-button {
-              width: 90px;
+              width: 80px;
               height: 30px;
               background-color: #ffffff;
               border: 1px solid #f0f0f0;
               border-radius: 5px;
-              font-size: 1rem;
+              font-size: 0.8rem;
               font-weight: 600;
               color: #000000;
               outline: 0;
@@ -102,7 +101,7 @@ div#Followers {
               background-color: #3ab0ff;
               border: 1px solid #3ab0ff;
               border-radius: 5px;
-              font-size: 1rem;
+              font-size: 0.8rem;
               font-weight: 600;
               color: #fff;
               outline: 0;

@@ -2,6 +2,7 @@ import { Router } from 'express';
 
 import isLogin from '../utils/isLogin';
 import { Follow, Profile } from '../models';
+import { reset } from 'continuation-local-storage';
 
 const router = Router();
 
@@ -41,6 +42,48 @@ router.get('/', async (req, res, next) => {
     } else {
       res.json({ failMessage: 'Loing info is not existed' });
     }
+  } catch (e) {
+    console.log(e);
+    res.send(e);
+  }
+});
+
+router.get('/:userId', async (req, res, next) => {
+  try {
+    console.log(req.params)
+
+    const { userId } = req.params;
+
+    const followers = await Follow.findAll({
+      where: { followeeId: userId },
+      attributes: ['followerId'],
+      include: [
+        {
+          model: Profile,
+          attributes: ['userName', 'profileImage'],
+          as: 'followerProfile'
+        }
+      ]
+    });
+
+    const followees = await Follow.findAll({
+      where: { followerId: userId },
+      attributes: ['followeeId'],
+      include: [
+        {
+          model: Profile,
+          attributes: ['userName', 'profileImage'],
+          as: 'followeeProfile'
+        }
+      ]
+    });
+
+    const result = {
+      followers,
+      followees
+    };
+
+    res.json(result);
   } catch (e) {
     console.log(e);
     res.send(e);

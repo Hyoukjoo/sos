@@ -1,5 +1,5 @@
 import { E_userType } from '../user/userType';
-import { I_followInfo, I_userProfile } from '../rootType';
+import { I_followInfo, I_profile } from '../rootType';
 
 export enum E_followType {
   FOLLOW_REQUEST = 'FOLLOW_REQUEST',
@@ -14,10 +14,10 @@ export enum E_followType {
   LOAD_MY_FOLLOW_INFO_SUCCESS = 'LOAD_MY_FOLLOW_INFO_SUCCESS',
   LOAD_MY_FOLLOW_INFO_FAILURE = 'LOAD_MY_FOLLOW_INFO_FAILURE',
   LOAD_MY_FOLLOW_INFO_ERROR = 'LOAD_MY_FOLLOW_INFO_ERROR',
-  LOAD_USER_FOLLOW_INFO_REQUEST = 'LOAD_USER_FOLLOW_INFO_REQUEST',
-  LOAD_USER_FOLLOW_INFO_SUCCESS = 'LOAD_USER_FOLLOW_INFO_SUCCESS',
-  LOAD_USER_FOLLOW_INFO_FAILURE = 'LOAD_USER_FOLLOW_INFO_FAILURE',
-  LOAD_USER_FOLLOW_INFO_ERROR = 'LOAD_USER_FOLLOW_INFO_ERROR'
+  LOAD_SOMEONE_FOLLOW_INFO_REQUEST = 'LOAD_SOMEONE_FOLLOW_INFO_REQUEST',
+  LOAD_SOMEONE_FOLLOW_INFO_SUCCESS = 'LOAD_SOMEONE_FOLLOW_INFO_SUCCESS',
+  LOAD_SOMEONE_FOLLOW_INFO_FAILURE = 'LOAD_SOMEONE_FOLLOW_INFO_FAILURE',
+  LOAD_SOMEONE_FOLLOW_INFO_ERROR = 'LOAD_SOMEONE_FOLLOW_INFO_ERROR'
 }
 
 interface I_followRequest {
@@ -27,7 +27,7 @@ interface I_followRequest {
 
 interface I_followSuccess {
   type: E_followType.FOLLOW_SUCCESS;
-  data: { followeeId: string; followeeProfile: I_userProfile };
+  data: { followeeId: string; followeeProfile: I_profile };
 }
 
 interface I_followFailure {
@@ -80,22 +80,26 @@ interface I_loadMyFollowInfoError {
 }
 
 interface I_loadUserFollowInfoRequest {
-  type: E_followType.LOAD_USER_FOLLOW_INFO_REQUEST;
+  type: E_followType.LOAD_SOMEONE_FOLLOW_INFO_REQUEST;
   data: { userId: string };
 }
 
 interface I_loadUserFollowInfoSuccess {
-  type: E_followType.LOAD_USER_FOLLOW_INFO_SUCCESS;
-  data: { followerId: string };
+  type: E_followType.LOAD_SOMEONE_FOLLOW_INFO_SUCCESS;
+  data: {
+    someoneId: string;
+    followees: { followeeId: string; followeeProfile: I_profile }[];
+    followers: { followerId: string; followerProfile: I_profile }[];
+  };
 }
 
 interface I_loadUserFollowInfoFailure {
-  type: E_followType.LOAD_USER_FOLLOW_INFO_FAILURE;
+  type: E_followType.LOAD_SOMEONE_FOLLOW_INFO_FAILURE;
   message: string;
 }
 
 interface I_loadUserFollowInfoError {
-  type: E_followType.LOAD_USER_FOLLOW_INFO_ERROR;
+  type: E_followType.LOAD_SOMEONE_FOLLOW_INFO_ERROR;
   error: Error;
 }
 

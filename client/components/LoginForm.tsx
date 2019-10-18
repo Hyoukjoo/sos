@@ -7,25 +7,20 @@ import useInput from '../hook_utils/useInput';
 import { E_userType } from '../redux/user/userType';
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
+
   const [userId, resetUserId, onChangeUserId] = useInput();
   const [password, resetPassword, onChangePassword] = useInput();
 
-  const dispatch = useDispatch();
-
-  const data = {
-    userId,
-    password
-  };
-
   const onLogin = useCallback(() => {
     if (!userId.trim() || !password.trim()) {
-      alert('input your id');
+      alert('Input your id and password');
       return;
     }
 
     dispatch({
       type: E_userType.USER_LOGIN_REQUEST,
-      data
+      data: { userId, password }
     });
 
     resetPassword();
@@ -46,7 +41,9 @@ const LoginForm = () => {
           </div>
         </div>
         <div className='button-container'>
-          <button onClick={onLogin}>login</button>
+          <button onClick={onLogin}>
+            <span>login</span>
+          </button>
         </div>
         <div className='link-container'>
           <Link href='/signup'>
@@ -59,13 +56,3 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
-
-{
-  /* <label>
-  <Link href='/signup'>
-    <a>
-      <button>signup</button>
-    </a>
-  </Link>
-</label>; */
-}

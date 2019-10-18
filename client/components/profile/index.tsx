@@ -23,8 +23,8 @@ const Profile: React.FC<I_props> = ({ userId }) => {
     }
   }, [userId]);
 
-  const { userName } = useSelector((state: I_state) => state.profile);
-  const { profileImage } = useSelector((state: I_state) => state.profile);
+  const { userName } = useSelector((state: I_state) => state.profile.myProfile);
+  const { profileImage } = useSelector((state: I_state) => state.profile.myProfile);
   const { postDatas } = useSelector((state: I_state) => state.post);
   const { myFollow } = useSelector((state: I_state) => state.follow);
 
@@ -76,7 +76,7 @@ const Profile: React.FC<I_props> = ({ userId }) => {
           <div className='sub-description'>
             <div className='sub-posts'>
               <span>
-                <span className='length'>{postDatas ? postDatas.length : 0}</span> posts
+                <span className='length'>{myPostDatas ? myPostDatas.length : 0}</span> posts
               </span>
             </div>
             <div className='sub-followings' onClick={showFollowings}>

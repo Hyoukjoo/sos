@@ -12,7 +12,7 @@ nav.HeadLine {
   .container {
     width: 900px;
     height: 100%;
-    grid-template-columns: 250px auto 100px;
+    grid-template-columns: 250px auto 250px;
 
     .left {
       justify-items: start;
@@ -20,6 +20,7 @@ nav.HeadLine {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       font-weight: bold;
       font-size: 1.8rem;
+
       .beta {
         padding-left: 5px;
         font-size: 1.1rem;
@@ -28,8 +29,115 @@ nav.HeadLine {
       }
     }
 
+    div.center {
+      justify-items: center;
+      align-items: center;
+
+      div.search-container {
+        position: relative;
+        justify-items: center;
+
+        input {
+          justify-items: center;
+          padding: 5px 10px;
+          width: 180px;
+          height: 20px;
+          border-radius: 3px;
+          border: 1px solid #b2bec3;
+          background-color: #f7f7f7;
+
+          &:focus {
+            outline: none;
+            background-color: #ffffff;
+          }
+        }
+
+        div.tail {
+          position: absolute;
+          top: 35px;
+          width: 12px;
+          height: 12px;
+          transform: rotate(45deg);
+          border-top: 1px solid #dbdbdb;
+          border-left: 1px solid #dbdbdb;
+          background-color: #ffffff;
+        }
+
+        div.result-outline-container {
+          position: absolute;
+          top: 42px;
+          width: 250px;
+          max-height: 300px;
+          border: 1px solid #dbdbdb;
+          box-shadow: 0px 0px 3px 0px #dbdbdb;
+          background-color: #ffffff;
+          border-radius: 3px;
+          box-sizing: border-box;
+
+          &::before {
+            content: '';
+            position: absolute;
+            border-bottom: 5px solid #ffffff;
+            border-right: 9px solid transparent;
+            border-left: 9px solid transparent;
+            top: -5px;
+            left: 115px;
+          }
+
+          div.result-inline-container {
+            align-self: baseline;
+            grid-template-rows: repeat(auto-fit, 60px);
+            width: 100%;
+            max-height: 300px;
+            overflow-y: auto;
+
+            div.list-container {
+              align-items: center;
+              padding: 5px 15px;
+              width: 100%;
+              height: 60px;
+              border-bottom: 1px solid #dbdbdb;
+              grid-template-columns: 50px auto;
+
+              div.profile-image {
+                justify-items: center;
+                align-items: center;
+                width: 40px;
+                height: 40px;
+                border: 1px solid #f0f0f0;
+                border-radius: 50%;
+                overflow: hidden;
+
+                img {
+                  width: 100%;
+                }
+              }
+
+              div.username {
+                padding-left: 5px;
+                span {
+                  font-size: 1rem;
+                }
+              }
+            }
+
+            div.no-users-found {
+              justify-items: center;
+              align-items: center;
+
+              span {
+                font-size: 1rem;
+                color: #a1a1a1;
+              }
+            }
+          }
+        }
+      }
+    }
+
     .right {
       grid-template-columns: 50px 50px;
+      justify-self: end;
       justify-items: center;
       align-items: center;
 

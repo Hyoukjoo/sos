@@ -5,8 +5,15 @@ import { E_userType } from '../user/userType';
 import { I_profileState } from '../rootType';
 
 const initialState: I_profileState = {
-  userName: null,
-  profileImage: null,
+  myProfile: {
+    userName: null,
+    profileImage: null
+  },
+  someoneProfile: {
+    userId: null,
+    userName: null,
+    profileImage: null
+  },
   showFollowings: false,
   showFollowers: false,
   message: null,
@@ -16,7 +23,6 @@ const initialState: I_profileState = {
 const profileReducer = (state = initialState, action: I_profileAction) => {
   return produce(state, draft => {
     switch (action.type) {
-      case E_profileType.CHANGE_PROFILE_IMAGE_NAME_REQUEST:
       case E_profileType.CHANGE_PASSWORD_REQUEST:
       case E_profileType.CHANGE_PROFILE_IMAGE_REQUEST:
       case E_profileType.CHANGE_USER_NAME_REQUEST: {
@@ -31,13 +37,13 @@ const profileReducer = (state = initialState, action: I_profileAction) => {
 
       case E_profileType.CHANGE_PROFILE_IMAGE_SUCCESS: {
         draft.message = action.message;
-        draft.profileImage = action.data.profileImage;
+        draft.myProfile.profileImage = action.data.profileImage;
         break;
       }
 
       case E_profileType.CHANGE_USER_NAME_SUCCESS: {
         draft.message = action.message;
-        draft.userName = action.data.userName;
+        draft.myProfile.userName = action.data.userName;
         break;
       }
 
@@ -47,12 +53,10 @@ const profileReducer = (state = initialState, action: I_profileAction) => {
       }
 
       case E_profileType.LOAD_MY_PROFILE_INFO_SUCCESS: {
-        draft.profileImage = action.data.profileImage;
-        draft.userName = action.data.userName;
+        draft.myProfile = action.data;
         break;
       }
 
-      case E_profileType.CHANGE_PROFILE_IMAGE_NAME_FAILURE:
       case E_profileType.CHANGE_PROFILE_IMAGE_FAILURE:
       case E_profileType.CHANGE_USER_NAME_FAILURE:
       case E_profileType.CHANGE_PASSWORD_FAILURE:
@@ -61,7 +65,6 @@ const profileReducer = (state = initialState, action: I_profileAction) => {
         break;
       }
 
-      case E_profileType.CHANGE_PROFILE_IMAGE_NAME_ERROR:
       case E_profileType.CHANGE_PROFILE_IMAGE_ERROR:
       case E_profileType.CHANGE_USER_NAME_ERROR:
       case E_profileType.CHANGE_PASSWORD_ERROR:
@@ -88,8 +91,11 @@ const profileReducer = (state = initialState, action: I_profileAction) => {
       }
 
       case E_userType.USER_LOGOUT_SUCCESS: {
-        draft.userName = null;
-        draft.profileImage = null;
+        draft.myProfile.userName = null;
+        draft.myProfile.profileImage = null;
+        draft.someoneProfile.userId = null;
+        draft.someoneProfile.userName = null;
+        draft.someoneProfile.profileImage = null;
         draft.message = null;
         draft.error = null;
         break;

@@ -33,14 +33,6 @@ class MyApp extends App<AppProps> {
       });
     }
 
-    store.dispatch({
-      type: E_profileType.LOAD_MY_PROFILE_INFO_REQUEST
-    });
-
-    store.dispatch({
-      type: E_followType.LOAD_MY_FOLLOW_INFO_REQUEST
-    });
-
     const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
 
     return { pageProps };

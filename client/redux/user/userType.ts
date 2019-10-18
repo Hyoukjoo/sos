@@ -1,8 +1,11 @@
+import { I_profileState } from '../rootType';
+
 export enum E_userType {
   USER_SIGNUP_REQUEST = 'USER_SIGNUP_REQUEST',
   USER_SIGNUP_SUCCESS = 'USER_SIGNUP_SUCCESS',
   USER_SIGNUP_FAILURE = 'USER_SIGNUP_FAILURE',
   USER_SIGNUP_ERROR = 'USER_SIGNUP_ERROR',
+  AFTER_SIGNUP = 'AFTER_SIGNUP',
   USER_LOGIN_REQUEST = 'USER_LOGIN_REQUEST',
   USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS',
   USER_LOGIN_FAILURE = 'USER_LOGIN_FAILURE',
@@ -14,7 +17,11 @@ export enum E_userType {
   USER_LOGOUT_REQUEST = 'USER_LOGOUT_REQUEST',
   USER_LOGOUT_SUCCESS = 'USER_LOGOUT_SUCCESS',
   USER_LOGOUT_FAILURE = 'USER_LOGOUT_FAILURE',
-  USER_LOGOUT_ERROR = 'USER_LOGOUT_ERROR'
+  USER_LOGOUT_ERROR = 'USER_LOGOUT_ERROR',
+  SEARCH_USER_REQUEST = 'SEARCH_USER_REQUEST',
+  SEARCH_USER_SUCCESS = 'SEARCH_USER_SUCCESS',
+  SEARCH_USER_FAILURE = 'SEARCH_USER_FAILURE',
+  SEARCH_USER_ERROR = 'SEARCH_USER_ERROR'
 }
 
 export interface I_userSingupInfo {
@@ -40,6 +47,10 @@ interface I_userSignupFailure {
 interface I_userSignupError {
   type: E_userType.USER_SIGNUP_ERROR;
   error: Error;
+}
+
+interface i_afterSignup {
+  type: E_userType.AFTER_SIGNUP;
 }
 
 export interface I_userLoginInfoType {
@@ -107,11 +118,32 @@ interface I_userLogoutError {
   error: Error;
 }
 
+interface I_searchUserRequest {
+  type: E_userType.SEARCH_USER_REQUEST;
+  data: { search: string };
+}
+
+interface I_searchUserSuccess {
+  type: E_userType.SEARCH_USER_SUCCESS;
+  data: I_profileState[];
+}
+
+interface I_searchUserFailure {
+  type: E_userType.SEARCH_USER_FAILURE;
+  message: string;
+}
+
+interface I_searchUserError {
+  type: E_userType.SEARCH_USER_ERROR;
+  error: Error;
+}
+
 export type I_userAction =
   | I_userSignupRequest
   | I_userSignupSuccess
   | I_userSignupFailure
   | I_userSignupError
+  | i_afterSignup
   | I_userLoginRequest
   | I_userLoginSuccess
   | I_userLoginFailure
@@ -123,4 +155,8 @@ export type I_userAction =
   | I_userLogoutRequest
   | I_userLogoutSuccess
   | I_userLogoutFailure
-  | I_userLogoutError;
+  | I_userLogoutError
+  | I_searchUserRequest
+  | I_searchUserSuccess
+  | I_searchUserFailure
+  | I_searchUserError;

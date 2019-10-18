@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import passport from 'passport';
 import { hash } from 'bcrypt';
+import { Op } from 'sequelize';
 
 import { User, Profile } from '../models';
 
@@ -8,31 +9,40 @@ const router = Router();
 
 router.post('/signup', async (req, res, next) => {
   try {
-    const exUser = await User.findOne({
+    const { userId, userName, password } = req.body;
+
+    const exUserId = await User.findOne({
       where: {
-        userId: req.body.userId
+        userId
       }
     });
 
-    if (exUser) return res.status(403).json({ message: 'Existed user' });
+    if (exUserId) return res.json({ failMessage: 'Existed Id' });
 
-    const passwordToHash = await hash(req.body.password, 11);
+    const exUserName = await Profile.findOne({
+      where: {
+        userName
+      }
+    });
 
-    const newUser = await User.create({
-      userId: req.body.userId,
+    if (exUserName) return res.json({ failMessage: 'Existed username' });
+
+    const passwordToHash = await hash(password, 11);
+
+    await User.create({
+      userId,
       password: passwordToHash
     });
 
-    const newProfile = await Profile.create({
-      userId: req.body.userId,
-      userName: req.body.userName
+    await Profile.create({
+      userId,
+      userName
     });
 
-    res.json(newUser);
+    res.json({ successMessage: 'Success' });
   } catch (e) {
     console.log(e);
     res.send(e);
-    return next(e);
   }
 });
 
@@ -55,6 +65,31 @@ router.get('/logout', (req, res, next) => {
   (req.session as any).destroy();
   req.logout();
   res.send('logout success');
+});
+
+router.post('/search', async (req, res, next) => {
+  try {
+    const { search } = req.body;
+
+    console.log(search);
+
+    if (search.trim().length > 0) {
+      const result = await Profile.findAll({
+        where: {
+          userName: { [Op.like]: '%' + search + '%' }
+        },
+        attributes: ['userId', 'userName', 'profileImage']
+      });
+
+      res.json(result);
+    } else {
+      console.log('0');
+      return res.json(null);
+    }
+  } catch (e) {
+    console.log(e);
+    res.send(e);
+  }
 });
 
 export default router;
