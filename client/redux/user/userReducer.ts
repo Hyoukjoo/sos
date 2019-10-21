@@ -7,8 +7,9 @@ const initialState: I_userState = {
   myInfo: {
     userId: null
   },
-  isSignup: false,
   searchUsers: [],
+  isSignup: false,
+  isMe: false,
   message: null,
   error: null
 };
@@ -69,6 +70,11 @@ const userReducer = (state = initialState, action: I_userAction) => {
       case E_userType.AFTER_SIGNUP: {
         draft.isSignup = false;
         draft.message = null;
+        break;
+      }
+
+      case E_userType.IS_ME: {
+        draft.isMe = action.data;
         break;
       }
 

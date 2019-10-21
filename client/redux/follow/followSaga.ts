@@ -88,7 +88,7 @@ function* watchLoadMyFollowInfo() {
   yield takeLatest(E_followType.LOAD_MY_FOLLOW_INFO_REQUEST, loadMyFollowInfoRequest);
 }
 
-const loadSomeoneFollowInfoRequestAPI = async data => axios.get(`/follow/${data}`);
+const loadSomeoneFollowInfoRequestAPI = async data => await axios.get(`/follow/${data}`);
 
 function* loadSomeoneFollowInfoRequest(action) {
   try {

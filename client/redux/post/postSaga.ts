@@ -3,22 +3,28 @@ import axios from 'axios';
 
 import { E_postType } from './postType';
 
-const newPostAPI = async data => {
-  return await axios.post('/post', data, {
+const newPostAPI = async data =>
+  await axios.post('/post', data, {
     headers: {
       'Content-Type': 'multipart/form-data'
     },
     withCredentials: true
   });
-};
 
 function* newPostRequest(action) {
   try {
     const result = yield call(newPostAPI, action.data);
-    console.log(result.data);
-    yield put({
-      type: E_postType.NEW_POST_SUCCESS
-    });
+    if (!result.data.failMessage) {
+      yield put({
+        type: E_postType.NEW_POST_SUCCESS,
+        data: result.data
+      });
+    } else {
+      yield put({
+        type: E_postType.NEW_POST_FAILURE,
+        message: result.data.failMessage
+      });
+    }
   } catch (e) {
     yield put({
       type: E_postType.NEW_POST_ERROR,
@@ -31,7 +37,7 @@ function* watchNewPost() {
   yield takeLatest(E_postType.NEW_POST_REQUEST, newPostRequest);
 }
 
-const deletePostRequestAPI = async data => axios.delete('/post', { data, withCredentials: true });
+const deletePostRequestAPI = async data => await axios.delete('/post', { data, withCredentials: true });
 
 function* deletePostRequest(action) {
   try {
@@ -59,9 +65,7 @@ function* watchDeletePost() {
   yield takeLatest(E_postType.DELETE_POST_REQUEST, deletePostRequest);
 }
 
-const loadPostAPI = async () => {
-  return await axios.get('/post', { withCredentials: true });
-};
+const loadPostAPI = async () => await axios.get('/post', { withCredentials: true });
 
 function* loadPostRequest() {
   try {
@@ -82,7 +86,35 @@ function* watchLoadPost() {
   yield takeLatest(E_postType.LOAD_POST_REQUEST, loadPostRequest);
 }
 
-const postLikeAPI = async data => axios.post('/post/like', data, { withCredentials: true });
+const loadSomeonePostsAPI = async data => await axios.get(`/post/${data}`);
+
+function* loadSomeonePosts(action) {
+  try {
+    const result = yield call(loadSomeonePostsAPI, action.data);
+    if (!result.data.failMessage) {
+      yield put({
+        type: E_postType.LOAD_SOMEONE_POST_SUCCESS,
+        data: result.data
+      });
+    } else {
+      yield put({
+        type: E_postType.LOAD_SOMEONE_POST_FAILURE,
+        message: result.data.failMessage
+      });
+    }
+  } catch (e) {
+    yield put({
+      type: E_postType.LOAD_SOMEONE_POST_ERROR,
+      error: e
+    });
+  }
+}
+
+function* watchLoadSomeonePosts() {
+  yield takeLatest(E_postType.LOAD_SOMEONE_POST_REQUEST, loadSomeonePosts);
+}
+
+const postLikeAPI = async data => await axios.post('/post/like', data, { withCredentials: true });
 
 function* postLikeRequest(action) {
   try {
@@ -138,7 +170,7 @@ function* watchPostUnLike() {
   yield takeLatest(E_postType.POST_UNLIKE_REQUEST, postUnLikeRequest);
 }
 
-const postReplyAPI = async data => axios.post('/post/reply', data, { withCredentials: true });
+const postReplyAPI = async data => await axios.post('/post/reply', data, { withCredentials: true });
 
 function* postReplyRequest(action) {
   try {
@@ -166,7 +198,7 @@ function* watchPostReply() {
   yield takeLatest(E_postType.POST_REPLY_REQUEST, postReplyRequest);
 }
 
-const postDeleteReplyRequestAPI = async data => axios.delete('/post/reply', { data, withCredentials: true });
+const postDeleteReplyRequestAPI = async data => await axios.delete('/post/reply', { data, withCredentials: true });
 
 function* postDeleteReplyRequest(action) {
   try {
@@ -199,6 +231,7 @@ export default function* postSaga() {
     fork(watchNewPost),
     fork(watchDeletePost),
     fork(watchLoadPost),
+    fork(watchLoadSomeonePosts),
     fork(watchPostLike),
     fork(watchPostUnLike),
     fork(watchPostReply),

@@ -1,9 +1,9 @@
-import { all, takeLatest, takeEvery, fork, put, call } from 'redux-saga/effects';
+import { all, takeLatest, fork, put, call } from 'redux-saga/effects';
 import axios from 'axios';
 
 import { E_profileType } from './profileType';
 
-const loadProfileInfoAPI = async () => axios.get('/profile/loadprofileinfo', { withCredentials: true });
+const loadProfileInfoAPI = async () => await axios.get('/profile', { withCredentials: true });
 
 function* loadProfileInfo() {
   try {
@@ -31,7 +31,36 @@ function* watchLoadProfileInfo() {
   yield takeLatest(E_profileType.LOAD_MY_PROFILE_INFO_REQUEST, loadProfileInfo);
 }
 
-const changeProfileImageAPI = async data => axios.post('/profile/changeprofileimage', data, { withCredentials: true });
+const loadSomeoneProfileInfoAPI = async data => await axios.get(`/profile/${data}`);
+
+function* loadSomeoneProfileInfo(action) {
+  try {
+    const result = yield call(loadSomeoneProfileInfoAPI, action.data);
+    if (!result.data.failMessage) {
+      yield put({
+        type: E_profileType.LOAD_SOMEONE_PROFILE_INFO_SUCCESS,
+        data: result.data
+      });
+    } else {
+      yield put({
+        type: E_profileType.LOAD_SOMEONE_PROFILE_INFO_FAILURE,
+        message: result.data.failMessage
+      });
+    }
+  } catch (e) {
+    yield put({
+      type: E_profileType.LOAD_SOMEONE_PROFILE_INFO_ERROR,
+      error: e
+    });
+  }
+}
+
+function* watchLoadSomeoneProfileInfo() {
+  yield takeLatest(E_profileType.LOAD_SOMEONE_PROFILE_INFO_REQUEST, loadSomeoneProfileInfo);
+}
+
+const changeProfileImageAPI = async data =>
+  await axios.post('/profile/changeprofileimage', data, { withCredentials: true });
 
 function* changeProfileImage(action) {
   try {
@@ -60,7 +89,7 @@ function* watchChangeProfileImage() {
   yield takeLatest(E_profileType.CHANGE_PROFILE_IMAGE_REQUEST, changeProfileImage);
 }
 
-const changeUserNameAPI = async data => axios.post('/profile/changeusername', data, { withCredentials: true });
+const changeUserNameAPI = async data => await axios.post('/profile/changeusername', data, { withCredentials: true });
 
 function* changeUserName(action) {
   try {
@@ -120,6 +149,7 @@ function* watchChangePassword() {
 export default function* profileSaga() {
   yield all([
     fork(watchLoadProfileInfo),
+    fork(watchLoadSomeoneProfileInfo),
     fork(watchChangeProfileImage),
     fork(watchChangeUserName),
     fork(watchChangePassword)

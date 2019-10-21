@@ -3,11 +3,7 @@ import axios from 'axios';
 
 import { E_userType, I_userSingupInfo, I_userLoginInfoType } from './userType';
 
-const signupAPI = async (data: I_userSingupInfo) => {
-  return await axios.post('/user/signup', data, {
-    withCredentials: true
-  });
-};
+const signupAPI = async (data: I_userSingupInfo) => await axios.post('/user/signup', data, { withCredentials: true });
 
 function* signupRequest(action) {
   try {
@@ -34,11 +30,7 @@ function* watchSginup() {
   yield takeLatest(E_userType.USER_SIGNUP_REQUEST, signupRequest);
 }
 
-const loginAPI = async (data: I_userLoginInfoType) => {
-  return await axios.post('/user/login', data, {
-    withCredentials: true
-  });
-};
+const loginAPI = async (data: I_userLoginInfoType) => await axios.post('/user/login', data, { withCredentials: true });
 
 function* loginRequest(action) {
   try {
@@ -60,11 +52,7 @@ function* watchLogin() {
   yield takeLatest(E_userType.USER_LOGIN_REQUEST, loginRequest);
 }
 
-const loadUserAPI = async () => {
-  return await axios.get('/user/info', {
-    withCredentials: true
-  });
-};
+const loadUserAPI = async () => await axios.get('/user/info', { withCredentials: true });
 
 function* loadUserRequest() {
   try {
@@ -85,11 +73,7 @@ function* watchLaodUser() {
   yield takeLatest(E_userType.LOAD_USER_INFO_REQUEST, loadUserRequest);
 }
 
-const logoutAPI = () => {
-  return axios.get('/user/logout', {
-    withCredentials: true
-  });
-};
+const logoutAPI = async () => await axios.get('/user/logout', { withCredentials: true });
 
 function* logoutRequest() {
   try {

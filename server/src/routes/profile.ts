@@ -6,7 +6,7 @@ import upload from '../utils/upload';
 
 const router = Router();
 
-router.get('/loadprofileinfo', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     if (req.user) {
       const profile = await Profile.findOne({ where: { userId: req.user } });
@@ -15,6 +15,19 @@ router.get('/loadprofileinfo', async (req, res, next) => {
     } else {
       res.json({ failMessage: 'Login info is not existed' });
     }
+  } catch (e) {
+    console.log(e);
+    res.send(e);
+  }
+});
+
+router.get('/:userId', async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+
+    const result = await Profile.findOne({ where: { userId } });
+
+    res.json(result);
   } catch (e) {
     console.log(e);
     res.send(e);
@@ -34,8 +47,6 @@ router.post('/changeprofileimage', upload.array('image'), async (req, res, next)
       const newProfile: any = await Profile.findOne({ where: { userId: req.user }, attributes: ['profileImage'] });
 
       const profile = { profileImage: newProfile.dataValues.profileImage };
-
-      console.log(profile);
 
       res.json({ successMessage: 'Success Change Profile Image', profile });
     } else {
@@ -63,41 +74,10 @@ router.post('/changeusername', async (req, res, next) => {
 
       const profile = { userName: newProfile.dataValues.userName };
 
-      console.log(profile);
-
       res.json({ successMessage: 'Success Change User Name', profile });
     } else {
       res.json({ failMessage: 'Fail Change User Name' });
     }
-  } catch (e) {
-    console.log(e);
-    res.send(e);
-  }
-});
-
-router.post('/changeprofileimagename', upload.array('image'), async (req, res, next) => {
-  try {
-    const updateProfile = await Profile.update(
-      {
-        userName: req.body.userName,
-        profileImage: req.files[0].filename
-      },
-      { where: { userId: req.user } }
-    );
-
-    if (updateProfile[0] > 0) {
-      const newProfile: any = await Profile.findOne({ where: { userId: req.user } });
-
-      const profile = {
-        userName: newProfile.dataValues.userName,
-        profileImage: newProfile.dataValues.profileImage
-      };
-
-      console.log(updateProfile);
-      console.log(profile);
-
-      res.json({ message: 'Success Change Profile', profile });
-    } else res.json({ message: 'Fail Change Profile' });
   } catch (e) {
     console.log(e);
     res.send(e);
@@ -130,3 +110,32 @@ router.post('/changepassword', async (req, res, next) => {
 });
 
 export default router;
+
+// router.post('/changeprofileimagename', upload.array('image'), async (req, res, next) => {
+//   try {
+//     const updateProfile = await Profile.update(
+//       {
+//         userName: req.body.userName,
+//         profileImage: req.files[0].filename
+//       },
+//       { where: { userId: req.user } }
+//     );
+
+//     if (updateProfile[0] > 0) {
+//       const newProfile: any = await Profile.findOne({ where: { userId: req.user } });
+
+//       const profile = {
+//         userName: newProfile.dataValues.userName,
+//         profileImage: newProfile.dataValues.profileImage
+//       };
+
+//       console.log(updateProfile);
+//       console.log(profile);
+
+//       res.json({ message: 'Success Change Profile', profile });
+//     } else res.json({ message: 'Fail Change Profile' });
+//   } catch (e) {
+//     console.log(e);
+//     res.send(e);
+//   }
+// });

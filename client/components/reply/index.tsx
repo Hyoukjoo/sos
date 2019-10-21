@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Link from 'next/link';
 
 import { E_postType } from '../../redux/post/postType';
 import I_state from '../../redux/rootType';
@@ -82,14 +83,22 @@ const Reply: React.FC = () => {
             return (
               <div className='reply-list' key={v.id + v.userId}>
                 <div className='profile-image'>
-                  {v.replyUserProfile.profileImage ? (
-                    <img src={`http://localhost:4000/${v.replyUserProfile.profileImage}`} alt='' />
-                  ) : (
-                    <div className='empty-profile-image'></div>
-                  )}
+                  <Link href={{ pathname: '/user', query: { id: v.userId } }} as={`/user/${v.userId}`}>
+                    <a onClick={clearReply}>
+                      {v.replyUserProfile.profileImage ? (
+                        <img src={`http://localhost:4000/${v.replyUserProfile.profileImage}`} alt='' />
+                      ) : (
+                        <div className='empty-profile-image'></div>
+                      )}
+                    </a>
+                  </Link>
                 </div>
                 <div className='comment-container'>
-                  <span className='username'>{v.replyUserProfile.userName}</span>
+                  <Link href={{ pathname: '/user', query: { id: v.userId } }} as={`/user/${v.userId}`}>
+                    <a onClick={clearReply}>
+                      <span className='username'>{v.replyUserProfile.userName}</span>
+                    </a>
+                  </Link>
                   <span className='comment'>{v.comment}</span>
                 </div>
                 <div className='delete-container'>

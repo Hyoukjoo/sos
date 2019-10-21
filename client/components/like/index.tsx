@@ -76,11 +76,15 @@ const Like: React.FC = () => {
             return (
               <div className='like-list' key={v.postId + v.userId}>
                 <div className='profile-image'>
-                  {v.likeUserProfile.profileImage ? (
-                    <img src={`http://localhost:4000/${v.likeUserProfile.profileImage}`} alt='profile-image' />
-                  ) : (
-                    <div className='empty-profile-image'></div>
-                  )}
+                  <Link href={{ pathname: '/user', query: { id: v.userId } }} as={`/user/${v.userId}`}>
+                    <a onClick={clearLikes}>
+                      {v.likeUserProfile.profileImage ? (
+                        <img src={`http://localhost:4000/${v.likeUserProfile.profileImage}`} alt='profile-image' />
+                      ) : (
+                        <div className='empty-profile-image'></div>
+                      )}
+                    </a>
+                  </Link>
                 </div>
                 <div className='username'>
                   <Link href={{ pathname: '/user', query: v.userId }} as={`/user/${v.userId}`}>

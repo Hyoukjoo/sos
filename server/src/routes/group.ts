@@ -38,7 +38,6 @@ router.post('/invite', isLogin, async (req, res, next) => {
       }
     });
 
-    console.log(group);
     if (!group) return res.status(421).json({ message: 'Not exist group' });
 
     if (group) {

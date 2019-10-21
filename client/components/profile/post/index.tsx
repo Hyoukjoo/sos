@@ -1,17 +1,17 @@
 import React from 'react';
 
-import { I_postData, I_follow } from '../../../redux/rootType';
+import { I_postData } from '../../../redux/rootType';
 import monthArr from '../../utils/month';
 
 interface I_props {
-  myPostDatas: I_postData[];
+  postDatas: I_postData[];
 }
 
-const Posts: React.FC<I_props> = ({ myPostDatas }) => {
+const Posts: React.FC<I_props> = ({ postDatas }) => {
   return (
     <div id='Posts'>
-      {myPostDatas &&
-        myPostDatas.map(postData => {
+      {postDatas &&
+        postDatas.map(postData => {
           const startDate = new Date(postData.startTime);
           const finishDate = new Date(postData.finishTime);
 

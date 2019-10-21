@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Link from 'next/link';
 
 import useInput from '../../hook_utils/useInput';
 import monthArr from '../utils/month';
@@ -106,11 +107,19 @@ const Feed: React.FC<I_props> = ({ postDatas }) => {
               <header>
                 <div className='profile-image'>
                   <div className='image'>
-                    <img src={`http://localhost:4000/${postData.userPost.userProfile.profileImage}`} alt='' />
+                    <Link href={{ pathname: '/user', query: { id: postData.userId } }} as={`/user/${postData.userId}`}>
+                      <a>
+                        <img src={`http://localhost:4000/${postData.userPost.userProfile.profileImage}`} alt='' />
+                      </a>
+                    </Link>
                   </div>
                 </div>
                 <div className='profile-name'>
-                  <span>{postData.userPost.userProfile.userName}</span>
+                  <Link href={{ pathname: '/user', query: { id: postData.userId } }} as={`/user/${postData.userId}`}>
+                    <a>
+                      <span>{postData.userPost.userProfile.userName}</span>
+                    </a>
+                  </Link>
                 </div>
                 <div className='period'>
                   <span>{formatDate}</span>

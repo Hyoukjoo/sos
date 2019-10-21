@@ -9,8 +9,10 @@ import { E_followType } from '../../redux/follow/followType';
 const Followers: React.FC = () => {
   const dispatch = useDispatch();
 
-  const { followers } = useSelector((state: I_state) => state.follow.myFollow);
-  const { followees } = useSelector((state: I_state) => state.follow.myFollow);
+  const { isMe } = useSelector((state: I_state) => state.user);
+
+  const { followers } = useSelector((state: I_state) => (isMe ? state.follow.myFollow : state.follow.someoneFollow));
+  const { followees } = useSelector((state: I_state) => (isMe ? state.follow.myFollow : state.follow.someoneFollow));
 
   const clear = () => {
     dispatch({

@@ -14,8 +14,10 @@ export enum E_postType {
   LOAD_POST_SUCCESS = 'LOAD_POST_SUCCESS',
   LOAD_POST_FAILURE = 'LOAD_POST_FAILURE',
   LOAD_POST_ERROR = 'LOAD_POST_ERROR',
-  LOAD_PLACE_DATA = 'LOAD_PLACE_DATA',
-  SHOW_LIKE_LIST = 'SHOW_LIKE_LIST',
+  LOAD_SOMEONE_POST_REQUEST = 'LOAD_SOMEONE_POST_REQUEST',
+  LOAD_SOMEONE_POST_SUCCESS = 'LOAD_SOMEONE_POST_SUCCESS',
+  LOAD_SOMEONE_POST_FAILURE = 'LOAD_SOMEONE_POST_FAILURE',
+  LOAD_SOMEONE_POST_ERROR = 'LOAD_SOMEONE_POST_ERROR',
   POST_LIKE_REQUEST = 'POST_LIKE_REQUEST',
   POST_LIKE_SUCCESS = 'POST_LIKE_SUCCESS',
   POST_LIKE_FAILURE = 'POST_LIKE_FAILURE',
@@ -32,6 +34,8 @@ export enum E_postType {
   POST_DELETE_REPLY_SUCCESS = 'POST_DELETE_REPLY_SUCCESS',
   POST_DELETE_REPLY_FAILURE = 'POST_DELETE_REPLY_FAILURE',
   POST_DELETE_REPLY_ERROR = 'POST_DELETE_REPLY_ERROR',
+  LOAD_PLACE_DATA = 'LOAD_PLACE_DATA',
+  SHOW_LIKE_LIST = 'SHOW_LIKE_LIST',
   SHOW_REPLY_INPUT = 'SHOW_REPLY_INPUT',
   SHOW_REPLY_LIST = 'SHOW_REPLY_LIST',
   SHOW_NEW_POST = 'SHOW_NEW_POST'
@@ -58,6 +62,7 @@ interface I_newPostRequest {
 
 interface I_newPostSuccess {
   type: E_postType.NEW_POST_SUCCESS;
+  data: I_postData;
 }
 
 interface I_newPostFailure {
@@ -109,18 +114,24 @@ interface I_loadPostError {
   error: Error;
 }
 
-interface I_loadPlaceData {
-  type: E_postType.LOAD_PLACE_DATA;
-  data: string;
+interface I_loadSomeonePostRequest {
+  type: E_postType.LOAD_SOMEONE_POST_REQUEST;
+  data: { userId: string };
 }
 
-interface I_showLikeList {
-  type: E_postType.SHOW_LIKE_LIST;
-  data: { postData: I_postData };
+interface I_loadSomeonePostSuccess {
+  type: E_postType.LOAD_SOMEONE_POST_SUCCESS;
+  data: I_postData[];
 }
 
-interface I_userLogoutSuccess {
-  type: E_userType.USER_LOGOUT_SUCCESS;
+interface I_loadSomeonePostFailure {
+  type: E_postType.LOAD_SOMEONE_POST_FAILURE;
+  message: string;
+}
+
+interface I_loadSomeonePostError {
+  type: E_postType.LOAD_SOMEONE_POST_ERROR;
+  error: Error;
 }
 
 interface I_postLikeRequest {
@@ -130,7 +141,7 @@ interface I_postLikeRequest {
 
 interface I_postLikeSuccess {
   type: E_postType.POST_LIKE_SUCCESS;
-  data: { postId: number; userId: string; likeUserProfile: { userName: string; profileImage: string } };
+  data: { postId: number; userId: string; likeUserProfile: I_profile };
 }
 
 interface I_postLikeFailure {
@@ -161,11 +172,6 @@ interface I_postUnLikeFailure {
 interface I_postUnLikeError {
   type: E_postType.POST_UNLIKE_ERROR;
   error: Error;
-}
-
-interface I_showReplyList {
-  type: E_postType.SHOW_REPLY_LIST;
-  data: { postData: I_postData };
 }
 
 interface I_postReplyRequest {
@@ -208,9 +214,28 @@ interface I_postDeleteReplyError {
   error: Error;
 }
 
+interface I_loadPlaceData {
+  type: E_postType.LOAD_PLACE_DATA;
+  data: string;
+}
+
+interface I_showLikeList {
+  type: E_postType.SHOW_LIKE_LIST;
+  data: { postData: I_postData };
+}
+
+interface I_showReplyList {
+  type: E_postType.SHOW_REPLY_LIST;
+  data: { postData: I_postData };
+}
+
 interface I_showReplyInput {
   type: E_postType.SHOW_REPLY_INPUT;
   data: { postId: number };
+}
+
+interface I_userLogoutSuccess {
+  type: E_userType.USER_LOGOUT_SUCCESS;
 }
 
 export type I_postAction =
@@ -227,9 +252,10 @@ export type I_postAction =
   | I_loadPostSuccess
   | I_loadPostFailure
   | I_loadPostError
-  | I_loadPlaceData
-  | I_userLogoutSuccess
-  | I_showLikeList
+  | I_loadSomeonePostRequest
+  | I_loadSomeonePostSuccess
+  | I_loadSomeonePostFailure
+  | I_loadSomeonePostError
   | I_postLikeRequest
   | I_postLikeSuccess
   | I_postLikeFailure
@@ -246,5 +272,8 @@ export type I_postAction =
   | I_postDeleteReplySuccess
   | I_postDeleteReplyFailure
   | I_postDeleteReplyError
+  | I_loadPlaceData
+  | I_showLikeList
+  | I_showReplyList
   | I_showReplyInput
-  | I_showReplyList;
+  | I_userLogoutSuccess;

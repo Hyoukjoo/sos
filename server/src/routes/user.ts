@@ -71,8 +71,6 @@ router.post('/search', async (req, res, next) => {
   try {
     const { search } = req.body;
 
-    console.log(search);
-
     if (search.trim().length > 0) {
       const result = await Profile.findAll({
         where: {
@@ -83,7 +81,6 @@ router.post('/search', async (req, res, next) => {
 
       res.json(result);
     } else {
-      console.log('0');
       return res.json(null);
     }
   } catch (e) {

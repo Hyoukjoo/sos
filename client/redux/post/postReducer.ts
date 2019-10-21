@@ -5,7 +5,8 @@ import { E_userType } from '../user/userType';
 import { I_postState } from '../rootType';
 
 const InitialState: I_postState = {
-  postDatas: null,
+  postDatas: [],
+  someonePosts: [],
   loadPlaceData: null,
   images: null,
   message: null,
@@ -23,6 +24,7 @@ const postReducer = (state = InitialState, action: I_postAction) => {
       case E_postType.NEW_POST_REQUEST:
       case E_postType.DELETE_POST_REQUEST:
       case E_postType.LOAD_POST_REQUEST:
+      case E_postType.LOAD_SOMEONE_POST_REQUEST:
       case E_postType.POST_LIKE_REQUEST:
       case E_postType.POST_UNLIKE_REQUEST:
       case E_postType.POST_REPLY_REQUEST:
@@ -31,6 +33,7 @@ const postReducer = (state = InitialState, action: I_postAction) => {
       }
 
       case E_postType.NEW_POST_SUCCESS: {
+        draft.postDatas.unshift(action.data);
         break;
       }
 
@@ -42,6 +45,11 @@ const postReducer = (state = InitialState, action: I_postAction) => {
 
       case E_postType.LOAD_POST_SUCCESS: {
         draft.postDatas = action.data;
+        break;
+      }
+
+      case E_postType.LOAD_SOMEONE_POST_SUCCESS: {
+        draft.someonePosts = action.data;
         break;
       }
 
@@ -74,6 +82,7 @@ const postReducer = (state = InitialState, action: I_postAction) => {
       case E_postType.NEW_POST_FAILURE:
       case E_postType.DELETE_POST_FAILURE:
       case E_postType.LOAD_POST_FAILURE:
+      case E_postType.LOAD_SOMEONE_POST_FAILURE:
       case E_postType.POST_LIKE_FAILURE:
       case E_postType.POST_UNLIKE_FAILURE:
       case E_postType.POST_REPLY_FAILURE:
@@ -85,6 +94,7 @@ const postReducer = (state = InitialState, action: I_postAction) => {
       case E_postType.NEW_POST_ERROR:
       case E_postType.DELETE_POST_ERROR:
       case E_postType.LOAD_POST_ERROR:
+      case E_postType.LOAD_SOMEONE_POST_ERROR:
       case E_postType.POST_LIKE_ERROR:
       case E_postType.POST_UNLIKE_ERROR:
       case E_postType.POST_REPLY_ERROR:

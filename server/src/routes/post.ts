@@ -107,19 +107,6 @@ router.post('/', isLogin, upload.array('image'), async (req, res, next) => {
   }
 });
 
-router.delete('/', isLogin, async (req, res, next) => {
-  try {
-    const result = await Post.destroy({where: { postId: req.body.postId }})
-    if(result > 0) {
-      res.json({successMessage: 'Success delete post'});
-    } else {
-      res.json({failMessage: 'Fail delete post'})
-    }
-  } catch (e) {
-    console.log(e);
-    res.send(e);
-  }
-})
 
 router.get('/', isLogin, async (req, res, next) => {
   try {
@@ -221,12 +208,78 @@ router.get('/', isLogin, async (req, res, next) => {
   }
 });
 
+router.get('/:userId', async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+
+    if(userId.trim().length > 0) {
+      const result = await Post.findAll({
+        where: { userId }, 
+        include: [
+          {
+            model: Like,
+            as: 'postLike',
+            attributes: ['postId', 'userId'],
+            include: [
+              {
+                model: Profile,
+                as: 'likeUserProfile',
+                attributes: ['userName', 'profileImage']
+              }
+            ],
+            order: [['updatedAt', 'DESC']]
+          },
+          {
+            model: Reply,
+            as: 'postReply',
+            attributes: ['id', 'userId', 'comment', 'updatedAt'],
+            include: [
+              {
+                model: Profile,
+                as: 'replyUserProfile',
+                attributes: ['userId','userName', 'profileImage']
+              }
+            ],
+            order: [['updateAt', 'DESC']]
+          },
+          {
+            model: Image,
+            as: 'postImage',
+            attributes: ['src']
+          }
+        ]
+      });
+  
+      res.json(result);
+    } else {
+      res.json({ failMessage: 'No Id'})
+    }
+  } catch (e) {
+    console.log(e);
+    res.send(e);
+  }
+})
+
+router.delete('/', isLogin, async (req, res, next) => {
+  try {
+    const result = await Post.destroy({where: { postId: req.body.postId }})
+    if(result > 0) {
+      res.json({successMessage: 'Success delete post'});
+    } else {
+      res.json({failMessage: 'Fail delete post'})
+    }
+  } catch (e) {
+    console.log(e);
+    res.send(e);
+  }
+})
+
+
 router.post('/like', async (req, res, next) => {
   try {
     const postId = req.body.postId;
 
     const data = await Like.findOne({ where: { postId, userId: req.user } });
-    console.log(data);
 
     if (!data) {
       await Like.create({
@@ -273,25 +326,26 @@ router.delete('/like', isLogin, async (req, res, next) => {
 
 router.post('/reply', isLogin, async (req, res, next) => {
   try {
-    const result = await Reply.create({
+    const reply = await Reply.create({
       postId: req.body.postId,
       userId: req.user,
       comment: req.body.comment
     });
 
-    const replyUserProfile = await result.getReplyUserProfile();
+    const replyUserProfile = await reply.getReplyUserProfile();
 
-    const deliveryBox = {
-      id: result.id,
-      postId: result.postId,
-      userId: result.userId,
-      comment: result.comment,
+    const result = {
+      id: reply.id,
+      postId: reply.postId,
+      userId: reply.userId,
+      comment: reply.comment,
       replyUserProfile: {
+        userId: req.user,
         userName: replyUserProfile.userName,
         profileImage: replyUserProfile.profileImage
       }
     };
-    res.json(deliveryBox);
+    res.json(result);
   } catch (e) {
     console.log(e);
     res.send(e);

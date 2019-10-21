@@ -21,7 +21,8 @@ export enum E_userType {
   SEARCH_USER_REQUEST = 'SEARCH_USER_REQUEST',
   SEARCH_USER_SUCCESS = 'SEARCH_USER_SUCCESS',
   SEARCH_USER_FAILURE = 'SEARCH_USER_FAILURE',
-  SEARCH_USER_ERROR = 'SEARCH_USER_ERROR'
+  SEARCH_USER_ERROR = 'SEARCH_USER_ERROR',
+  IS_ME = 'IS_ME'
 }
 
 export interface I_userSingupInfo {
@@ -138,6 +139,11 @@ interface I_searchUserError {
   error: Error;
 }
 
+interface isMe {
+  type: E_userType.IS_ME;
+  data: boolean;
+}
+
 export type I_userAction =
   | I_userSignupRequest
   | I_userSignupSuccess
@@ -159,4 +165,5 @@ export type I_userAction =
   | I_searchUserRequest
   | I_searchUserSuccess
   | I_searchUserFailure
-  | I_searchUserError;
+  | I_searchUserError
+  | isMe;

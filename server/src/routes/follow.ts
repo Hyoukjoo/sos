@@ -2,7 +2,6 @@ import { Router } from 'express';
 
 import isLogin from '../utils/isLogin';
 import { Follow, Profile } from '../models';
-import { reset } from 'continuation-local-storage';
 
 const router = Router();
 
@@ -50,8 +49,6 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:userId', async (req, res, next) => {
   try {
-    console.log(req.params)
-
     const { userId } = req.params;
 
     const followers = await Follow.findAll({

@@ -10,23 +10,25 @@ export interface I_userState {
   myInfo: {
     userId: string;
   };
-  searchUsers: I_profileState[];
-  isSignup: Boolean;
+  searchUsers: I_profile[];
+  isSignup: boolean;
+  isMe: boolean;
   message: string;
   error: Error;
 }
 
 export interface I_postState {
   postDatas: I_postData[];
+  someonePosts: I_postData[];
   loadPlaceData: string;
   images: string;
-  message: string;
-  error: Error;
   isLike: boolean;
   isReply: boolean;
   isNewPost: boolean;
   currentPostData: I_postData;
   currentReplyPostId: number;
+  message: string;
+  error: Error;
 }
 
 export interface I_postData {

@@ -7,15 +7,15 @@ import Posts from './post';
 
 import I_state from '../../redux/rootType';
 import { E_profileType } from '../../redux/profile/profileType';
+import { E_followType } from '../../redux/follow/followType';
 
 interface I_props {
   userId: string;
+  someoneId: string;
 }
 
-const Profile: React.FC<I_props> = ({ userId }) => {
+const Profile: React.FC<I_props> = ({ userId, someoneId }) => {
   const dispatch = useDispatch();
-
-  const [category, setCategory] = useState(null);
 
   useEffect(() => {
     if (Router.query === {}) {
@@ -23,12 +23,22 @@ const Profile: React.FC<I_props> = ({ userId }) => {
     }
   }, [userId]);
 
-  const { userName } = useSelector((state: I_state) => state.profile.myProfile);
-  const { profileImage } = useSelector((state: I_state) => state.profile.myProfile);
-  const { postDatas } = useSelector((state: I_state) => state.post);
-  const { myFollow } = useSelector((state: I_state) => state.follow);
+  const [category, setCategory] = useState(null);
 
-  const myPostDatas = postDatas.filter(postData => postData.userId === userId);
+  const { isMe } = useSelector((state: I_state) => state.user);
+
+  console.log(isMe);
+
+  const { userName } = useSelector((state: I_state) => (isMe ? state.profile.myProfile : state.profile.someoneProfile));
+  const { profileImage } = useSelector((state: I_state) =>
+    isMe ? state.profile.myProfile : state.profile.someoneProfile
+  );
+  const postDatas = useSelector((state: I_state) =>
+    isMe ? state.post.postDatas.filter(postData => postData.userId === userId) : state.post.someonePosts
+  );
+  const followInfo = useSelector((state: I_state) => (isMe ? state.follow.myFollow : state.follow.someoneFollow));
+
+  const { myFollow } = useSelector((state: I_state) => state.follow);
 
   const handleCategory = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const text = e.currentTarget.children[0].innerHTML;
@@ -39,7 +49,7 @@ const Profile: React.FC<I_props> = ({ userId }) => {
     category => {
       switch (category) {
         case 'POSTS':
-          return <Posts myPostDatas={myPostDatas} />;
+          return <Posts postDatas={postDatas} />;
         case 'SETTING':
           return <SettingForm />;
         default:
@@ -61,6 +71,22 @@ const Profile: React.FC<I_props> = ({ userId }) => {
     });
   };
 
+  const requestFollow = followeeId => {
+    dispatch({
+      type: E_followType.FOLLOW_REQUEST,
+      data: {
+        followeeId
+      }
+    });
+  };
+
+  const requestUnFollow = followeeId => {
+    dispatch({
+      type: E_followType.UNFOLLOW_REQUEST,
+      data: { followeeId }
+    });
+  };
+
   return (
     <div id='Profile'>
       <header>
@@ -70,23 +96,42 @@ const Profile: React.FC<I_props> = ({ userId }) => {
           ) : null}
         </div>
         <div className='profile-description'>
-          <div className='username'>
-            <span>{userName}</span>
+          <div className='top-sub-description'>
+            <div className='username'>
+              <span>{userName}</span>
+            </div>
+            {!isMe && (
+              <div className='follow-button-container'>
+                {!isMe && myFollow.followees.filter(followee => followee.followeeId.includes(someoneId)).length > 0 ? (
+                  <div className='following-button'>
+                    <button onClick={() => requestUnFollow(someoneId)}>
+                      <span>Following</span>
+                    </button>
+                  </div>
+                ) : (
+                  <div className='follow-button'>
+                    <button onClick={() => requestFollow(someoneId)}>
+                      <span>Follow</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
-          <div className='sub-description'>
+          <div className='bottom-sub-description'>
             <div className='sub-posts'>
               <span>
-                <span className='length'>{myPostDatas ? myPostDatas.length : 0}</span> posts
+                <span className='length'>{postDatas ? postDatas.length : 0}</span> posts
               </span>
             </div>
             <div className='sub-followings' onClick={showFollowings}>
               <span>
-                <span className='length'>{myFollow ? myFollow.followees.length : 0}</span> following
+                <span className='length'>{followInfo ? followInfo.followees.length : 0}</span> following
               </span>
             </div>
             <div className='sub-followers' onClick={showFollowers}>
               <span>
-                <span className='length'>{myFollow ? myFollow.followers.length : 0}</span> followers
+                <span className='length'>{followInfo ? followInfo.followers.length : 0}</span> followers
               </span>
             </div>
           </div>
@@ -94,25 +139,18 @@ const Profile: React.FC<I_props> = ({ userId }) => {
       </header>
 
       <div className='container'>
-        <div className='empty-div'></div>
+        <div className={isMe ? 'empty-div' : 'empty-div someone'}></div>
         <div className='category'>
           <div className='category-list' onClick={handleCategory}>
             <span>POSTS</span>
           </div>
-          {/* <div className='category-list' onClick={handleCategory}>
-            <span>FOLLOWS</span>
-          </div>
-          <div className='category-list' onClick={handleCategory}>
-            <span>FOLLOWERS</span>
-          </div>
-          <div className='category-list' onClick={handleCategory}>
-            <span>GROUP</span>
-          </div> */}
-          <div className='category-list' onClick={handleCategory}>
-            <span>SETTING</span>
-          </div>
+          {isMe && (
+            <div className='category-list' onClick={handleCategory}>
+              <span>SETTING</span>
+            </div>
+          )}
         </div>
-        <div className='empty-div'></div>
+        <div className={isMe ? 'empty-div' : 'empty-div someone'}></div>
       </div>
       {renderSwitch(category)}
     </div>

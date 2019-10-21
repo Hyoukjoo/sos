@@ -25,13 +25,11 @@ const profileReducer = (state = initialState, action: I_profileAction) => {
     switch (action.type) {
       case E_profileType.CHANGE_PASSWORD_REQUEST:
       case E_profileType.CHANGE_PROFILE_IMAGE_REQUEST:
-      case E_profileType.CHANGE_USER_NAME_REQUEST: {
+      case E_profileType.CHANGE_USER_NAME_REQUEST:
+      case E_profileType.LOAD_MY_PROFILE_INFO_REQUEST:
+      case E_profileType.LOAD_SOMEONE_PROFILE_INFO_REQUEST: {
         draft.message = null;
         draft.error = null;
-        break;
-      }
-
-      case E_profileType.LOAD_MY_PROFILE_INFO_REQUEST: {
         break;
       }
 
@@ -57,10 +55,16 @@ const profileReducer = (state = initialState, action: I_profileAction) => {
         break;
       }
 
+      case E_profileType.LOAD_SOMEONE_PROFILE_INFO_SUCCESS: {
+        draft.someoneProfile = action.data;
+        break;
+      }
+
       case E_profileType.CHANGE_PROFILE_IMAGE_FAILURE:
       case E_profileType.CHANGE_USER_NAME_FAILURE:
       case E_profileType.CHANGE_PASSWORD_FAILURE:
-      case E_profileType.LOAD_MY_PROFILE_INFO_FAILURE: {
+      case E_profileType.LOAD_MY_PROFILE_INFO_FAILURE:
+      case E_profileType.LOAD_SOMEONE_PROFILE_INFO_FAILURE: {
         draft.message = action.message;
         break;
       }
@@ -68,7 +72,8 @@ const profileReducer = (state = initialState, action: I_profileAction) => {
       case E_profileType.CHANGE_PROFILE_IMAGE_ERROR:
       case E_profileType.CHANGE_USER_NAME_ERROR:
       case E_profileType.CHANGE_PASSWORD_ERROR:
-      case E_profileType.LOAD_MY_PROFILE_INFO_ERROR: {
+      case E_profileType.LOAD_MY_PROFILE_INFO_ERROR:
+      case E_profileType.LOAD_SOMEONE_PROFILE_INFO_ERROR: {
         draft.error = action.error;
         break;
       }
