@@ -72,14 +72,14 @@ const Like: React.FC = () => {
           </div>
         </header>
         <div className='like-list-container'>
-          {currentPostData.postLike.map(v => {
+          {currentPostData.postLike.map(like => {
             return (
-              <div className='like-list' key={v.postId + v.userId}>
+              <div className='like-list' key={like.postId + like.userId}>
                 <div className='profile-image'>
-                  <Link href={{ pathname: '/user', query: { id: v.userId } }} as={`/user/${v.userId}`}>
+                  <Link href={{ pathname: '/user', query: { id: like.userId } }} as={`/user/${like.userId}`}>
                     <a onClick={clearLikes}>
-                      {v.likeUserProfile.profileImage ? (
-                        <img src={`http://localhost:4000/${v.likeUserProfile.profileImage}`} alt='profile-image' />
+                      {like.likeUserProfile.profileImage ? (
+                        <img src={`http://localhost:4000/${like.likeUserProfile.profileImage}`} alt='profile-image' />
                       ) : (
                         <div className='empty-profile-image'></div>
                       )}
@@ -87,20 +87,21 @@ const Like: React.FC = () => {
                   </Link>
                 </div>
                 <div className='username'>
-                  <Link href={{ pathname: '/user', query: v.userId }} as={`/user/${v.userId}`}>
+                  <Link href={{ pathname: '/user', query: like.userId }} as={`/user/${like.userId}`}>
                     <a onClick={clearLikes}>
-                      <span>{v.likeUserProfile.userName}</span>
+                      <span>{like.likeUserProfile.userName}</span>
                     </a>
                   </Link>
                 </div>
                 <div className='follow-container'>
                   <div className='follow-button-container'>
-                    {myFollowees && myFollowees.filter(followee => followee.followeeId === v.userId).length > 0 ? (
-                      <button className='following-button' onClick={() => requestUnFollow(v.userId)}>
+                    {userId === like.userId ? null : myFollowees &&
+                      myFollowees.filter(followee => followee.followeeId === like.userId).length > 0 ? (
+                      <button className='following-button' onClick={() => requestUnFollow(like.userId)}>
                         <span>following</span>
                       </button>
                     ) : (
-                      <button className='follow-button' onClick={() => requestFollow(v.userId)}>
+                      <button className='follow-button' onClick={() => requestFollow(like.userId)}>
                         <span>follow</span>
                       </button>
                     )}

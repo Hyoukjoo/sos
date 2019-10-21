@@ -75,15 +75,25 @@ const Followings: React.FC = () => {
             return (
               <div className='list' key={followee.followeeId}>
                 <div className='profile-image'>
-                  {followee.followeeProfile.profileImage ? (
-                    <img src={`http://localhost:4000/${followee.followeeProfile.profileImage}`} alt='' />
-                  ) : (
-                    <div className='empty-profile-image'></div>
-                  )}
+                  <Link
+                    href={{ pathname: '/user', query: { id: followee.followeeId } }}
+                    as={`/user/${followee.followeeId}`}
+                  >
+                    <a onClick={clear}>
+                      {followee.followeeProfile.profileImage ? (
+                        <img src={`http://localhost:4000/${followee.followeeProfile.profileImage}`} alt='' />
+                      ) : (
+                        <div className='empty-profile-image'></div>
+                      )}
+                    </a>
+                  </Link>
                 </div>
                 <div className='username'>
-                  <Link href={{ pathname: '/user', query: followee.followeeId }} as={`/user/${followee.followeeId}`}>
-                    <a>
+                  <Link
+                    href={{ pathname: '/user', query: { id: followee.followeeId } }}
+                    as={`/user/${followee.followeeId}`}
+                  >
+                    <a onClick={clear}>
                       <span>{followee.followeeProfile.userName}</span>
                     </a>
                   </Link>

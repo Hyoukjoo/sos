@@ -76,15 +76,25 @@ const Followers: React.FC = () => {
             return (
               <div className='list' key={follower.followerId}>
                 <div className='profile-image'>
-                  {follower.followerProfile.profileImage ? (
-                    <img src={`http://localhost:4000/${follower.followerProfile.profileImage}`} alt='' />
-                  ) : (
-                    <div className='empty-profile-image'></div>
-                  )}
+                  <Link
+                    href={{ pathname: '/user', query: { id: follower.followerId } }}
+                    as={`/user/${follower.followerId}`}
+                  >
+                    <a onClick={clear}>
+                      {follower.followerProfile.profileImage ? (
+                        <img src={`http://localhost:4000/${follower.followerProfile.profileImage}`} alt='' />
+                      ) : (
+                        <div className='empty-profile-image'></div>
+                      )}
+                    </a>
+                  </Link>
                 </div>
                 <div className='username'>
-                  <Link href={{ pathname: '/user', query: follower.followerId }} as={`/user/${follower.followerId}`}>
-                    <a>
+                  <Link
+                    href={{ pathname: '/user', query: { id: follower.followerId } }}
+                    as={`/user/${follower.followerId}`}
+                  >
+                    <a onClick={clear}>
                       <span>{follower.followerProfile.userName}</span>
                     </a>
                   </Link>

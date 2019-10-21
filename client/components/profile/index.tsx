@@ -27,8 +27,6 @@ const Profile: React.FC<I_props> = ({ userId, someoneId }) => {
 
   const { isMe } = useSelector((state: I_state) => state.user);
 
-  console.log(isMe);
-
   const { userName } = useSelector((state: I_state) => (isMe ? state.profile.myProfile : state.profile.someoneProfile));
   const { profileImage } = useSelector((state: I_state) =>
     isMe ? state.profile.myProfile : state.profile.someoneProfile

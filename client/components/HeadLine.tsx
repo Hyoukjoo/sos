@@ -34,6 +34,8 @@ const HeadLine: React.FC = memo(() => {
     });
   };
 
+  const clearSearch = () => setSearch('');
+
   return (
     <nav className='HeadLine'>
       <div className='container'>
@@ -57,14 +59,18 @@ const HeadLine: React.FC = memo(() => {
                       searchUsers.map(user => {
                         const { userName, profileImage } = user;
                         return (
-                          <div key={userName} className='list-container'>
-                            <div className='profile-image'>
-                              {profileImage && <img src={`http://localhost:4000/${profileImage}`} alt='' />}
-                            </div>
-                            <div className='username'>
-                              <span>{userName}</span>
-                            </div>
-                          </div>
+                          <Link href={{ pathname: '/user', query: { id: user.userId } }} as={`/user/${user.userId}`}>
+                            <a onClick={clearSearch}>
+                              <div key={userName} className='list-container'>
+                                <div className='profile-image'>
+                                  {profileImage && <img src={`http://localhost:4000/${profileImage}`} alt='' />}
+                                </div>
+                                <div className='username'>
+                                  <span>{userName}</span>
+                                </div>
+                              </div>
+                            </a>
+                          </Link>
                         );
                       })
                     ) : (
