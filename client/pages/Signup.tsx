@@ -1,8 +1,9 @@
 import React from 'react';
-import SignupForm from '../components/SignupForm';
-import { NextFC } from 'next';
+import { NextPage } from 'next';
 
-const Signup: NextFC = () => {
+import SignupForm from '../components/SignupForm';
+
+const Signup: NextPage = () => {
   return <SignupForm />;
 };
 

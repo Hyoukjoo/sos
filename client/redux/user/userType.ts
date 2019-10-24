@@ -1,4 +1,4 @@
-import { I_profileState } from '../rootType';
+import { I_profile } from '../rootType';
 
 export enum E_userType {
   USER_SIGNUP_REQUEST = 'USER_SIGNUP_REQUEST',
@@ -126,7 +126,7 @@ interface I_searchUserRequest {
 
 interface I_searchUserSuccess {
   type: E_userType.SEARCH_USER_SUCCESS;
-  data: I_profileState[];
+  data: I_profile[];
 }
 
 interface I_searchUserFailure {

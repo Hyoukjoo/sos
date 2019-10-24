@@ -2,21 +2,24 @@ import next from 'next';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import expressSession from 'express-session';
+import morgan from 'morgan';
 import { config } from 'dotenv';
 
+config();
+
 const dev = process.env.NODE_ENV !== 'production';
+const prod = process.env.NODE_ENV === 'production';
 const app = next({ dev });
 const handler = app.getRequestHandler();
-
-config();
 
 app
   .prepare()
   .then(() => {
     const server = express();
-    // server.use(morgan('dev'));
+    if (prod) server.use(morgan('combined'));
+    else server.use(morgan('dev'));
     server.use(express.json());
-    server.use(express.urlencoded({ extended: true }));
+    server.use(express.urlencoded({ extended: false }));
     server.use(cookieParser(process.env.COOKIE_SECRET));
     server.use(
       expressSession({
@@ -24,8 +27,9 @@ app
         saveUninitialized: false,
         secret: process.env.COOKIE_SECRET as string,
         cookie: {
+          maxAge: 6000,
           httpOnly: true,
-          secure: false
+          secure: prod
         }
       })
     );
@@ -40,7 +44,7 @@ app
       return handler(req, res);
     });
 
-    server.listen(process.env.SERVER_PORT, () => {
+    server.listen(process.env.SERVER_PORT || 3000, () => {
       console.log('client server is running!');
     });
   })

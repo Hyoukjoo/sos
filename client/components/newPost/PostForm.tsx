@@ -163,9 +163,9 @@ const PostForm: React.FC = () => {
 
         <div className='post-container'>
           <header>
-            {profile.profileImage ? (
+            {profile.myProfile.profileImage ? (
               <div className='profile-image'>
-                <img src={`http://localhost:4000/${profile.profileImage}`} alt='' />
+                <img src={`http://localhost:4000/${profile.myProfile.profileImage}`} alt='' />
               </div>
             ) : (
               <div className='empty-profile-image'></div>

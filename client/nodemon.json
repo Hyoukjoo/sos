@@ -1,1 +1,1 @@
-{ "watch": ["server.ts"], "exec": "ts-node ./server.ts" }
+{ "watch": ["server.ts"], "exec": "ts-node --project tsconfig.server.json ./server.ts", "ext": "js ts" }

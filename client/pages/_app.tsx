@@ -1,54 +1,56 @@
 import React from 'react';
-import App, { Container } from 'next/app';
+import { NextComponentType } from 'next';
+import App from 'next/app';
 import { Provider } from 'react-redux';
-import withRedux, { AppProps, NextJSAppContext } from 'next-redux-wrapper';
+import withRedux, { NextJSContext } from 'next-redux-wrapper';
 import withReduxSaga from 'next-redux-saga';
+import { Store } from 'redux';
 import axios from 'axios';
 
 import makeStore from '../redux/store';
 
-import { E_userType } from '../redux/user/userType';
-import { E_profileType } from '../redux/profile/profileType';
-import { E_followType } from '../redux/follow/followType';
-
 import Layout from '../components/Layout';
 
-class MyApp extends App<AppProps> {
-  static getInitialProps = async ({ Component, ctx }: NextJSAppContext) => {
-    const { store, isServer } = ctx;
+import { E_userType } from 'redux/user/userType';
 
-    const cookie = isServer ? ctx.req.headers.cookie : '';
+interface I_props {
+  store: Store;
+}
 
-    if (isServer && cookie) {
-      axios.defaults.headers.Cookie = cookie;
-    }
+class MyApp extends App<I_props> {
+  // public static async getInitialProps({ Component, ctx }: AppContextType<Router>) {
+  //   const { store, isServer } = ctx as any;
 
-    const state = store.getState();
+  //   const cookie = isServer ? ctx.req.headers.cookie : '';
 
-    const { userId } = state.user.myInfo;
+  //   if (isServer && cookie) {
+  //     axios.defaults.headers.Cookie = cookie;
+  //   }
 
-    if (!userId) {
-      store.dispatch({
-        type: E_userType.LOAD_USER_INFO_REQUEST
-      });
-    }
+  //   const state = store.getState();
 
-    const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
+  //   const { userId } = state.user.myInfo;
 
-    return { pageProps };
-  };
+  //   if (!userId) {
+  //     store.dispatch({
+  //       type: E_userType.LOAD_USER_INFO_REQUEST
+  //     });
+  //   }
+
+  //   const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
+
+  //   return { pageProps };
+  // }
 
   render() {
     const { Component, pageProps, store } = this.props;
 
     return (
-      <Container>
-        <Provider store={store}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </Provider>
-      </Container>
+      <Provider store={store}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </Provider>
     );
   }
 }
