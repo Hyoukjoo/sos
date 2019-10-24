@@ -124,33 +124,33 @@ router.get('/', isLogin, async (req, res, next) => {
       attributes: ['followeeId']
     });
 
-    const groups = groupData.map(result => result.groupName);
+    // const groups = groupData.map(result => result.groupName);
 
     const followees = followeeData.map(result => result.followeeId);
     const findUserId = [req.user, ...followees];
 
-    let reg = '';
+    // let reg = '';
 
-    for (let i = 0; i < groups.length; i++) {
-      reg += groups[i].replace(/\$/, '\\$\\b') + '\\b';
-      if (i !== groups.length - 1) reg += '|';
-    }
+    // for (let i = 0; i < groups.length; i++) {
+    //   reg += groups[i].replace(/\$/, '\\$\\b') + '\\b';
+    //   if (i !== groups.length - 1) reg += '|';
+    // }
 
     const posts = await Post.findAll({
       where: {
         [Op.and]: [
           { userId: findUserId },
-          {
-            privacyBound: {
-              [Op.or]: [
-                null,
-                {
-                  [Op.regexp]: reg
-                },
-                { [Op.like]: '%@' + req.user + '%' }
-              ]
-            }
-          }
+          // {
+          //   privacyBound: {
+          //     [Op.or]: [
+          //       null,
+          //       {
+          //         [Op.regexp]: reg
+          //       },
+          //       { [Op.like]: '%@' + req.user + '%' }
+          //     ]
+          //   }
+          // }
         ]
       },
       include: [
