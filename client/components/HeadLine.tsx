@@ -6,6 +6,8 @@ import I_state from '../redux/rootType';
 import { E_postType } from '../redux/post/postType';
 import { E_userType } from '../redux/user/userType';
 
+import { serverImageURL } from '../info/url';
+
 const HeadLine: React.FC = memo(() => {
   const dispatch = useDispatch();
 
@@ -63,7 +65,7 @@ const HeadLine: React.FC = memo(() => {
                             <a onClick={clearSearch}>
                               <div key={userName} className='list-container'>
                                 <div className='profile-image'>
-                                  {profileImage && <img src={`http://localhost:4000/${profileImage}`} alt='' />}
+                                  {profileImage && <img src={`${serverImageURL}${profileImage}`} alt='' />}
                                 </div>
                                 <div className='username'>
                                   <span>{userName}</span>

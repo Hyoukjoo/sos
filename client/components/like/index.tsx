@@ -6,6 +6,8 @@ import { E_postType } from '../../redux/post/postType';
 import I_state from '../../redux/rootType';
 import { E_followType } from '../../redux/follow/followType';
 
+import { serverImageURL } from '../../info/url';
+
 const Like: React.FC = () => {
   const dispatch = useDispatch();
 
@@ -79,7 +81,7 @@ const Like: React.FC = () => {
                   <Link href={{ pathname: '/user', query: { id: like.userId } }} as={`/user/${like.userId}`}>
                     <a onClick={clearLikes}>
                       {like.likeUserProfile.profileImage ? (
-                        <img src={`http://localhost:4000/${like.likeUserProfile.profileImage}`} alt='profile-image' />
+                        <img src={`${serverImageURL}/${like.likeUserProfile.profileImage}`} alt='profile-image' />
                       ) : (
                         <div className='empty-profile-image'></div>
                       )}

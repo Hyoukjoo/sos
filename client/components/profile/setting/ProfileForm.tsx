@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import useInput from '../../../hook_utils/useInput';
-
 import I_state from '../../../redux/rootType';
 import { E_profileType } from '../../../redux/profile/profileType';
+
+import useInput from '../../../hook_utils/useInput';
+import { serverImageURL } from '../../../info/url';
 
 const ProfileForm: React.FC = () => {
   const dispatch = useDispatch();
@@ -52,7 +53,7 @@ const ProfileForm: React.FC = () => {
         <label htmlFor='upload-profile-image'>
           <div className='image' title='Change Profile Photo'>
             {profileImage !== undefined && profileImage !== null ? (
-              <img src={`http://localhost:4000/${profileImage}`} alt='profileImage' />
+              <img src={`${serverImageURL}${profileImage}`} alt='profileImage' />
             ) : null}
           </div>
           <input type='file' name='' id='upload-profile-image' onChange={handleImage} />

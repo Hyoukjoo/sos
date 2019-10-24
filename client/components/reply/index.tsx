@@ -4,7 +4,9 @@ import Link from 'next/link';
 
 import { E_postType } from '../../redux/post/postType';
 import I_state from '../../redux/rootType';
+
 import useInput from '../../hook_utils/useInput';
+import { serverImageURL } from '../../info/url';
 
 const Reply: React.FC = () => {
   const dispatch = useDispatch();
@@ -86,7 +88,7 @@ const Reply: React.FC = () => {
                   <Link href={{ pathname: '/user', query: { id: v.userId } }} as={`/user/${v.userId}`}>
                     <a onClick={clearReply}>
                       {v.replyUserProfile.profileImage ? (
-                        <img src={`http://localhost:4000/${v.replyUserProfile.profileImage}`} alt='' />
+                        <img src={`${serverImageURL}${v.replyUserProfile.profileImage}`} alt='' />
                       ) : (
                         <div className='empty-profile-image'></div>
                       )}

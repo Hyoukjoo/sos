@@ -4,4 +4,4 @@ build/
 .next/
 .env
 ex/
-uploads/
+static/

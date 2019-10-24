@@ -9,6 +9,8 @@ import I_state from '../../redux/rootType';
 import { E_profileType } from '../../redux/profile/profileType';
 import { E_followType } from '../../redux/follow/followType';
 
+import { serverImageURL } from '../../info/url';
+
 interface I_props {
   userId: string;
   someoneId: string;
@@ -90,7 +92,7 @@ const Profile: React.FC<I_props> = ({ userId, someoneId }) => {
       <header>
         <div className='profile-image' title='Change Profile Photo'>
           {profileImage !== undefined && profileImage !== null ? (
-            <img src={`http://localhost:4000/${profileImage}`} alt='profileImage' />
+            <img src={`${serverImageURL}${profileImage}`} alt='profileImage' />
           ) : null}
         </div>
         <div className='profile-description'>

@@ -8,6 +8,8 @@ import monthArr from '../utils/month';
 import I_state, { I_postData } from '../../redux/rootType';
 import { E_postType } from '../../redux/post/postType';
 
+import { serverImageURL } from '../../info/url';
+
 interface I_props {
   postDatas: I_postData[];
 }
@@ -109,7 +111,7 @@ const Feed: React.FC<I_props> = ({ postDatas }) => {
                   <div className='image'>
                     <Link href={{ pathname: '/user', query: { id: postData.userId } }} as={`/user/${postData.userId}`}>
                       <a>
-                        <img src={`http://localhost:4000/${postData.userPost.userProfile.profileImage}`} alt='' />
+                        <img src={`${serverImageURL}${postData.userPost.userProfile.profileImage}`} alt='' />
                       </a>
                     </Link>
                   </div>
@@ -131,7 +133,7 @@ const Feed: React.FC<I_props> = ({ postDatas }) => {
                 </div>
               </div>
               <div className='image'>
-                {postData.postImage[0] && <img src={`http://localhost:4000/${postData.postImage[0].src}`} />}
+                {postData.postImage[0] && <img src={`${serverImageURL}/${postData.postImage[0].src}`} />}
               </div>
               <footer>
                 <div className='button-div'>

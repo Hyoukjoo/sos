@@ -6,6 +6,8 @@ import I_state from '../../redux/rootType';
 import { E_profileType } from '../../redux/profile/profileType';
 import { E_followType } from '../../redux/follow/followType';
 
+import { serverImageURL } from '../../info/url';
+
 const Followings: React.FC = () => {
   const dispatch = useDispatch();
 
@@ -81,7 +83,7 @@ const Followings: React.FC = () => {
                   >
                     <a onClick={clear}>
                       {followee.followeeProfile.profileImage ? (
-                        <img src={`http://localhost:4000/${followee.followeeProfile.profileImage}`} alt='' />
+                        <img src={`${serverImageURL}${followee.followeeProfile.profileImage}`} alt='' />
                       ) : (
                         <div className='empty-profile-image'></div>
                       )}

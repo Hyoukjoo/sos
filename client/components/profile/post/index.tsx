@@ -3,6 +3,8 @@ import React from 'react';
 import { I_postData } from '../../../redux/rootType';
 import monthArr from '../../utils/month';
 
+import { serverImageURL } from '../../../info/url';
+
 interface I_props {
   postDatas: I_postData[];
 }
@@ -28,7 +30,7 @@ const Posts: React.FC<I_props> = ({ postDatas }) => {
 
           return (
             <div className='post-container' key={postData.postId}>
-              <img src={`http://localhost:4000/${postData.postImage[0].src}`} alt='' />
+              <img src={`${serverImageURL}${postData.postImage[0].src}`} alt='' />
               <div className='info-container'>
                 <span>{formatDate}</span>
               </div>

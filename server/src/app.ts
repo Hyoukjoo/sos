@@ -24,7 +24,7 @@ const app = express();
 
 sequelize.sync();
 
-app.use(express.static(path.join(__dirname, 'uploads')));
+app.use('/static/images', express.static(path.join(__dirname, 'static', 'images')));
 app.use(
   cors({
     origin: true,

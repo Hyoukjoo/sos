@@ -10,6 +10,8 @@ import { E_postType } from '../../redux/post/postType';
 import DayPicker from 'react-day-picker';
 import TimePicker from 'react-times';
 
+import { serverImageURL } from '../../info/url';
+
 const PostForm: React.FC = () => {
   const dispatch = useDispatch();
 
@@ -165,7 +167,7 @@ const PostForm: React.FC = () => {
           <header>
             {profile.myProfile.profileImage ? (
               <div className='profile-image'>
-                <img src={`http://localhost:4000/${profile.myProfile.profileImage}`} alt='' />
+                <img src={`${serverImageURL}${profile.myProfile.profileImage}`} alt='' />
               </div>
             ) : (
               <div className='empty-profile-image'></div>
