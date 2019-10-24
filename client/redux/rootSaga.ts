@@ -7,7 +7,7 @@ import groupSaga from './group/groupSaga';
 import followSaga from './follow/followSaga';
 import profileSaga from './profile/profileSage';
 
-axios.defaults.baseURL = 'http://localhost:4000';
+axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? 'http://45.119.146.235:4000' : 'http://localhost:4000';
 
 export default function* rootSaga() {
   yield all([fork(userSaga), fork(postSaga), fork(groupSaga), fork(followSaga), fork(profileSaga)]);
