@@ -8,11 +8,6 @@ export interface I_config_component {
   database: string;
   host: string;
   dialect: 'mysql';
-  pool: {
-    max: number;
-    min: number;
-    idle: number;
-  };
   define: {
     freezeTableName: boolean;
   };
@@ -30,11 +25,16 @@ const config: I_config = {
     database: 'test',
     host: 'localhost',
     dialect: 'mysql',
-    pool: {
-      max: 5,
-      min: 0,
-      idle: 10000
-    },
+    define: {
+      freezeTableName: true
+    }
+  },
+  production: {
+    username: process.env.PRODUCTION_DB_USER as string,
+    password: process.env.PRODUCTION_DB_PASSWORD as string,
+    database: 'sos_db',
+    host: 'localhost',
+    dialect: 'mysql',
     define: {
       freezeTableName: true
     }

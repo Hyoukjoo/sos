@@ -11,7 +11,7 @@ import { initLikeModel, associateLike } from './like';
 import { initReplyModel, associateReply } from './reply';
 import { initProfileModel, associateProfile } from './profile';
 
-const env = 'development';
+const env = process.env.NODE_ENV === 'production' ? 'production' : 'development';
 
 const config = Config[env] as I_config_component;
 

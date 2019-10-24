@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import expressSession from 'express-session';
 import passport from 'passport';
 import morgan from 'morgan';
+import path from 'path';
 
 import userRouter from './routes/user';
 import postRouter from './routes/post';
@@ -23,7 +24,7 @@ const app = express();
 
 sequelize.sync();
 
-app.use(express.static(__dirname + '/uploads'));
+app.use(express.static(path.join(__dirname, 'uploads')));
 app.use(
   cors({
     origin: true,
@@ -31,9 +32,10 @@ app.use(
   })
 );
 
-app.use(morgan('dev'));
+if (prod) app.use(morgan('combined'));
+else app.use(morgan('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
   expressSession({

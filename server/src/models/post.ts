@@ -24,8 +24,8 @@ export class Post extends Model<Post> {
   public addPostImages!: Sequelize.HasManyAddAssociationsMixin<Image, number>;
   public addPostImage!: Sequelize.HasManyAddAssociationMixin<Image, number>;
   public createPostImage!: Sequelize.HasManyCreateAssociationMixin<Image>;
-  public hasPostImage: Sequelize.HasManyHasAssociationMixin<Image, number>;
-  public hasPostImages: Sequelize.HasManyHasAssociationsMixin<Image, number>;
+  public hasPostImage!: Sequelize.HasManyHasAssociationMixin<Image, number>;
+  public hasPostImages!: Sequelize.HasManyHasAssociationsMixin<Image, number>;
 
   public getPostTag!: Sequelize.BelongsToManyGetAssociationsMixin<Tag>;
   public setPostTag!: Sequelize.BelongsToSetAssociationMixin<Tag, number>;
