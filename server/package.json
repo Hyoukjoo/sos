@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon",
-    "compile": "tsc",
-    "tscdev": "nodemon -e ts  --exec \"npm run compile\"",
+    "compile": "tsc && node .dist/server.js",
+    "build": "tsc",
     "start": "node .dist/server.js"
   },
   "author": "HJ",
