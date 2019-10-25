@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon",
     "build": "next build && tsc --project tsconfig.server.json",
-    "start": "cross-env NODE_ENV=production node .next/server.js"
+    "start": "pm2 start ecosystem.config.js --env production"
   },
   "keywords": [
     "socail",
