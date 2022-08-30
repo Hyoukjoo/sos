@@ -58,7 +58,7 @@
     "@zeit/next-sass": "^1.0.1",
     "cross-env": "^6.0.3",
     "moment": "^2.24.0",
-    "moment-timezone": "^0.5.27",
+    "moment-timezone": "^0.5.35",
     "redux-devtools-extension": "^2.13.8",
     "ts-node": "^8.4.1",
     "tslint": "^5.20.0",
